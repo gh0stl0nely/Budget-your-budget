@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
   <title>Budget your budget Template</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
 </head>
+
 <body>
 
   <nav class="light-blue lighten-1" role="navigation">
@@ -27,24 +29,28 @@
 
   <div class="section no-pad-bot">
     <div class="container">
+      <div class="section" id="budget-options">
+        <!-- Eventual location for budget options -->
+        <!-- <div class="chip">
         <div class ="section" id="budget-options">
-            <!-- Eventual location for budget options -->
-            <!-- <div data-name="food" class="chip">
+            Eventual location for budget options
+            <div data-name="food" class="chip">
                 Food
                 <i class="close material-icons">close</i>
             </div>
 
+            <div class="chip">
             <div data-name="transport" class="chip">
                 Transport
                 <i class="close material-icons">close</i>
             </div>
 
-            <div data-name="cloth" class="chip">
+            <div class="chip">
                 Cloth
                 <i class="close material-icons">close</i>
             </div> -->
-            
-        </div>
+        <br><br>
+      </div>
     </div>
   </div>
 
@@ -57,9 +63,9 @@
         <div class="col s12 m4">
           <div class="icon-block">
             <input placeholder="Salary" id="salary" type="number" class="validate" min="0">
-            <label for="Salary">Income</label >
+            <label for="Salary">Income</label>
           </div>
-        </div>        
+        </div>
         <div class="col s12 m4"></div>
       </div>
 
@@ -68,9 +74,9 @@
         <div class="col s12 m4">
           <div class="icon-block">
             <input placeholder="Saving Rate" id="saving" type="number" class="validate" min="0">
-            <label for="Saving">Desired Saving Percent</label >
+            <label for="Saving">Desired Saving Percent</label>
           </div>
-        </div>        
+        </div>
         <div class="col s12 m4"></div>
       </div>
 
@@ -78,14 +84,17 @@
     <br><br>
 
     <div class="container">
-        <!-- Eventual location for budget options -->
-        <div class="row center">
-          <a id="download-button" class="btn-large waves-effect waves-light orange">Submit</a>
-        </div>
-        <br><br>
-  
+      <!-- Eventual location for budget options -->
+      <div class="row center">
+        <a id="download-button" class="btn-large waves-effect waves-light orange">Submit</a>
       </div>
+      <br><br>
+
+    </div>
   </div>
+
+
+
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -93,5 +102,7 @@
   <script src="js/init.js"></script>
   <script src="logic.js"></script>
 
-  </body>
+
+</body>
+
 </html>
