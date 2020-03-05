@@ -52,7 +52,7 @@ function createAndDisplayTag(storage, i, budgetOptions) {
 // })
 
 // submitting income and saving percentage
-var submit = document.getElementById("download-button");
+var submit = document.getElementById("submit-button");
 submit.addEventListener("click", proposeBudget);
 
 function proposeBudget(event) {
@@ -61,30 +61,34 @@ function proposeBudget(event) {
     var salary = document.getElementById("salary");
     var saving = document.getElementById("saving");
 
-    var regex = /\d+/;
+    var regex = /\d*\.?\d*$/;
     // if the input is not vaild, the input box will turn red
-    if (regex.test(salary.textContent)) {
+    if (!regex.test(salary.value)) {
         salary.style.backgroundColor = "#ff000042";
         salary.style.color = "red";
-        console.log(regex.test(salary.textContent));
+    } else {
+        salary.style.backgroundColor = "none";
+        salary.style.color = "black";
     };
 
-    if (regex.test(saving.textContent)) {
+    if (!regex.test(saving.value)) {
         saving.style.backgroundColor = "#ff000042";
         saving.style.color = "red";
-        console.log(regex.test(saving.textContent));
+    } else {
+        saving.style.backgroundColor = "white";
+        saving.style.color = "black";
     };
 
-    if (saving.textContent > 100 || saving.textContent < 0) {
+    // user need to enter a number between 0-100 for percentage
+    if (saving.value > 100 || saving.value < 0) {
         saving.style.backgroundColor = "#ff000042";
         saving.style.color = "red";
-        alert("Please enter a valid number for percentage.");
+        alert("Please enter a number from 1 to 100.");
     };
-    console.log(saving.textContent);
 
-    // var chips = document.getElementsByClassName("chip");
-
-    // if (chips.length == 0 || !chips) {
-    //     alert("Please choose at least one category.");
-    // };
+    // choose at least one category
+    var chips = document.getElementsByClassName("chip");
+    if (chips.length == 0 || !chips) {
+        alert("Please choose at least one category.");
+    };
 };
