@@ -92,3 +92,9 @@ function proposeBudget(event) {
         alert("Please choose at least one category.");
     };
 };
+
+// Function to convert data into downloadable Excel file
+
+function exportToExcel(){
+    
+}
