@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
   <title>Budget your budget Template</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.min.js" integrity="sha256-6KtblFoCFV8zf19mVStSMp7nx2+hE1vQB6bDJyBVnEY=" crossorigin="anonymous"></script>
 </head>
+
 <body>
 
   <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="Home_link" href="index.html" class="Home_link">Home</a>
+    <div class="nav-wrapper container">
+      <a id="Home_link" href="index.html" class="Home_link brand-logo">Budget Your Budget</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="#">Navbar Link</a></li>
+        <li><a href="#index.html">Home</a></li>
+        <li><a href="#budget.html">Budget plan</a></li>
       </ul>
 
       <ul id="nav-mobile" class="sidenav">
@@ -27,27 +32,60 @@
 
   <div class="section no-pad-bot" id="budget_titles">
     <div class="container">
-        <div class ="section">
-
-            <br><br>
+      <div class="section">
+        <!-- Eventual location for budget options -->
+        <h4 class="center-align">Your Budget</h4>
+        <p class="center-align">Income $$$$</p>
+        <p class="center-align">Saving goal $$$$</p>
+        <div class="divider"></div>
+        <div class="row">
+          <div class="col s6 m6 l4" style="background-color: rgb(248, 196, 196);">
+            employee
+            software
+            foundation
+            player
+            emotion
+            enthusiasm
+            power
+            moment
+            organization
+            attitude
+          </div>
+          <div class="col s6 m6 l8" style="background-color: rgb(191, 208, 255);">
+            Dave found joy in the daily routine of life. He awoke at the same time, ate the same breakfast and drove the
+            same commute. He worked at a job that never seemed to change and he got home at 6 pm sharp every night. It
+            was who he had been for the last ten years and he had no idea that was all about to change.
+          </div>
         </div>
+        <div class="row center-align">
+          <p>Projected saving at Retirement $$$$</p>
+        </div>
+        <div class="row center-align">
+          <a class="btn-large waves-effect waves-light orange" onclick="exportToExcel()">Share</a>
+          <a class="btn-large waves-effect waves-light orange">Save</a>
+        </div>
+        <br><br>
+      </div>
     </div>
   </div>
 
 
   <div class="container" id="Budget">
     <div class="section">
-      
-  </div>
 
- 
+    </div>
 
 
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
-  
 
-  </body>
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+    <!--Downloading Budget to Excel-->
+    <script src="logic.js"></script>
+
+
+</body>
+
 </html>
