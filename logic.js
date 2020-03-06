@@ -116,7 +116,7 @@ var prevDate = (fullDate.getFullYear() - 5)+ "/" + twoDigitMonth + "/" + fullDat
 
 var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
 
-$('#inflation').on('click', function calculate() {
+function calculate() {
   $.getJSON(apiUrl, {
       country: countrySource,
       start: prevDate,
@@ -126,7 +126,7 @@ $('#inflation').on('click', function calculate() {
     })
     .done(function (data) {        
         var temp_val = data.replace("$", "");
-        inflation = Number(temp_val);
+        inflation = (Number(temp_val) - 100) / 5 ;
     });
-});
+};
 
