@@ -102,14 +102,16 @@ function exportToExcel() {
   
   // Take data from Ibraheim stuff, amount and percentage
   // Do a for loop using "" as length
-
-  
+    
 
   /* Make worksheet */
   var ws_data = [
     ["Item", "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
     ["life", 2, "20%"],
-    ["life", 3, "30%"]
+    ["life", 3, "30%"],
+    [],
+    ["Projected Saving With Inflation", 1000],
+    ["Projected Saving Without Inflation", 2000],
   ];
   
   // Add sheet to 
@@ -122,3 +124,39 @@ function exportToExcel() {
   //Download the file
   XLSX.writeFile(workbook, "out.xls");
 }
+
+var inflation;
+var countrySource;
+
+fetch('https://extreme-ip-lookup.com/json/')
+.then( res => res.json())
+.then(response => {
+    countrySource = response.country.toLowerCase(); 
+}).catch((data, status) => {
+    console.log('Request failed');
+ })
+
+// get current date
+var fullDate = new Date();
+var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
+var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+
+// get date from 1 year ago for range of inflation calculation
+var prevDate = (fullDate.getFullYear() - 1)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
+
+var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
+
+$('#inflation').on('click', function calculate() {
+  $.getJSON(apiUrl, {
+      country: countrySource,
+      start: prevDate,
+      end: currentDate,
+      amount: 100,
+      format: true
+    })
+    .done(function (data) {        
+        var temp_val = data.replace("$", "");
+        inflation = Number(temp_val);
+    });
+});
+
