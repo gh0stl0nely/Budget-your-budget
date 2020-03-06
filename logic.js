@@ -94,26 +94,39 @@ function proposeBudget(event) {
 };
 
 var inflation;
+var countrySource;
 
+fetch('https://extreme-ip-lookup.com/json/')
+.then( res => res.json())
+.then(response => {
+    countrySource = response.country.toLowerCase(); 
+       
+})
+ .catch((data, status) => {
+    console.log('Request failed');
+ })
+
+// get current date
 var fullDate = new Date();
 var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
-var currentDate = fullDate.getFullYear() + "-" + twoDigitMonth + "-" + fullDate.getDate();
+var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
 
-var prevDate = (fullDate.getFullYear() - 1)+ "-" + twoDigitMonth + "-" + fullDate.getDate();
-console.log(prevDate);
+// get date from 1 year ago for range of inflation calculation
+var prevDate = (fullDate.getFullYear() - 1)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
 
 var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
 
-$('#submit-button').on('click', function calculate() {
-    $.getJSON(apiUrl, {
-        country: 'canada',
-        start: prevDate,
-        end: currentDate,
-        amount: 100,
-        format: true
+$('#inflation').on('click', function calculate() {
+  $.getJSON(apiUrl, {
+      country: countrySource,
+      start: prevDate,
+      end: currentDate,
+      amount: 100,
+      format: true
     })
-      .done(function (data) {
-          $('#endPrice').val(data);
-      });
+    .done(function (data) {        
+        var temp_val = data.replace("$", "");
+        inflation = Number(temp_val);
+    });
 });
 
