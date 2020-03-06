@@ -112,11 +112,11 @@ var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()
 var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
 
 // get date from 1 year ago for range of inflation calculation
-var prevDate = (fullDate.getFullYear() - 1)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
+var prevDate = (fullDate.getFullYear() - 5)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
 
 var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
 
-$('#inflation').on('click', function calculate() {
+function calculate() {
   $.getJSON(apiUrl, {
       country: countrySource,
       start: prevDate,
@@ -126,7 +126,7 @@ $('#inflation').on('click', function calculate() {
     })
     .done(function (data) {        
         var temp_val = data.replace("$", "");
-        inflation = Number(temp_val);
+        inflation = (Number(temp_val) - 100) / 5 ;
     });
-});
+};
 
