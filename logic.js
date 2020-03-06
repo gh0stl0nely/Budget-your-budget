@@ -92,3 +92,28 @@ function proposeBudget(event) {
         alert("Please choose at least one category.");
     };
 };
+
+var inflation;
+
+var fullDate = new Date();
+var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
+var currentDate = fullDate.getFullYear() + "-" + twoDigitMonth + "-" + fullDate.getDate();
+
+var prevDate = (fullDate.getFullYear() - 1)+ "-" + twoDigitMonth + "-" + fullDate.getDate();
+console.log(prevDate);
+
+var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
+
+$('#submit-button').on('click', function calculate() {
+    $.getJSON(apiUrl, {
+        country: 'canada',
+        start: prevDate,
+        end: currentDate,
+        amount: 100,
+        format: true
+    })
+      .done(function (data) {
+          $('#endPrice').val(data);
+      });
+});
+
