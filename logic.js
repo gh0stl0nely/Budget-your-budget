@@ -175,7 +175,6 @@ function createCategoryElement(name, url) {
   return el;
 }
 
-
 for (var i = 0; i < data.categories.length; i++) {
   var category = data.categories[i];
   var categoryElement = createCategoryElement(
@@ -187,6 +186,7 @@ for (var i = 0; i < data.categories.length; i++) {
   if (i + 1 < data.categories.length) {
     container.appendChild(comma);
   }
+}
 
 var data = {
     categories: [
@@ -209,7 +209,9 @@ var data = {
     return el;
   }
 
+  // puliing categories from index 
 
+  
   for (var i = 0; i < data.categories.length; i++) {
     var category = data.categories[i];
     var categoryElement = createCategoryElement(category.name, category.url_title);
