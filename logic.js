@@ -52,8 +52,8 @@ function createAndDisplayTag(storage, i, budgetOptions) {
 // })
 
 // submitting income and saving percentage
-var submit = document.getElementById("submit-button");
-submit.addEventListener("click", proposeBudget);
+// var submit = document.getElementById("submit-button");
+// submit.addEventListener("click", proposeBudget);
 
 
 function proposeBudget(event) {
@@ -103,102 +103,43 @@ function proposeBudget(event) {
     };
 };
 
-<<<<<<< HEAD
-=======
-var inflation;
-var countrySource;
-function getCountry(event){
-    event.preventDefault();
+function getInflation(){
+
+    // get current date
+    var fullDate = new Date();
+    var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
+    var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+
+    // get date from 1 year ago for range of inflation calculation
+    var prevDate = (fullDate.getFullYear() - 4)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
+
+    var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
+
+    
     fetch('https://extreme-ip-lookup.com/json/')
-    .then( res => res.json())
-    .then(response => {
-        countrySource = response.country.toLowerCase(); 
-        
-    })
-    .catch((data, status) => {
-        console.log('Get Country Request failed');
-    });
-}
-
-function getInflation(event) {
-event.preventDefault();
-// get current date
-var fullDate = new Date();
-var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
-var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
-
-// get date from 1 year ago for range of inflation calculation
-var prevDate = (fullDate.getFullYear() - 4)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
-
-var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
-
-//default country to canada if one is not found
-if (countrySource === null) {
-    countrySource = 'canada';
-}
-
-function calculate() {
-  $.getJSON(apiUrl, {
-      country: countrySource,
-      start: prevDate,
-      end: currentDate,
-      amount: 100,
-      format: true
-    })
-    .done(function (data) {        
-        var temp_val = data.replace("$", "");
-        inflation = (Number(temp_val) - 100) / 5 ;
-    });
-    }
+        .then( res => res.json())
+        .then(response => {        
+            var countrySource = response.country.toLowerCase();
+             $.getJSON(apiUrl, {
+                    country: countrySource,
+                    start: prevDate,
+                    end: currentDate,
+                    amount: 100,
+                    format: true
+                    })
+                    .done(function (data) {        
+                        var temp_val = data.replace("$", "");
+                        var inflation = (Number(temp_val) - 100) / 4;
+                        //pass inflation variable here to                                      
+                    });                                
+            
+                })
 };
-
-<<<<<<< HEAD
->>>>>>> 67ca4144f4ef4d6448b536d04cdf825ab3a8e604
+getInflation();
 
 
-// var data = {
-//     categories: [
-//       {name: 'one', url_title: 'oneUrl'},
-//       {name: 'two', url_title: 'twoUrl'}
-//     ],
-//   };
-  
-//   var container = document.getElementById('container');
-//   var comma = document.createTextNode(', ');
-  
-//   function createCategoryElement(name, url) {
-//     var urlBase = '#journal-category-';
-//     var cssClass = 'js-page-link';
-  
-//     var el = document.createElement('a');
-//     el.setAttribute('href', urlBase + url);
-//     el.setAttribute('class', cssClass);
-//     el.innerHTML = name;
-//     return el;
-//   }
-  
-//   // Create HTML elements for each category and append them to the DOM.
-  
-//   for (var i = 0; i < data.categories.length; i++) {
-//     var category = data.categories[i];
-//     var categoryElement = createCategoryElement(category.name, category.url_title);
-//     container.appendChild(categoryElement);
-  
-//     // Join categories with a comma
-//     if (i + 1 < data.categories.length) {
-//       container.appendChild(comma);
-//     }
-//   }
-  
-//           for (...loop over categories...) {
-//               ...
-//               var categoryElement = createCategoryElement(category.name, category.url_title);
-//               container.appendChild(categoryElement);
-  
-//               if (i + 1 < data.categories.length) {
-//                   containenr.appendChild(commaElement);
-//               }
-//           }
+
+
 
 var data = {
     categories: [
@@ -221,8 +162,8 @@ var data = {
     return el;
   }
   
-  
-  
+  // puliing categories from index 
+  function appendToBudget(){
   for (var i = 0; i < data.categories.length; i++) {
     var category = data.categories[i];
     var categoryElement = createCategoryElement(category.name, category.url_title);
@@ -230,9 +171,9 @@ var data = {
   
     
     if (i + 1 < data.categories.length) {
-      container.appendChild(comma);
+      container.appendChild(salary);
     }
   }
-  
+}
           
           
