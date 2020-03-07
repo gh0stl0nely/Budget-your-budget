@@ -103,3 +103,88 @@ function proposeBudget(event) {
     };
 };
 
+<<<<<<< HEAD
+=======
+var inflation;
+var countrySource;
+
+fetch('https://extreme-ip-lookup.com/json/')
+.then( res => res.json())
+.then(response => {
+    countrySource = response.country.toLowerCase(); 
+       
+})
+ .catch((data, status) => {
+    console.log('Request failed');
+ })
+
+// get current date
+var fullDate = new Date();
+var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
+var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+
+// get date from 1 year ago for range of inflation calculation
+var prevDate = (fullDate.getFullYear() - 5)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
+
+var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
+
+function calculate() {
+  $.getJSON(apiUrl, {
+      country: countrySource,
+      start: prevDate,
+      end: currentDate,
+      amount: 100,
+      format: true
+    })
+    .done(function (data) {        
+        var temp_val = data.replace("$", "");
+        inflation = (Number(temp_val) - 100) / 5 ;
+    });
+};
+
+>>>>>>> 67ca4144f4ef4d6448b536d04cdf825ab3a8e604
+
+
+// var data = {
+//     categories: [
+//       {name: 'one', url_title: 'oneUrl'},
+//       {name: 'two', url_title: 'twoUrl'}
+//     ],
+//   };
+  
+//   var container = document.getElementById('container');
+//   var comma = document.createTextNode(', ');
+  
+//   function createCategoryElement(name, url) {
+//     var urlBase = '#journal-category-';
+//     var cssClass = 'js-page-link';
+  
+//     var el = document.createElement('a');
+//     el.setAttribute('href', urlBase + url);
+//     el.setAttribute('class', cssClass);
+//     el.innerHTML = name;
+//     return el;
+//   }
+  
+//   // Create HTML elements for each category and append them to the DOM.
+  
+//   for (var i = 0; i < data.categories.length; i++) {
+//     var category = data.categories[i];
+//     var categoryElement = createCategoryElement(category.name, category.url_title);
+//     container.appendChild(categoryElement);
+  
+//     // Join categories with a comma
+//     if (i + 1 < data.categories.length) {
+//       container.appendChild(comma);
+//     }
+//   }
+  
+//           for (...loop over categories...) {
+//               ...
+//               var categoryElement = createCategoryElement(category.name, category.url_title);
+//               container.appendChild(categoryElement);
+  
+//               if (i + 1 < data.categories.length) {
+//                   containenr.appendChild(commaElement);
+//               }
+//           }
