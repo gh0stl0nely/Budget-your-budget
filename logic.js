@@ -42,6 +42,15 @@ function proposeBudget(event) {
   var salary = document.getElementById("salary");
   var saving = document.getElementById("saving");
 
+  // grab the value of salary
+  var salaryCal = salary.value;
+  var savingCal = saving.value;
+  var calculation = (salaryCal * savingCal) / 100;
+  alert(calculation);
+  // grab the value of saving
+  // do your calculation
+  // alert calculation
+
   var regex = /\d*\.?\d*$/;
   // if the input is not vaild, the input box will turn red
   if (!regex.test(salary.value)) {
@@ -108,37 +117,54 @@ function exportToExcel() {
 var inflation;
 var countrySource;
 
-fetch('https://extreme-ip-lookup.com/json/')
-.then( res => res.json())
-.then(response => {
-    countrySource = response.country.toLowerCase(); 
-}).catch((data, status) => {
-    console.log('Request failed');
- })
+function getCountry(event) {
+  event.preventDefault();
+  fetch("https://extreme-ip-lookup.com/json/")
+    .then(res => res.json())
+    .then(response => {
+      countrySource = response.country.toLowerCase();
+    })
+    .catch((data, status) => {
+      console.log("Get Country Request failed");
+    });
+}
 
-// get current date
-var fullDate = new Date();
-var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
-var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+function getInflation(event) {
+  event.preventDefault();
+  // get current date
+  var fullDate = new Date();
+  var twoDigitMonth =
+    fullDate.getMonth().length + 1 === 1
+      ? fullDate.getMonth() + 1
+      : "0" + (fullDate.getMonth() + 1);
+  var currentDate =
+    fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
 
-// get date from 1 year ago for range of inflation calculation
-var prevDate = (fullDate.getFullYear() - 1)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
+  // get date from 1 year ago for range of inflation calculation
+  var prevDate =
+    fullDate.getFullYear() - 4 + "/" + twoDigitMonth + "/" + fullDate.getDate();
 
-var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
+  var apiUrl =
+    "https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?";
 
-$('#inflation').on('click', function calculate() {
-  $.getJSON(apiUrl, {
+  //default country to canada if one is not found
+  if (countrySource === null) {
+    countrySource = "canada";
+  }
+
+  function calculate() {
+    $.getJSON(apiUrl, {
       country: countrySource,
       start: prevDate,
       end: currentDate,
       amount: 100,
       format: true
-    })
-    .done(function (data) {        
-        var temp_val = data.replace("$", "");
-        inflation = Number(temp_val);
+    }).done(function(data) {
+      var temp_val = data.replace("$", "");
+      inflation = (Number(temp_val) - 100) / 5;
     });
-});
+  }
+}
 
 function graphToggle(){
     var switches = document.getElementById('mySwitch').checked;
@@ -168,3 +194,62 @@ function graphToggle(){
 //     this.localStorage.setItem('chips', JSON.stringify(storage));
 
 // })
+
+var data = {
+  categories: [
+    { name: "one", url_title: "oneUrl" },
+    { name: "two", url_title: "twoUrl" }
+  ]
+};
+
+var container = document.getElementById("container");
+var comma = document.createTextNode(", ");
+
+function createCategoryElement(name, url) {
+  var urlBase = "#journal-category-";
+  var cssClass = "js-page-link";
+
+  var el = document.createElement("a");
+  el.setAttribute("href", urlBase + url);
+  el.setAttribute("class", cssClass);
+  el.innerHTML = name;
+  return el;
+}
+
+  for (var i = 0; i < data.categories.length; i++) {
+    var category = data.categories[i];
+    var categoryElement = createCategoryElement(
+      category.name,
+      category.url_title
+    );
+
+    container.appendChild(categoryElement);
+  
+    if (i + 1 < data.categories.length) {
+      container.appendChild(comma);
+    }
+  }
+}
+
+
+
+var data = {
+    categories: [
+      {name: 'one', url_title: 'oneUrl'},
+      {name: 'two', url_title: 'twoUrl'}
+    ],
+  };
+  
+  var container = document.getElementById('container');
+  var comma = document.createTextNode(', ');
+  
+function createCategoryElement(name, url) {
+    var urlBase = '#journal-category-';
+    var cssClass = 'js-page-link';
+  
+    var el = document.createElement('a');
+    el.setAttribute('href', urlBase + url);
+    el.setAttribute('class', cssClass);
+    el.innerHTML = name;
+    return el;
+  }
