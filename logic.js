@@ -175,6 +175,7 @@ function createCategoryElement(name, url) {
   return el;
 }
 
+
 for (var i = 0; i < data.categories.length; i++) {
   var category = data.categories[i];
   var categoryElement = createCategoryElement(
@@ -186,4 +187,36 @@ for (var i = 0; i < data.categories.length; i++) {
   if (i + 1 < data.categories.length) {
     container.appendChild(comma);
   }
-}
+
+var data = {
+    categories: [
+      {name: 'one', url_title: 'oneUrl'},
+      {name: 'two', url_title: 'twoUrl'}
+    ],
+  };
+  
+  var container = document.getElementById('container');
+  var comma = document.createTextNode(', ');
+  
+  function createCategoryElement(name, url) {
+    var urlBase = '#journal-category-';
+    var cssClass = 'js-page-link';
+  
+    var el = document.createElement('a');
+    el.setAttribute('href', urlBase + url);
+    el.setAttribute('class', cssClass);
+    el.innerHTML = name;
+    return el;
+  }
+
+
+  for (var i = 0; i < data.categories.length; i++) {
+    var category = data.categories[i];
+    var categoryElement = createCategoryElement(category.name, category.url_title);
+    container.appendChild(categoryElement);
+  
+    
+    if (i + 1 < data.categories.length) {
+      container.appendChild(salary);
+    }
+  }
