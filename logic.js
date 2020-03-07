@@ -46,8 +46,8 @@ function proposeBudget(event) {
     // grab the value of salary
     var salaryCal = salary.value
     var savingCal = saving.value
-    var calculation = ((salaryCal * savingCal)/100)
-    alert(calculation)
+    var calculation = ((salaryCal * savingCal) / 100)
+    M.toast({ html: calculation, classes: 'red' });
     // grab the value of saving
     // do your calculation
     // alert calculation
@@ -74,13 +74,13 @@ function proposeBudget(event) {
     if (saving.value > 100 || saving.value < 0) {
         saving.style.backgroundColor = "#ff000042";
         saving.style.color = "red";
-        alert("Please enter a number from 1 to 100.");
+        M.toast({ html: 'Please enter a number from 0 to 100.', classes: 'red' });
     };
 
     // choose at least one category
     var chips = document.getElementsByClassName("chip");
     if (chips.length == 0 || !chips) {
-        alert("Please choose at least one category.")
+        M.toast({ html: "Please choose at least one category.", classes: 'red' });
     };
   
     getInflation();
@@ -132,41 +132,60 @@ function projectedSavings(x) {
 }
 
 //Ebrahim's code
-
 var data = {
     categories: [
-      {name: 'one', url_title: 'oneUrl'},
-      {name: 'two', url_title: 'twoUrl'}
+        { name: 'one', url_title: 'oneUrl' },
+        { name: 'two', url_title: 'twoUrl' }
     ],
-  };
-  
-  var container = document.getElementsByClassName('chips');
-  var comma = document.createTextNode(', ');
+
+};
+
+var container = document.getElementsByClassName('chips');
+var comma = document.createTextNode(', ');
   
   function createCategoryElement(name, url) {
+
     var urlBase = '#journal-category-';
     var cssClass = 'js-page-link';
-  
+
     var el = document.createElement('a');
     el.setAttribute('href', urlBase + url);
     el.setAttribute('class', cssClass);
     el.innerHTML = name;
     return el;
-  }
-  
-  // puliing categories from index 
-  function appendToBudget(){
-  for (var i = 0; i < data.categories.length; i++) {
-    var category = data.categories[i];
-    var categoryElement = createCategoryElement(category.name, category.url_title);
-    container.appendChild(categoryElement);
-  
-    
-    if (i + 1 < data.categories.length) {
-      container.appendChild(salary);
-    }
-  }
 }
+
+// puliing categories from index 
+function appendToBudget() {
+    for (var i = 0; i < data.categories.length; i++) {
+        var category = data.categories[i];
+        var categoryElement = createCategoryElement(category.name, category.url_title);
+        container.appendChild(categoryElement);
+
+
+        if (i + 1 < data.categories.length) {
+            container.appendChild(salary);
+        }
+    }
+}
+
+// modal
+document.addEventListener('DOMContentLoaded', function () {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);
+});
+
+var addInputBttn = document.getElementById("addInputBttn");
+addInputBttn.addEventListener("click", addInputField);
+function addInputField(){
+    var inputDiv = document.getElementById("inputDiv");
+    var inputField = document.createElement("input");
+    inputField.setAttribute("type", "text");
+    inputField.setAttribute("id", "customCategory");
+    inputField.classList.add("validate");
+    inputDiv.appendChild(inputField);
+}
+
 
 // * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
 
@@ -190,3 +209,4 @@ var data = {
 // submitting income and saving percentage
           
           
+
