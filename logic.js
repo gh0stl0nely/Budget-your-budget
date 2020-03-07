@@ -172,7 +172,7 @@ var data = {
   }
   
   // puliing categories from index 
-  
+  function appendToBudget(){
   for (var i = 0; i < data.categories.length; i++) {
     var category = data.categories[i];
     var categoryElement = createCategoryElement(category.name, category.url_title);
@@ -183,6 +183,6 @@ var data = {
       container.appendChild(salary);
     }
   }
-  
+}
           
           
