@@ -132,9 +132,15 @@ function projectedSavings(x) {
 }
 
 //Ebrahim's code
+var data = {
+  categories: [
+    {name: 'one', url_title: 'oneUrl'},
+    {name: 'two', url_title: 'twoUrl'}
+  ],
+};
 
-var container = document.getElementById("container");
-var comma = document.createTextNode(", ");
+var container = document.getElementsByClassName('chips');
+var comma = document.createTextNode(', ');
 
 function createCategoryElement(name, url) {
   var urlBase = "#journal-category-";
@@ -147,27 +153,6 @@ function createCategoryElement(name, url) {
   return el;
 }
 
-var data = {
-    categories: [
-      {name: 'one', url_title: 'oneUrl'},
-      {name: 'two', url_title: 'twoUrl'}
-    ],
-  };
-  
-  var container = document.getElementsByClassName('chips');
-  var comma = document.createTextNode(', ');
-  
-  function createCategoryElement(name, url) {
-    var urlBase = '#journal-category-';
-    var cssClass = 'js-page-link';
-  
-    var el = document.createElement('a');
-    el.setAttribute('href', urlBase + url);
-    el.setAttribute('class', cssClass);
-    el.innerHTML = name;
-    return el;
-  }
-  
   // puliing categories from index 
   function appendToBudget(){
   for (var i = 0; i < data.categories.length; i++) {
