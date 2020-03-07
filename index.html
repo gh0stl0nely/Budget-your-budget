@@ -14,54 +14,65 @@
 
 <body>
 
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo hide-on-small-only" style="padding-left: 15px; ">Budget Your Budget</a>
-      <a href="#" class="brand-logo show-on-small hide-on-med-and-up"
-        style="padding-left: 15px; font-size: 15px;">Budget Your
-        Budget</a>
-      <ul class="right hide-on-med-and-down">
-        <li class="active"><a href="index.html">Home</a></li>
-        <li><a href="budget.html">Budget plan</a></li>
-      </ul>
-
-      <!-- side nav shown on mobile screen -->
-      <ul id="nav-mobile" class="sidenav">
-        <li class="active"><a href="index.html">Home</a></li>
-        <li><a href="budget.html">Budget plan</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </div>
-  </nav>
-
-  <div class="container center-align">
-    <p class="blue-text text-darken-2" style="font-size: 20px;">This app is for creating a budget plan and working
-      towards your saving goal</p>
+  <div class="navbar-fixed">
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper">
+        <a class="brand-logo hide-on-small-only" style="padding-left: 15px; ">Budget Your Budget</a>
+        <a href="#" class="brand-logo show-on-small hide-on-med-and-up"
+          style="padding-left: 15px; font-size: 15px;">Budget Your
+          Budget</a>
+        <ul class="right hide-on-med-and-down">
+          <li id="home"><a>Home</a></li>
+          <li id="budget"><a>Budget plan</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </nav>
   </div>
 
-  <div class="section no-pad-bot">
-    <div class="container">
+  <!-- side nav shown on mobile screen -->
+  <ul id="nav-mobile" class="sidenav">
+    <li id="homeMobile"><a>Home</a></li>
+    <li id="budgetMobile"><a>Budget plan</a></li>
+  </ul>
 
-      <div class="section" id="budget-options">
-        <!-- budget options -->
-        <!-- <div data-name="food" class="chip">
+  <!--Home Page-->
+  <section id="Home">
+
+    <!-- Header Introduction-->
+    <div class="container center-align">
+      <p class="blue-text text-darken-2" style="font-size: 20px;">This app is for creating a budget plan and working
+        towards your saving goal</p>
+    </div>
+
+    <!-- Category Chips (or Tags) -->
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div id="budget-options">
+          <!-- 
+        <div data-name="Food" class="chip">
           Food
           <i class="close material-icons">close</i>
         </div>
 
-        <div data-name="transport" class="chip">
-          Transport
+        <div data-name="Transportation" class="chip">
+          Transportation
           <i class="close material-icons">close</i>
         </div>
 
-        <div class="chip">
+        <div data-name="Cloth" class="chip">
           Cloth
           <i class="close material-icons">close</i>
         </div> -->
+        </div>
 
-        <!-- add category bttn -->
-        <a class="waves-effect waves-light btn modal-trigger orange right" href="#modal"><i
-            class="material-icons">add</i></a>
+        <br><br>
+
+        <!-- Add category bttn -->
+        <div class="center-align">
+          <a class="waves-effect waves-light btn modal-trigger orange" href="#modal"><i
+              class="material-icons">add</i></a>
+        </div>
+
 
         <!-- Modal Structure -->
         <div id="modal" class="modal">
@@ -71,52 +82,49 @@
             <div class="row">
               <div class="col s6">
                 <div class="input-field" id="inputDiv">
-                  <input id="customCategory" type="text" class="validate">
-                  <label for="customCategory">Category name</label>
+                  <input placeholder="New Category" id="customCategory" type="text" class="validate">
+
                 </div>
                 <button class="waves-effect waves-light btn orange" id="addInputBttn">Add categories</button>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="addChipsBttn">OK</a>
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+            <a class="modal-close waves-effect waves-green btn-flat" id="addChipsBtn">OK</a>
+            <a class="modal-close waves-effect waves-green btn-flat" id="closeBtn">Close</a>
           </div>
         </div>
+
       </div>
     </div>
-  </div>
-  
- <!-- Input section -->
-  <div class="container">
-    <div class="section">
-        Input Sections  
-      
-      <div class="row">
-        <div class="col s12 m4"></div>
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <input placeholder="Monthly Salary" id="salary" type="number" step="any" class="validate" min="0">
-            <label for="Salary">Income in $CAD</label>
+
+
+    <!-- Input section for Income and Expected Saving -->
+    <div class="container">
+      <div class="section">
+        <div class="row">
+          <div class="col s12 m4"></div>
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <input placeholder="Monthly Salary" id="salary" type="number" step="any" class="validate" min="0">
+              <label for="Salary">Income in $CAD (Valid input: 24000, 38493.29)</label>
+            </div>
           </div>
+          <div class="col s12 m4"></div>
         </div>
-        <div class="col s12 m4"></div>  
-      </div>
 
-      <div class="row">
-        <div class="col s12 m4"></div>
-        <div class="col s12 m4">
-          <div class="icon-block">
-            <input placeholder="Saving Rate" id="saving" type="number" step="any" class="validate" min="0" max="100">
-            <label for="Saving">Desired Saving Percent</label>
+        <div class="row">
+          <div class="col s12 m4"></div>
+          <div class="col s12 m4">
+            <div class="icon-block">
+              <input placeholder="Saving Rate" id="saving" type="number" step="any" class="validate" min="0" max="100">
+              <label for="Saving">Desired Saving Percentage (Valid input: 28.5, 95 )</label>
+            </div>
           </div>
+          <div class="col s12 m4"></div>
         </div>
-        <div class="col s12 m4"></div>
+
       </div>
-
-    </div>
-    <br><br>
-
       <br><br>
       <!-- Submit bttn -->
 
@@ -124,12 +132,67 @@
         <a id="submit-button" class="btn-large waves-effect waves-light orange">Submit</a>
       </div>
     </div>
-  </div>
 
-  <!--  Scripts !--> 
+  </section>
+
+  <!--Budget Page-->
+
+  <section style="display: none;" id="BudgetPage" class="section no-pad-bot">
+    <div class="container">
+      <div class="section">
+        <h4 class="center-align">Your Budget Plan</h4>
+        <p class="center-align">Income <span id="incomeAmount">$$$$</span></p>
+        <p class="center-align">Saving goal <span id="savingAmount">$$$$</span></p>
+        <div class="divider"></div>
+        <div class="budget-box">
+          <ul>
+            <li id="customer-budget">
+              <div class="title">Your budget</div>
+
+            </li>
+            <li>
+              <div class="title">Catagories</div>
+              <div class="input"><input value="%" class="percentage"></div>
+            </li>
+            <li>
+              <div class="title">Monthly allowance</div>
+            </li>
+            <li>
+              <div class="title">Projected saving at retirement</div>
+            </li>
+          </ul>
+
+        </div>
+        <br><br>
+      </div>
+
+      <div class="section">
+        <div class="divider"></div>
+        <!-- category col -->
+        <div class="row">
+          <div class="col s6 m6 l4" id="categoryList">
+          </div>
+          <!-- detail col -->
+          <div class="col s6 m6 l8" id="details">
+          </div>
+        </div>
+        <div class="row center-align" id="projected">
+          <p>Projected saving at Retirement <span id="projectedAmount">$$$$</span></p>
+        </div>
+        <div class="row center-align">
+          <a class="btn-large waves-effect waves-light orange" id="share">Share</a>
+          <a class="btn-large waves-effect waves-light orange" id="save">Save</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/6.0.2/cash.min.js"></script>
   <script src="logic.js"></script>
 
 
