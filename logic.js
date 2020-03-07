@@ -130,43 +130,26 @@ function getInflation(){
     var prevDate = (fullDate.getFullYear() - 4)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
 
     var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
-
-// Function to convert data into downloadable Excel file
-
-var inflation;
-var countrySource;
-
-function getCountry(event) {
-  event.preventDefault();
-  fetch("https://extreme-ip-lookup.com/json/")
-    .then(res => res.json())
-    .then(response => {
-      countrySource = response.country.toLowerCase();
-    })
-    .catch((data, status) => {
-      console.log("Get Country Request failed");
-    });
-}
     
     fetch('https://extreme-ip-lookup.com/json/')
-        .then( res => res.json())
-        .then(response => {        
-            var countrySource = response.country.toLowerCase();
-             $.getJSON(apiUrl, {
-                    country: countrySource,
-                    start: prevDate,
-                    end: currentDate,
-                    amount: 100,
-                    format: true
-                    })
-                    .done(function (data) {        
-                        var temp_val = data.replace("$", "");
-                        var inflation = (Number(temp_val) / 100) / 4;                        
-                        projectedSavings(inflation);                                                                                    
-                    });                                
-            
+    .then( res => res.json())
+    .then(response => {        
+        var countrySource = response.country.toLowerCase();
+         $.getJSON(apiUrl, {
+                country: countrySource,
+                start: prevDate,
+                end: currentDate,
+                amount: 100,
+                format: true
                 })
-};
+                .done(function (data) {        
+                    var temp_val = data.replace("$", "");
+                    var inflation = (Number(temp_val) / 100) / 4;                        
+                    projectedSavings(inflation);                                                                                    
+                });                                
+        
+            })
+}
 
 function projectedSavings(x) {
     var salary = document.getElementById("salary");
