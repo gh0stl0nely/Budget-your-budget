@@ -171,7 +171,7 @@ var data = {
     return el;
   }
   
-  
+  // puliing categories from index 
   
   for (var i = 0; i < data.categories.length; i++) {
     var category = data.categories[i];
