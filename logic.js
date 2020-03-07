@@ -140,7 +140,7 @@ var data = {
     ],
   };
   
-  var container = document.getElementById('container');
+  var container = document.getElementsByClassName('chips');
   var comma = document.createTextNode(', ');
   
   function createCategoryElement(name, url) {
