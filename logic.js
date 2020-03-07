@@ -34,35 +34,35 @@ function createAndDisplayTag(storage, i, budgetOptions) {
 }
 
 // This create new category in home page (index.html)
-function addNewCategoryInHomePage(){
-    // This is the ADD CATEGORY (FINAL)
-    // Category from id="inputDiv"
-    var inputDiv = document.getElementById('inputDiv').children;
-    var chips = [];
+function addNewCategoryInHomePage() {
+  // This is the ADD CATEGORY (FINAL)
+  // Category from id="inputDiv"
+  var inputDiv = document.getElementById('inputDiv').children;
+  var chips = [];
 
-    // 
-    var newCategory;
-    for(var i = 0; i < inputDiv.length; i++){
-      newCategory = inputDiv[i].value;
-      chips.push(newCategory);
-    }
+  // 
+  var newCategory;
+  for (var i = 0; i < inputDiv.length; i++) {
+    newCategory = inputDiv[i].value;
+    chips.push(newCategory);
+  }
 
-    // Add them to existing id="budget-options" list
-    var budgetOptions = document.getElementById("budget-options");
-    for(var i = 0; i < chips.length; i++){
-      createAndDisplayTag(chips,i,budgetOptions);
-    }
-    
-    //Update local storage
-    var chipsForLocalStorage = [];
-    var allCurrentTags = budgetOptions.children;
-    var item;
+  // Add them to existing id="budget-options" list
+  var budgetOptions = document.getElementById("budget-options");
+  for (var i = 0; i < chips.length; i++) {
+    createAndDisplayTag(chips, i, budgetOptions);
+  }
 
-    for(var i = 0; allCurrentTags.length; i++){
-        item = allCurrentTags[i]
-    }
+  //Update local storage
+  var chipsForLocalStorage = [];
+  var allCurrentTags = budgetOptions.children;
+  var item;
 
-    localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
+  for (var i = 0; allCurrentTags.length; i++) {
+    item = allCurrentTags[i]
+  }
+
+  localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
 
 }
 
@@ -71,109 +71,97 @@ var submit = document.getElementById("submit-button");
 submit.addEventListener("click", proposeBudget);
 
 function proposeBudget(event) {
-    event.preventDefault();
-    // check for valid income and saving percentage input
-    var salary = document.getElementById("salary");
-    var saving = document.getElementById("saving");
+  event.preventDefault();
+  // check for valid income and saving percentage input
+  var salary = document.getElementById("salary");
+  var saving = document.getElementById("saving");
 
-    // grab the value of salary
-    var salaryCal = salary.value
-    var savingCal = saving.value
-    var calculation = ((salaryCal * savingCal)/100)
-    alert(calculation)
-    // grab the value of saving
-    // do your calculation
-    // alert calculation
+  // grab the value of salary
+  var salaryCal = salary.value
+  var savingCal = saving.value
+  var calculation = ((salaryCal * savingCal) / 100)
+  alert(calculation)
+  // grab the value of saving
+  // do your calculation
+  // alert calculation
 
-    var regex = /\d*\.?\d*$/;
-    // if the input is not vaild, the input box will turn red
-    if (!regex.test(salary.value)) {
-        salary.style.backgroundColor = "#ff000042";
-        salary.style.color = "red";
-    } else {
-        salary.style.backgroundColor = "none";
-        salary.style.color = "black";
-    };
+  var regex = /\d*\.?\d*$/;
+  // if the input is not vaild, the input box will turn red
+  if (!regex.test(salary.value)) {
+    salary.style.backgroundColor = "#ff000042";
+    salary.style.color = "red";
+  } else {
+    salary.style.backgroundColor = "none";
+    salary.style.color = "black";
+  };
 
-    if (!regex.test(saving.value)) {
-        saving.style.backgroundColor = "#ff000042";
-        saving.style.color = "red";
-    } else {
-        saving.style.backgroundColor = "white";
-        saving.style.color = "black";
-    };
+  if (!regex.test(saving.value)) {
+    saving.style.backgroundColor = "#ff000042";
+    saving.style.color = "red";
+  } else {
+    saving.style.backgroundColor = "white";
+    saving.style.color = "black";
+  };
 
-    // user need to enter a number between 0-100 for percentage
-    if (saving.value > 100 || saving.value < 0) {
-        saving.style.backgroundColor = "#ff000042";
-        saving.style.color = "red";
-        alert("Please enter a number from 1 to 100.");
-    };
+  // user need to enter a number between 0-100 for percentage
+  if (saving.value > 100 || saving.value < 0) {
+    saving.style.backgroundColor = "#ff000042";
+    saving.style.color = "red";
+    alert("Please enter a number from 1 to 100.");
+  };
 
-    // choose at least one category
-    var chips = document.getElementsByClassName("chip");
-    if (chips.length == 0 || !chips) {
-        alert("Please choose at least one category.")
-    };
-  
-    getInflation();
+  // choose at least one category
+  var chips = document.getElementsByClassName("chip");
+  if (chips.length == 0 || !chips) {
+    alert("Please choose at least one category.")
+  };
+
+  getInflation();
 };
 
 //Bin's code
-function getInflation(){
-    // get current date
-    var fullDate = new Date();
-    var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
-    var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+function getInflation() {
+  // get current date
+  var fullDate = new Date();
+  var twoDigitMonth = ((fullDate.getMonth().length + 1) === 1) ? (fullDate.getMonth() + 1) : '0' + (fullDate.getMonth() + 1);
+  var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
 
-    // get date from 1 year ago for range of inflation calculation
-    var prevDate = (fullDate.getFullYear() - 4)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
+  // get date from 1 year ago for range of inflation calculation
+  var prevDate = (fullDate.getFullYear() - 4) + "/" + twoDigitMonth + "/" + fullDate.getDate();
 
-    var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
-    
-    fetch('https://extreme-ip-lookup.com/json/')
-    .then( res => res.json())
-    .then(response => {        
-        var countrySource = response.country.toLowerCase();
-         $.getJSON(apiUrl, {
-                country: countrySource,
-                start: prevDate,
-                end: currentDate,
-                amount: 100,
-                format: true
-                })
-                .done(function (data) {        
-                    var temp_val = data.replace("$", "");
-                    var inflation = (Number(temp_val) / 100) / 4;                        
-                    projectedSavings(inflation);                                                                                    
-                });                                
-        
-            })
-}
+  var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
+
+
+  fetch('https://extreme-ip-lookup.com/json/')
+    .then(res => res.json())
+    .then(response => {
+      var countrySource = response.country.toLowerCase();
+      $.getJSON(apiUrl, {
+          country: countrySource,
+          start: prevDate,
+          end: currentDate,
+          amount: 100,
+          format: true
+        })
+        .done(function (data) {
+          var temp_val = data.replace("$", "");
+          var inflation = (Number(temp_val) / 100) / 4;
+          projectedSavings(inflation);
+        });
+
+    })
+};
 
 function projectedSavings(x) {
-    var salary = document.getElementById("salary");
-    var saving = document.getElementById("saving");
+  var salary = document.getElementById("salary");
+  var saving = document.getElementById("saving");
 
-  function calculate() {
-    $.getJSON(apiUrl, {
-      country: countrySource,
-      start: prevDate,
-      end: currentDate,
-      amount: 100,
-      format: true
-    }).done(function(data) {
-      var temp_val = data.replace("$", "");
-      inflation = (Number(temp_val) - 100) / 5;
-      var salaryCal = salary.value
-      var savingCal = saving.value
-      
-      var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
-      console.log(retirementSaving);
-      //Put code here to append to budge`t template 
-    });
-  }
-  
+  var salaryCal = salary.value
+  var savingCal = saving.value
+
+  var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
+  console.log(retirementSaving);
+  //Put code here to append to budge`t template 
 }
 
 //Ebrahim's code
@@ -193,34 +181,40 @@ function createCategoryElement(name, url) {
 }
 
 var data = {
-    categories: [
-      {name: 'one', url_title: 'oneUrl'},
-      {name: 'two', url_title: 'twoUrl'}
-    ],
-  };
-  
-  var container = document.getElementsByClassName('chips');
-  var comma = document.createTextNode(', ');
-  
-  function createCategoryElement(name, url) {
-    var urlBase = '#journal-category-';
-    var cssClass = 'js-page-link';
-  
-    var el = document.createElement('a');
-    el.setAttribute('href', urlBase + url);
-    el.setAttribute('class', cssClass);
-    el.innerHTML = name;
-    return el;
-  }
-  
-  // puliing categories from index 
-  function appendToBudget(){
+  categories: [{
+      name: 'one',
+      url_title: 'oneUrl'
+    },
+    {
+      name: 'two',
+      url_title: 'twoUrl'
+    }
+  ],
+};
+
+var container = document.getElementsByClassName('chips');
+var comma = document.createTextNode(', ');
+
+function createCategoryElement(name, url) {
+  var urlBase = '#journal-category-';
+  var cssClass = 'js-page-link';
+
+  var el = document.createElement('a');
+  el.setAttribute('href', urlBase + url);
+  el.setAttribute('class', cssClass);
+  el.innerHTML = name;
+  return el;
+}
+
+// puliing categories from index 
+function appendToBudget() {
   for (var i = 0; i < data.categories.length; i++) {
     var category = data.categories[i];
     var categoryElement = createCategoryElement(
       category.name,
       category.url_title
     );
+    
     container.appendChild(categoryElement);
 
     if (i + 1 < data.categories.length) {
