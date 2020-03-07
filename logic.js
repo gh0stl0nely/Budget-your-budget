@@ -1,5 +1,6 @@
 // displayTagsFromStorage(); Remember to de-comment!! 
 
+//Khoi's code
 function displayTagsFromStorage() {
     var storage = JSON.parse(localStorage.getItem('chips')); // []
 
@@ -32,29 +33,9 @@ function createAndDisplayTag(storage, i, budgetOptions) {
     budgetOptions.appendChild(divItem);
 }
 
-// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
-
-// window.addEventListener('beforeunload', function (e) {
-//     e.preventDefault();
-//     e.returnValue = '';
-
-//     var storage = [];
-//     var budgetOptions = this.document.getElementById('budget-options').children;
-
-//     for (var i = 0; i < budgetOptions.length; i++) {
-//         var chip = budgetOptions[i];
-//         var name = chip.getAttribute('data-name');
-//         storage.push(name);
-//     }
-
-//     this.localStorage.setItem('chips', JSON.stringify(storage));
-
-// })
-
-// submitting income and saving percentage
+// Demi's code
 var submit = document.getElementById("submit-button");
 submit.addEventListener("click", proposeBudget);
-
 
 function proposeBudget(event) {
     event.preventDefault();
@@ -101,44 +82,56 @@ function proposeBudget(event) {
     if (chips.length == 0 || !chips) {
         alert("Please choose at least one category.")
     };
+  
+    getInflation();
 };
 
-var inflation;
-var countrySource;
+//Bin's code
+function getInflation(){
+    // get current date
+    var fullDate = new Date();
+    var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
+    var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
 
-fetch('https://extreme-ip-lookup.com/json/')
-.then( res => res.json())
-.then(response => {
-    countrySource = response.country.toLowerCase(); 
-       
-})
- .catch((data, status) => {
-    console.log('Request failed');
- })
+    // get date from 1 year ago for range of inflation calculation
+    var prevDate = (fullDate.getFullYear() - 4)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
 
-// get current date
-var fullDate = new Date();
-var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
-var currentDate = fullDate.getFullYear() + "/" + twoDigitMonth + "/" + fullDate.getDate();
+    var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
 
-// get date from 1 year ago for range of inflation calculation
-var prevDate = (fullDate.getFullYear() - 5)+ "/" + twoDigitMonth + "/" + fullDate.getDate();
-
-var apiUrl = 'https://www.statbureau.org/calculate-inflation-price-jsonp?jsoncallback=?';
-
-function calculate() {
-  $.getJSON(apiUrl, {
-      country: countrySource,
-      start: prevDate,
-      end: currentDate,
-      amount: 100,
-      format: true
-    })
-    .done(function (data) {        
-        var temp_val = data.replace("$", "");
-        inflation = (Number(temp_val) - 100) / 5 ;
-    });
+    
+    fetch('https://extreme-ip-lookup.com/json/')
+        .then( res => res.json())
+        .then(response => {        
+            var countrySource = response.country.toLowerCase();
+             $.getJSON(apiUrl, {
+                    country: countrySource,
+                    start: prevDate,
+                    end: currentDate,
+                    amount: 100,
+                    format: true
+                    })
+                    .done(function (data) {        
+                        var temp_val = data.replace("$", "");
+                        var inflation = (Number(temp_val) / 100) / 4;                        
+                        projectedSavings(inflation);                                                                                    
+                    });                                
+            
+                })
 };
+
+function projectedSavings(x) {
+    var salary = document.getElementById("salary");
+    var saving = document.getElementById("saving");
+
+    var salaryCal = salary.value
+    var savingCal = saving.value
+    
+    var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
+    console.log(retirementSaving);
+    //Put code here to append to budge`t template 
+}
+
+//Ebrahim's code
 
 var data = {
     categories: [
@@ -174,5 +167,26 @@ var data = {
     }
   }
 }
+
+// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
+
+// window.addEventListener('beforeunload', function (e) {
+//     e.preventDefault();
+//     e.returnValue = '';
+
+//     var storage = [];
+//     var budgetOptions = this.document.getElementById('budget-options').children;
+
+//     for (var i = 0; i < budgetOptions.length; i++) {
+//         var chip = budgetOptions[i];
+//         var name = chip.getAttribute('data-name');
+//         storage.push(name);
+//     }
+
+//     this.localStorage.setItem('chips', JSON.stringify(storage));
+
+// })
+
+// submitting income and saving percentage
           
           
