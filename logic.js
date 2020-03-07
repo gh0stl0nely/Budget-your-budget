@@ -89,21 +89,25 @@ function exportToExcel() {
   // Create an empty note book
   var workbook = XLSX.utils.book_new();
   var ws_name = "Budget";
-  
+
   // Take data from Ibraheim stuff, amount and percentage
   // Do a for loop using "" as length
-    
+
   /* Make worksheet */
   var ws_data = [
-    ["Item".bold().toString(), "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
+    [
+      "Item".bold().toString(),
+      "Amount spent monthly ($CAD)",
+      "Amount spent monthly (%)"
+    ],
     ["life", 2, "20%"],
     ["life", 3, "30%"],
-    ['s'],
-    [' ',"Projected Saving With Inflation", 1000],
-    [' ',"Projected Saving Without Inflation", 2000],
+    ["s"],
+    [" ", "Projected Saving With Inflation", 1000],
+    [" ", "Projected Saving Without Inflation", 2000]
   ];
-  
-  // Add sheet to 
+
+  // Add sheet to
 
   var ws = XLSX.utils.aoa_to_sheet(ws_data);
 
@@ -166,34 +170,14 @@ function getInflation(event) {
   }
 }
 
-function graphToggle(){
-    var switches = document.getElementById('mySwitch').checked;
-    if(switches == true){
-        document.getElementById('myChart').style.visibility = 'visible';
-    } else {
-        document.getElementById('myChart').style.visibility = 'hidden';
-    }
+function graphToggle() {
+  var switches = document.getElementById("mySwitch").checked;
+  if (switches == true) {
+    document.getElementById("myChart").style.visibility = "visible";
+  } else {
+    document.getElementById("myChart").style.visibility = "hidden";
+  }
 }
-
-
-// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
-
-// window.addEventListener('beforeunload', function (e) {
-//     e.preventDefault();
-//     e.returnValue = '';
-
-//     var storage = [];
-//     var budgetOptions = this.document.getElementById('budget-options').children;
-
-//     for (var i = 0; i < budgetOptions.length; i++) {
-//         var chip = budgetOptions[i];
-//         var name = chip.getAttribute('data-name');
-//         storage.push(name);
-//     }
-
-//     this.localStorage.setItem('chips', JSON.stringify(storage));
-
-// })
 
 var data = {
   categories: [
@@ -216,40 +200,37 @@ function createCategoryElement(name, url) {
   return el;
 }
 
+// puliing categories from index
+function appendToBudget() {
   for (var i = 0; i < data.categories.length; i++) {
     var category = data.categories[i];
     var categoryElement = createCategoryElement(
       category.name,
       category.url_title
     );
-
     container.appendChild(categoryElement);
-  
+
     if (i + 1 < data.categories.length) {
-      container.appendChild(comma);
+      container.appendChild(salary);
     }
   }
 }
 
+// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
 
+// window.addEventListener('beforeunload', function (e) {
+//     e.preventDefault();
+//     e.returnValue = '';
 
-var data = {
-    categories: [
-      {name: 'one', url_title: 'oneUrl'},
-      {name: 'two', url_title: 'twoUrl'}
-    ],
-  };
-  
-  var container = document.getElementById('container');
-  var comma = document.createTextNode(', ');
-  
-function createCategoryElement(name, url) {
-    var urlBase = '#journal-category-';
-    var cssClass = 'js-page-link';
-  
-    var el = document.createElement('a');
-    el.setAttribute('href', urlBase + url);
-    el.setAttribute('class', cssClass);
-    el.innerHTML = name;
-    return el;
-  }
+//     var storage = [];
+//     var budgetOptions = this.document.getElementById('budget-options').children;
+
+//     for (var i = 0; i < budgetOptions.length; i++) {
+//         var chip = budgetOptions[i];
+//         var name = chip.getAttribute('data-name');
+//         storage.push(name);
+//     }
+
+//     this.localStorage.setItem('chips', JSON.stringify(storage));
+
+// })
