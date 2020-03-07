@@ -58,7 +58,30 @@
           <i class="close material-icons">close</i>
         </div> -->
 
-        <a class="btn waves-effect waves-light orange right" id="addBttn"><i class="material-icons">add</i></a>
+        <!-- add category bttn -->
+        <a class="waves-effect waves-light btn modal-trigger orange right" href="#modal"><i
+            class="material-icons">add</i></a>
+
+        <!-- Modal Structure -->
+        <div id="modal" class="modal">
+          <div class="modal-content">
+            <h4>Add your own categories</h4>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col s6">
+                <div class="input-field" id="inputDiv">
+                  <input id="customCategory" type="text" class="validate">
+                  <label for="customCategory">Category name</label>
+                </div>
+                <button class="waves-effect waves-light btn orange" id="addInputBttn">Add categories</button>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" id="addChipsBttn">OK</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
