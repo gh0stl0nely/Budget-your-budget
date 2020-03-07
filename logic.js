@@ -55,11 +55,21 @@ function createAndDisplayTag(storage, i, budgetOptions) {
 var submit = document.getElementById("submit-button");
 submit.addEventListener("click", proposeBudget);
 
+
 function proposeBudget(event) {
     event.preventDefault();
     // check for valid income and saving percentage input
     var salary = document.getElementById("salary");
     var saving = document.getElementById("saving");
+
+    // grab the value of salary
+    var salaryCal = salary.value
+    var savingCal = saving.value
+    var calculation = ((salaryCal * savingCal)/100)
+    alert(calculation)
+    // grab the value of saving
+    // do your calculation
+    // alert calculation
 
     var regex = /\d*\.?\d*$/;
     // if the input is not vaild, the input box will turn red
@@ -89,6 +99,7 @@ function proposeBudget(event) {
     // choose at least one category
     var chips = document.getElementsByClassName("chip");
     if (chips.length == 0 || !chips) {
-        alert("Please choose at least one category.");
+        alert("Please choose at least one category.")
     };
 };
+
