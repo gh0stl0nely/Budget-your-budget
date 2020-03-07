@@ -32,25 +32,6 @@ function createAndDisplayTag(storage, i, budgetOptions) {
   budgetOptions.appendChild(divItem);
 }
 
-// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
-
-// window.addEventListener('beforeunload', function (e) {
-//     e.preventDefault();
-//     e.returnValue = '';
-
-//     var storage = [];
-//     var budgetOptions = this.document.getElementById('budget-options').children;
-
-//     for (var i = 0; i < budgetOptions.length; i++) {
-//         var chip = budgetOptions[i];
-//         var name = chip.getAttribute('data-name');
-//         storage.push(name);
-//     }
-
-//     this.localStorage.setItem('chips', JSON.stringify(storage));
-
-// })
-
 // submitting income and saving percentage
 var submit = document.getElementById("submit-button");
 submit.addEventListener("click", proposeBudget);
@@ -103,7 +84,6 @@ function exportToExcel() {
   // Take data from Ibraheim stuff, amount and percentage
   // Do a for loop using "" as length
     
-
   /* Make worksheet */
   var ws_data = [
     ["Item".bold().toString(), "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
@@ -168,3 +148,23 @@ function graphToggle(){
         document.getElementById('myChart').style.visibility = 'hidden';
     }
 }
+
+
+// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
+
+// window.addEventListener('beforeunload', function (e) {
+//     e.preventDefault();
+//     e.returnValue = '';
+
+//     var storage = [];
+//     var budgetOptions = this.document.getElementById('budget-options').children;
+
+//     for (var i = 0; i < budgetOptions.length; i++) {
+//         var chip = budgetOptions[i];
+//         var name = chip.getAttribute('data-name');
+//         storage.push(name);
+//     }
+
+//     this.localStorage.setItem('chips', JSON.stringify(storage));
+
+// })
