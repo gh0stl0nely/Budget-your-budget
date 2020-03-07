@@ -1,5 +1,6 @@
 // displayTagsFromStorage(); Remember to de-comment!! 
 
+//Khoi's code
 function displayTagsFromStorage() {
     var storage = JSON.parse(localStorage.getItem('chips')); // []
 
@@ -32,29 +33,9 @@ function createAndDisplayTag(storage, i, budgetOptions) {
     budgetOptions.appendChild(divItem);
 }
 
-// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
-
-// window.addEventListener('beforeunload', function (e) {
-//     e.preventDefault();
-//     e.returnValue = '';
-
-//     var storage = [];
-//     var budgetOptions = this.document.getElementById('budget-options').children;
-
-//     for (var i = 0; i < budgetOptions.length; i++) {
-//         var chip = budgetOptions[i];
-//         var name = chip.getAttribute('data-name');
-//         storage.push(name);
-//     }
-
-//     this.localStorage.setItem('chips', JSON.stringify(storage));
-
-// })
-
-// submitting income and saving percentage
+// Demi's code
 var submit = document.getElementById("submit-button");
 submit.addEventListener("click", proposeBudget);
-
 
 function proposeBudget(event) {
     event.preventDefault();
@@ -70,8 +51,6 @@ function proposeBudget(event) {
     // grab the value of saving
     // do your calculation
     // alert calculation
-
-    getInflation();
 
     var regex = /\d*\.?\d*$/;
     // if the input is not vaild, the input box will turn red
@@ -103,10 +82,12 @@ function proposeBudget(event) {
     if (chips.length == 0 || !chips) {
         alert("Please choose at least one category.")
     };
+  
+    getInflation();
 };
 
+//Bin's code
 function getInflation(){
-
     // get current date
     var fullDate = new Date();
     var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1); 
@@ -147,10 +128,10 @@ function projectedSavings(x) {
     
     var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
     console.log(retirementSaving);
-    //Put code here to append to budget template 
+    //Put code here to append to budge`t template 
 }
 
-
+//Ebrahim's code
 
 var data = {
     categories: [
@@ -186,5 +167,26 @@ var data = {
     }
   }
 }
+
+// * Whenver the user about to leave the tab, the browser will save all the current chip inside local storage
+
+// window.addEventListener('beforeunload', function (e) {
+//     e.preventDefault();
+//     e.returnValue = '';
+
+//     var storage = [];
+//     var budgetOptions = this.document.getElementById('budget-options').children;
+
+//     for (var i = 0; i < budgetOptions.length; i++) {
+//         var chip = budgetOptions[i];
+//         var name = chip.getAttribute('data-name');
+//         storage.push(name);
+//     }
+
+//     this.localStorage.setItem('chips', JSON.stringify(storage));
+
+// })
+
+// submitting income and saving percentage
           
           
