@@ -106,12 +106,12 @@ function exportToExcel() {
 
   /* Make worksheet */
   var ws_data = [
-    ["Item", "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
+    ["Item".bold().toString(), "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
     ["life", 2, "20%"],
     ["life", 3, "30%"],
-    [],
-    ["Projected Saving With Inflation", 1000],
-    ["Projected Saving Without Inflation", 2000],
+    ['s'],
+    [' ',"Projected Saving With Inflation", 1000],
+    [' ',"Projected Saving Without Inflation", 2000],
   ];
   
   // Add sheet to 
@@ -160,3 +160,11 @@ $('#inflation').on('click', function calculate() {
     });
 });
 
+function graphToggle(){
+    var switches = document.getElementById('mySwitch').checked;
+    if(switches == true){
+        document.getElementById('myChart').style.visibility = 'visible';
+    } else {
+        document.getElementById('myChart').style.visibility = 'hidden';
+    }
+}
