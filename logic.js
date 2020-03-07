@@ -55,11 +55,21 @@ function createAndDisplayTag(storage, i, budgetOptions) {
 var submit = document.getElementById("submit-button");
 submit.addEventListener("click", proposeBudget);
 
+
 function proposeBudget(event) {
     event.preventDefault();
     // check for valid income and saving percentage input
     var salary = document.getElementById("salary");
     var saving = document.getElementById("saving");
+
+    // grab the value of salary
+    var salaryCal = salary.value
+    var savingCal = saving.value
+    var calculation = ((salaryCal * savingCal)/100)
+    alert(calculation)
+    // grab the value of saving
+    // do your calculation
+    // alert calculation
 
     var regex = /\d*\.?\d*$/;
     // if the input is not vaild, the input box will turn red
@@ -89,10 +99,12 @@ function proposeBudget(event) {
     // choose at least one category
     var chips = document.getElementsByClassName("chip");
     if (chips.length == 0 || !chips) {
-        alert("Please choose at least one category.");
+        alert("Please choose at least one category.")
     };
 };
 
+<<<<<<< HEAD
+=======
 var inflation;
 var countrySource;
 
@@ -130,3 +142,87 @@ function calculate() {
     });
 };
 
+<<<<<<< HEAD
+>>>>>>> 67ca4144f4ef4d6448b536d04cdf825ab3a8e604
+
+
+// var data = {
+//     categories: [
+//       {name: 'one', url_title: 'oneUrl'},
+//       {name: 'two', url_title: 'twoUrl'}
+//     ],
+//   };
+  
+//   var container = document.getElementById('container');
+//   var comma = document.createTextNode(', ');
+  
+//   function createCategoryElement(name, url) {
+//     var urlBase = '#journal-category-';
+//     var cssClass = 'js-page-link';
+  
+//     var el = document.createElement('a');
+//     el.setAttribute('href', urlBase + url);
+//     el.setAttribute('class', cssClass);
+//     el.innerHTML = name;
+//     return el;
+//   }
+  
+//   // Create HTML elements for each category and append them to the DOM.
+  
+//   for (var i = 0; i < data.categories.length; i++) {
+//     var category = data.categories[i];
+//     var categoryElement = createCategoryElement(category.name, category.url_title);
+//     container.appendChild(categoryElement);
+  
+//     // Join categories with a comma
+//     if (i + 1 < data.categories.length) {
+//       container.appendChild(comma);
+//     }
+//   }
+  
+//           for (...loop over categories...) {
+//               ...
+//               var categoryElement = createCategoryElement(category.name, category.url_title);
+//               container.appendChild(categoryElement);
+  
+//               if (i + 1 < data.categories.length) {
+//                   containenr.appendChild(commaElement);
+//               }
+//           }
+
+var data = {
+    categories: [
+      {name: 'one', url_title: 'oneUrl'},
+      {name: 'two', url_title: 'twoUrl'}
+    ],
+  };
+  
+  var container = document.getElementById('container');
+  var comma = document.createTextNode(', ');
+  
+  function createCategoryElement(name, url) {
+    var urlBase = '#journal-category-';
+    var cssClass = 'js-page-link';
+  
+    var el = document.createElement('a');
+    el.setAttribute('href', urlBase + url);
+    el.setAttribute('class', cssClass);
+    el.innerHTML = name;
+    return el;
+  }
+  
+  
+  
+  for (var i = 0; i < data.categories.length; i++) {
+    var category = data.categories[i];
+    var categoryElement = createCategoryElement(category.name, category.url_title);
+    container.appendChild(categoryElement);
+  
+    
+    if (i + 1 < data.categories.length) {
+      container.appendChild(comma);
+    }
+  }
+  
+          
+          
