@@ -208,17 +208,3 @@ var data = {
     el.innerHTML = name;
     return el;
   }
-
-  // puliing categories from index 
-
-  
-  for (var i = 0; i < data.categories.length; i++) {
-    var category = data.categories[i];
-    var categoryElement = createCategoryElement(category.name, category.url_title);
-    container.appendChild(categoryElement);
-  
-    
-    if (i + 1 < data.categories.length) {
-      container.appendChild(salary);
-    }
-  }
