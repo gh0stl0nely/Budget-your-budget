@@ -28,8 +28,41 @@ function createAndDisplayTag(storage, i, budgetOptions) {
   icon.innerText = "close";
 
   divItem.appendChild(icon);
-  console.log(divItem);
+  // console.log(divItem);
   budgetOptions.appendChild(divItem);
+}
+
+// This create new category in home page (index.html)
+function addNewCategoryInHomePage(){
+    // This is the ADD CATEGORY (FINAL)
+    // Category from id="inputDiv"
+    var inputDiv = document.getElementById('inputDiv').children;
+    var chips = [];
+
+    // 
+    var newCategory;
+    for(var i = 0; i < inputDiv.length; i++){
+      newCategory = inputDiv[i].value;
+      chips.push(newCategory);
+    }
+
+    // Add them to existing id="budget-options" list
+    var budgetOptions = document.getElementById("budget-options");
+    for(var i = 0; i < chips.length; i++){
+      createAndDisplayTag(chips,i,budgetOptions);
+    }
+    
+    //Update local storage
+    var chipsForLocalStorage = [];
+    var allCurrentTags = budgetOptions.children;
+    var item;
+
+    for(var i = 0; allCurrentTags.length; i++){
+        item = allCurrentTags[i]
+    }
+
+    localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
+
 }
 
 // submitting income and saving percentage
@@ -96,13 +129,13 @@ function exportToExcel() {
   /* Make worksheet */
   var ws_data = [
     [
-      "Item".bold().toString(),
+      "Item",
       "Amount spent monthly ($CAD)",
       "Amount spent monthly (%)"
     ],
-    ["life", 2, "20%"],
-    ["life", 3, "30%"],
-    ["s"],
+    ["Item1", 2, "20%"],
+    ["Item2", 3, "30%"],
+    [""],
     [" ", "Projected Saving With Inflation", 1000],
     [" ", "Projected Saving Without Inflation", 2000]
   ];
@@ -168,6 +201,7 @@ function getInflation(event) {
       inflation = (Number(temp_val) - 100) / 5;
     });
   }
+  
 }
 
 function graphToggle() {
@@ -234,3 +268,4 @@ function appendToBudget() {
 //     this.localStorage.setItem('chips', JSON.stringify(storage));
 
 // })
+
