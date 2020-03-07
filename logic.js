@@ -52,8 +52,8 @@ function createAndDisplayTag(storage, i, budgetOptions) {
 // })
 
 // submitting income and saving percentage
-// var submit = document.getElementById("submit-button");
-// submit.addEventListener("click", proposeBudget);
+var submit = document.getElementById("submit-button");
+submit.addEventListener("click", proposeBudget);
 
 
 function proposeBudget(event) {
@@ -70,6 +70,8 @@ function proposeBudget(event) {
     // grab the value of saving
     // do your calculation
     // alert calculation
+
+    getInflation();
 
     var regex = /\d*\.?\d*$/;
     // if the input is not vaild, the input box will turn red
@@ -129,15 +131,24 @@ function getInflation(){
                     })
                     .done(function (data) {        
                         var temp_val = data.replace("$", "");
-                        var inflation = (Number(temp_val) - 100) / 4;
-                        //pass inflation variable here to                                      
+                        var inflation = (Number(temp_val) / 100) / 4;                        
+                        projectedSavings(inflation);
+                        //Put code here to append to budget template                                                             
                     });                                
             
                 })
 };
-getInflation();
 
+function projectedSavings(x) {
+    var salary = document.getElementById("salary");
+    var saving = document.getElementById("saving");
 
+    var salaryCal = salary.value
+    var savingCal = saving.value
+    
+    var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
+    console.log(retirementSaving);
+}
 
 
 
