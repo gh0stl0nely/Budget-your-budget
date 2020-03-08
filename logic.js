@@ -144,17 +144,17 @@ function clearInputFields() {
 // ** Demi's code **
 function proposeBudget(event) {
   event.preventDefault();
-    // Check there is at least one category 
-    var chips = document.getElementsByClassName("chip");
-    if (chips.length == 0 || !chips) {
-      M.toast({
-        html: "Please choose at least one category.",
-        classes: 'red',
-        displayLength : '1500'
-      });
-      return;
-    };
-  
+  // Check there is at least one category 
+  var chips = document.getElementsByClassName("chip");
+  if (chips.length == 0 || !chips) {
+    M.toast({
+      html: "Please choose at least one category.",
+      classes: 'red',
+      displayLength: '1500'
+    });
+    return;
+  };
+
   // check for valid income and saving percentage input
   var salary = document.getElementById("salary");
   var saving = document.getElementById("saving");
@@ -175,7 +175,7 @@ function proposeBudget(event) {
     M.toast({
       html: 'Please enter a valid number for income.',
       classes: 'red',
-      displayLength : '2000'
+      displayLength: '2000'
     });
     return;
   } else {
@@ -189,7 +189,7 @@ function proposeBudget(event) {
     M.toast({
       html: 'Please enter a valid number for saving.',
       classes: 'red',
-      displayLength : '2000'
+      displayLength: '2000'
     });
     return;
   } else {
@@ -205,7 +205,7 @@ function proposeBudget(event) {
     M.toast({
       html: 'Please enter a number from 0 to 100.',
       classes: 'red',
-      displayLength : '2000'
+      displayLength: '2000'
     });
     return;
   } else {
@@ -351,3 +351,50 @@ function exportToExcel() {
   //Download the file
   XLSX.writeFile(workbook, "out.xls");
 }
+
+function visualize() {
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+
+    options: {
+      title: {
+        display: true,
+        text: 'Your chart'
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+
+visualize();
