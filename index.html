@@ -14,6 +14,7 @@
 
 <body>
 
+  <!-- Main Nav Bar-->
   <div class="navbar-fixed">
     <nav class="light-blue lighten-1" role="navigation">
       <div class="nav-wrapper">
@@ -23,7 +24,7 @@
           Budget</a>
         <ul class="right hide-on-med-and-down">
           <li id="home"><a>Home</a></li>
-          <li id="budget"><a>Budget plan</a></li>
+          <li id="budget"><a>Your Budget</a></li>
         </ul>
         <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </nav>
@@ -32,7 +33,7 @@
   <!-- side nav shown on mobile screen -->
   <ul id="nav-mobile" class="sidenav">
     <li id="homeMobile"><a>Home</a></li>
-    <li id="budgetMobile"><a>Budget plan</a></li>
+    <li id="budgetMobile"><a>Your Budget</a></li>
   </ul>
 
   <!--Home Page-->
@@ -53,16 +54,7 @@
           Food
           <i class="close material-icons">close</i>
         </div>
-
-        <div data-name="Transportation" class="chip">
-          Transportation
-          <i class="close material-icons">close</i>
-        </div>
-
-        <div data-name="Cloth" class="chip">
-          Cloth
-          <i class="close material-icons">close</i>
-        </div> -->
+      -->
         </div>
 
         <br><br>
@@ -107,7 +99,8 @@
           <div class="col s12 m4">
             <div class="icon-block">
               <input placeholder="Monthly Salary" id="salary" type="number" step="any" class="validate" min="0">
-              <label for="Salary">Income in $CAD (Valid input: 24000, 38493.29)</label>
+              <label for="Salary">Income in $CAD</label>
+              <label style="display: block;">Valid input: 24000, 38493.29</label>
             </div>
           </div>
           <div class="col s12 m4"></div>
@@ -118,27 +111,26 @@
           <div class="col s12 m4">
             <div class="icon-block">
               <input placeholder="Saving Rate" id="saving" type="number" step="any" class="validate" min="0" max="100">
-              <label for="Saving">Desired Saving Percentage (Valid input: 28.5, 95 )</label>
+              <label for="Saving">Desired Saving Percentage</label>
+              <label style="display: block;">Valid input: 28.5, 95</label>
             </div>
           </div>
           <div class="col s12 m4"></div>
         </div>
 
       </div>
-      <br><br>
-      <!-- Submit bttn -->
-
+      <!-- Calculate bttn -->
       <div class="row center">
-        <a id="submit-button" class="btn-large waves-effect waves-light orange">Submit</a>
+        <a id="submit-button" class="btn-large waves-effect waves-light orange">Calculate</a>
       </div>
     </div>
 
   </section>
 
   <!--Budget Page-->
-
   <section style="display: none;" id="BudgetPage" class="section no-pad-bot">
     <div class="container">
+      <!-- Numbers And Calculations-->
       <div class="section">
         <h4 class="center-align">Your Budget Plan</h4>
         <p class="center-align">Income <span id="incomeAmount">$$$$</span></p>
@@ -163,38 +155,70 @@
           </ul>
 
         </div>
-        <br><br>
+             <!-- Download Excel Button-->
+             <div class="row center-align">
+                <a class="btn-large waves-effect waves-light orange" id="downloadExcel">Download Budget (.xls)</a>
+          </div>
       </div>
 
       <div class="section">
-        <div class="divider"></div>
         <!-- category col -->
-        <div class="row">
+        <!-- <div class="row">
           <div class="col s6 m6 l4" id="categoryList">
-          </div>
+          </div> -->
           <!-- detail col -->
-          <div class="col s6 m6 l8" id="details">
+          <!-- <div class="col s6 m6 l8" id="details">
           </div>
+        </div> -->
+
+        <!-- Graph -->
+        <div style="text-align: center;" id="Graph">
+          <!-- Toggle between Hide And Show graph-->
+          <div class="switch">
+            <label>
+              Hide
+              <input id="mySwitch" type="checkbox" checked>
+      
+              <span class="lever"></span>
+              Show
+            </label>
+          </div>  
+
+          <!-- Toggle between Bar and -->
+          <div id="graphStyling">
+            <br>
+           <span><button id="barGraph" class="btn">Bar Graph</button></span>
+           <span><button id="pieGraph" class="btn">Pie Graph</button></span>
+          </div>  
+
+          <!-- Actual Graph-->
+          <div id="myChart">
+            <!-- <canvas id="myChartBar" width="1500" height="1200"></canvas>
+            <canvas style="display: none;" id="myChartPie" width="1500" height="1200"></canvas> -->
+          </div>
+
         </div>
-        <div class="row center-align" id="projected">
-          <p>Projected saving at Retirement <span id="projectedAmount">$$$$</span></p>
-        </div>
-        <div class="row center-align">
-          <a class="btn-large waves-effect waves-light orange" id="share">Share</a>
-          <a class="btn-large waves-effect waves-light orange" id="save">Save</a>
-        </div>
+
       </div>
 
     </div>
-
-    <canvas id="myChart" width="1500" height="1200"></canvas>
+ 
   </section>
+  
+  <!-- jQuery-->
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
-   <!-- This is Chart-->
+
+  <!-- Sheetjs for Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.min.js" integrity="sha256-6KtblFoCFV8zf19mVStSMp7nx2+hE1vQB6bDJyBVnEY=" crossorigin="anonymous"></script>
+  
+  <!-- This is Chart-->
+  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/6.0.2/cash.min.js"></script>
   <script src="logic.js"></script>

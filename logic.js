@@ -3,11 +3,11 @@ displayTagsFromStorage();
 addEventListenerOnLoad();
 
 function toggleSections(e) {
-  console.log(e.target.innerHTML);
+  // console.log(e.target.innerHTML);
   if (e.target.innerHTML == 'Home') {
     document.getElementById('BudgetPage').style.display = 'none';
     document.getElementById('Home').style.display = 'block';
-  } else if (e.target.innerHTML == 'Budget plan') {
+  } else if (e.target.innerHTML == 'Your Budget') {
     document.getElementById('BudgetPage').style.display = 'block';
     document.getElementById('Home').style.display = 'none';
   }
@@ -47,10 +47,28 @@ function addEventListenerOnLoad() {
   document.getElementById('budget').addEventListener('click', toggleSections);
   document.getElementById('homeMobile').addEventListener('click', toggleSections);
   document.getElementById('budgetMobile').addEventListener('click', toggleSections);
+
+  //Toggling graph hide and show
+  document.getElementById('mySwitch').addEventListener('click', toggleOnAndOff);
+
+  //Download Budget to Excel
+  document.getElementById('downloadExcel').addEventListener('click', exportToExcel);
+
 }
 /*                       **  **              */
 
 // ** Khoi's code **
+function toggleGraph(e){
+  e.preventDefault();
+  console.log(e.target.innerHTML);
+  if(e.target.innerHTML == 'Bar Graph'){
+    document.getElementById('myChartBar').style.display = 'block';
+    document.getElementById('myChartPie').style.display = 'none';
+  } else if(e.target.innerHTML == 'Pie Graph'){
+    document.getElementById('myChartBar').style.display = 'none';
+    document.getElementById('myChartPie').style.display = 'block';
+  }
+}
 
 //Helper for displayTagsFromStorage
 function createAndDisplayTag(storage, i, budgetOptions) {
@@ -141,6 +159,195 @@ function clearInputFields() {
   inputFields[0].value = "";
 }
 
+function exportToExcel() {
+  // Create an empty note book
+  var workbook = XLSX.utils.book_new();
+  var ws_name = "Budget";
+
+  // Take data from Ibraheim stuff, amount and percentage
+  // Do a for loop using "" as length
+
+  /* Make worksheet */
+  var ws_data = [
+    [
+      "Item",
+      "Amount spent monthly ($CAD)",
+      "Amount spent monthly (%)"
+    ],
+    ["Item1", 2, "20%"],
+    ["Item2", 3, "30%"],
+    [""],
+    [" ", "Projected Saving With Inflation", 1000],
+    [" ", "Projected Saving Without Inflation", 2000]
+  ];
+
+  // Create worksheet
+
+  var ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+  /* Add the worksheet to the workbook */
+  XLSX.utils.book_append_sheet(workbook, ws, ws_name);
+
+  //Download the file in Excel
+  XLSX.writeFile(workbook, "Your Budget.xls");
+}
+
+function visualize(){
+  // document.getElementById('myChartBar')
+  // document.getElementById('myChartBar')
+  //Empty out myChart 
+  var myChart = document.getElementById('myChart');
+  myChart.innerHTML = "";
+
+  //Create 2 new canvas
+  for(var i = 0; i < 2; i++){
+    var canvas = document.createElement('canvas');
+    canvas.setAttribute('width', '1500');
+    canvas.setAttribute('height', '1200');
+    if(i == 0){
+      canvas.id = 'myChartBar';
+    } else {
+      canvas.id = 'myChartPie';
+      canvas.style.display = 'none';
+    }
+
+    myChart.appendChild(canvas);
+  }
+
+  visualizeBar();
+  visualizePie();
+  
+  document.getElementById('barGraph').addEventListener('click', toggleGraph);
+  document.getElementById('pieGraph').addEventListener('click', toggleGraph);
+}
+
+function visualizeBar() {
+  var ctx = document.getElementById('myChartBar').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'Recommended amount',
+        data: [Math.floor((100-50) * Math.random()), Math.floor((100-50) * Math.random())],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          // 'rgba(255, 206, 86, 0.2)',
+          // 'rgba(75, 192, 192, 0.2)',
+          // 'rgba(153, 102, 255, 0.2)',
+          // 'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          // 'rgba(255, 206, 86, 1)',
+          // 'rgba(75, 192, 192, 1)',
+          // 'rgba(153, 102, 255, 1)',
+          // 'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Your Budget',
+        fontSize: 25,
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel:{
+            display:true,
+            labelString: 'Recommended spending amount ($CAD)',
+            fontSize: 14,
+            fontColor: '#26a69a',
+            foneWeight: 'bold',
+          }
+        }],
+        xAxes: [{
+          scaleLabel:{
+            display:true,
+            labelString: 'Category',
+            fontSize: 20,
+            fontColor: '#26a69a',
+          }
+        }]
+      },
+
+    }
+  });
+}
+
+function visualizePie() {
+
+  var ctx = document.getElementById('myChartPie').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: 'Recommended spending per category',
+        data: [Math.floor((100-50) * Math.random()), Math.floor((100-50) * Math.random())],
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          // 'rgba(255, 206, 86, 0.2)',
+          // 'rgba(75, 192, 192, 0.2)',
+          // 'rgba(153, 102, 255, 0.2)',
+          // 'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+
+    options: {
+      title: {
+        display: true,
+        text: 'Your Budget',
+        fontSize: 25,
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel:{
+            display:true,
+            labelString: 'Recommended spending amount ($CAD)',
+            fontSize: 14,
+            fontColor: '#26a69a',
+          }
+        }],
+        xAxes: [{
+          scaleLabel:{
+            display:true,
+            labelString: 'Category',
+            fontSize: 20,
+            fontColor: '#26a69a',
+          }
+        }]
+
+      }
+    }
+  });
+}
+
+function toggleOnAndOff(e){
+  var toggle = e.target.checked;
+  var graph = document.getElementById('myChart');
+  if(toggle){
+    graph.style.visibility = 'visible';
+  } else {
+    graph.style.visibility = 'hidden';
+  }
+}
+
 // ** Demi's code **
 function proposeBudget(event) {
   event.preventDefault();
@@ -162,6 +369,7 @@ function proposeBudget(event) {
   // grab the value of salary and saving
   var salaryCal = salary.value;
   var savingCal = saving.value;
+
   // do your calculation
   var calculation = ((salaryCal * savingCal) / 100);
 
@@ -169,9 +377,6 @@ function proposeBudget(event) {
 
   // if the input is not vaild, the input box will turn red
   if (!regex.test(salaryCal)) {
-    salary.style.backgroundColor = "#ff000042";
-    salary.style.color = "red";
-    console.log(regex.test(salary.value));
     M.toast({
       html: 'Please enter a valid number for income.',
       classes: 'red',
@@ -184,8 +389,6 @@ function proposeBudget(event) {
   };
 
   if (!regex.test(savingCal)) {
-    saving.style.backgroundColor = "#ff000042";
-    saving.style.color = "red";
     M.toast({
       html: 'Please enter a valid number for saving.',
       classes: 'red',
@@ -200,8 +403,6 @@ function proposeBudget(event) {
   // user need to enter a number between 0-100 for percentage
 
   if (saving.value > 100 || saving.value < 0) {
-    saving.style.backgroundColor = "#ff000042";
-    saving.style.color = "red";
     M.toast({
       html: 'Please enter a number from 0 to 100.',
       classes: 'red',
@@ -212,6 +413,13 @@ function proposeBudget(event) {
     saving.style.backgroundColor = "white";
     saving.style.color = "black";
   }
+  // Move over to Your Budget section
+  document.getElementById('Home').style.display = "none";
+  document.getElementById('BudgetPage').style.display = "block";
+
+  // Wait until all numbers are calculated then call visualize to draw graph 
+  
+  visualize();
 
   // Generating Inflation
   getInflation();
@@ -246,6 +454,7 @@ function getInflation() {
     .then(res => res.json())
     .then(response => {
       var countrySource = response.country.toLowerCase();
+      
       $.getJSON(apiUrl, {
           country: countrySource,
           start: prevDate,
@@ -318,83 +527,3 @@ function appendToBudget() {
     }
   }
 }
-
-function exportToExcel() {
-  // Create an empty note book
-  var workbook = XLSX.utils.book_new();
-  var ws_name = "Budget";
-
-  // Take data from Ibraheim stuff, amount and percentage
-  // Do a for loop using "" as length
-
-  /* Make worksheet */
-  var ws_data = [
-    [
-      "Item",
-      "Amount spent monthly ($CAD)",
-      "Amount spent monthly (%)"
-    ],
-    ["Item1", 2, "20%"],
-    ["Item2", 3, "30%"],
-    [""],
-    [" ", "Projected Saving With Inflation", 1000],
-    [" ", "Projected Saving Without Inflation", 2000]
-  ];
-
-  // Add sheet to
-
-  var ws = XLSX.utils.aoa_to_sheet(ws_data);
-
-  /* Add the worksheet to the workbook */
-  XLSX.utils.book_append_sheet(workbook, ws, ws_name);
-
-  //Download the file
-  XLSX.writeFile(workbook, "out.xls");
-}
-
-function visualize() {
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-
-    options: {
-      title: {
-        display: true,
-        text: 'Your chart'
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true
-          }
-        }]
-      }
-    }
-  });
-}
-
-visualize();
