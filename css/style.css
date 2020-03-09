@@ -5,9 +5,11 @@
  *
  * Made By MaterializeCSS.com
  */
+
 body{
   width: 100%;
 }
+
 .logo{
   font-family: 'Abril Fatface', cursive;
 }
@@ -24,10 +26,11 @@ body{
  .instruction{
    font-size: 20px;
    color: white;
-   width: 60%;
+   width: 80%;
    margin: 0 auto;
    padding-bottom: 20px;
  }
+ 
  .content {
   position: relative;
   border-bottom: 2px solid rgb(68, 141, 201);
@@ -66,6 +69,18 @@ body{
   font-size: 30px;
   line-height: 60px;
   z-index: 2;
+}
+
+#budget-options{
+  margin-top: 20px;
+}
+
+#addChipsBtn{
+  border: 1px solid rgb(145, 201, 238);
+}
+
+#closeBtn{
+  border: 1px solid rgb(145, 201, 238);
 }
 
 .icon-block {
@@ -137,6 +152,13 @@ body{
   
 }
 
+#ThankYou{
+  padding: 15px;
+  font-size: 20px;
+  font-family: 'Abril Fatface', cursive;
+  background-color: rgba(56, 250, 120, 0.849);
+}
+
 @media screen and (max-width:780px){
 .top{
     font-size: 25px;
@@ -154,7 +176,7 @@ body{
   }
 }
 
-@media screen and (max-width:550px){
+/* @media screen and (max-width:550px){
 .top{
     font-size: 18px;
     padding-bottom: 10px;
@@ -169,9 +191,9 @@ body{
     padding-left: 10px;
     padding-right: 10px;
   }
-}
+}  */
 
-@media screen and (max-width:400px){
+/* @media screen and (max-width:400px){
   .top{
     font-size: 15px;
     padding-bottom: 10px;
@@ -187,4 +209,4 @@ body{
     padding-left: 10px;
     padding-right: 10px;
   }
-}
+} */
