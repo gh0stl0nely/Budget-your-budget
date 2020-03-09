@@ -137,6 +137,13 @@ body{
   
 }
 
+#thankyou{
+  padding: 15px;
+  font-size: 20px;
+  font-family: 'Abril Fatface', cursive;
+  background-color: rgba(56, 250, 120, 0.849);
+}
+
 @media screen and (max-width:780px){
 .top{
     font-size: 25px;

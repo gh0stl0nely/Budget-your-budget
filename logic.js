@@ -3,7 +3,6 @@ displayTagsFromStorage();
 addEventListenerOnLoad();
 
 function toggleSections(e) {
-    console.log(e.target);
     if (e.target.innerHTML == 'Home') {
         document.getElementById('BudgetPage').style.display = 'none';
         document.getElementById('Home').style.display = 'block';
@@ -16,6 +15,7 @@ function toggleSections(e) {
         document.getElementById('BudgetPage').style.display = 'none';
         document.getElementById('Home').style.display = 'none';
         document.getElementById("ContactPage").style.display = 'block';
+        document.getElementById("thankyou").style.display = "none";
     }
 };
 
@@ -55,6 +55,7 @@ function addEventListenerOnLoad() {
     document.getElementById('budgetMobile').addEventListener('click', toggleSections);
     document.getElementById('contact').addEventListener('click', toggleSections);
     document.getElementById('contactMobile').addEventListener('click', toggleSections);
+    document.getElementById('sendBtn').addEventListener('click', sendMsg);
 }
 /*                       **  **              */
 
@@ -237,6 +238,18 @@ function addInputField() {
     inputField.classList.add("validate");
     inputDiv.appendChild(inputField);
 }
+
+function sendMsg() {
+    event.preventDefault();
+    document.getElementById("nameInput").value = '';
+    document.getElementById("email").value = '';
+    document.getElementById("message").value = '';
+    document.getElementById("thankyou").style.display = "block";
+    setTimeout(function () {
+        document.getElementById("thankyou").style.display = "none";
+    }, 2500);
+};
+
 
 // ** Bin's code **
 function getInflation() {

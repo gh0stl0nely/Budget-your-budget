@@ -211,7 +211,7 @@
       app
       better</p>
     <div class="container">
-      <form class="col s12 m12 l12">
+      <form class="col s12 m12 l12" id="form">
         <div class="row">
           <div class="col m2 l3 hide-on-small-only"></div>
           <div class="input-field col s6 m4 l3">
@@ -233,15 +233,21 @@
           <div class="col m2 l3 hide-on-small-only"></div>
         </div>
         <div class="row">
-          <button class="btn waves-effect waves-yellow orange" type="submit" name="action">Submit
+          <button class="btn waves-effect waves-yellow orange" type="submit" name="action" id="sendBtn">Submit
             <i class="material-icons right">send</i>
           </button>
         </div>
       </form>
+
+      <div id="thankyou">
+        <p class="green-text text-darken-2">Thank you for your message! We will get back to you as soon as possible.
+        </p>
+        <i class="material-icons medium green-text text-darken-2">email</i>
+      </div>
   </section>
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/6.0.2/cash.min.js"></script>
