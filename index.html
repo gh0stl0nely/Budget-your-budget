@@ -23,7 +23,7 @@
   <div class="navbar-fixed">
     <nav class="blue lighten-1" role="navigation">
       <div class="nav-wrapper">
-        <a class="brand-logo hide-on-small-only logo" style="padding-left: 20px;">Budget Your Budget</a>
+        <a class="brand-logo hide-on-small-only logo" style="padding-left: 20px; cursor: pointer;">Budget Your Budget</a>
         <a class="brand-logo show-on-small hide-on-med-and-up logo" style="font-size: 15px;">Budget
           Your
           Budget</a>
@@ -54,11 +54,13 @@
           towards your saving goal.</p>
         <ol class="instruction">
           <li>Click the orange "+" button to add categories you will spend money on monthly. (i.e: Food, Rent,
-            Transportation).</li>
+            Transportation)</li>
             <br>
-          <li>Enter your monthly income.</li>
+          <li>Enter your monthly income</li>
           <br>
-          <li>Enter the percentage of your income that you want to save.</li>
+          <li>Enter the percentage of your income that you want to save</li>
+          <br>
+          <li>Press "Calculate Budget"</li>
         </ol>
       </div>
       <div class="circle-border">
@@ -98,18 +100,16 @@
               <div class="col s6">
                 <div class="input-field" id="inputDiv">
                   <input placeholder="New Category" id="customCategory" type="text" class="validate" required>
-
                 </div>
                 <button class="waves-effect waves-yellow btn orange" id="addInputBttn">Add categories</button>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <a class="modal-close waves-effect waves-yellow btn-flat" id="addChipsBtn">OK</a>
+            <a class="modal-close waves-effect waves-yellow btn-flat" id="addChipsBtn">Save Categories</a>
             <a class="modal-close waves-effect waves-yellow btn-flat" id="closeBtn">Close</a>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -144,7 +144,7 @@
       </div>
       <!-- Calculate bttn -->
       <div class="row center">
-        <a id="submit-button" class="btn-large waves-effect waves-light orange">Calculate</a>
+        <a id="submit-button" class="btn-large waves-effect waves-light orange">Calculate Budget</a>
       </div>
     </div>
   </section>
@@ -226,17 +226,12 @@
  
   </section>
   
-  <!-- jQuery-->
-  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-
   <!-- Contact us page -->
   <section class="section no-pad-bot center-align" style="display: none;" id="ContactPage">
     <h4 class="indigo-text text-darken-3">Contact Us</h4>
-    <p class="indigo-text text-darken-3">You're welcome to email us if you have any questions or feedbacks to make our
-      app
-      better</p>
+    <p class="indigo-text text-darken-3">Feel free shoot us an message if you have any questions or feedbacks for us :)</p>
     <div class="container">
-      <form class="col s12 m12 l12">
+      <form class="col s12 m12 l12" id="feedbackForm">
         <div class="row">
           <div class="col m2 l3 hide-on-small-only"></div>
           <div class="input-field col s6 m4 l3">
@@ -258,16 +253,22 @@
           <div class="col m2 l3 hide-on-small-only"></div>
         </div>
         <div class="row">
-          <button class="btn waves-effect waves-yellow orange" type="submit" name="action">Submit
+          <button class="btn waves-effect waves-yellow orange" type="submit" id="sendBtn">Submit
             <i class="material-icons right">send</i>
           </button>
         </div>
       </form>
+
+      <!-- This message will appear if you successfully submit form -->
+      <div id="ThankYou">
+        <p class="green-text text-darken-2">Thank you for your message! We will get back to you as soon as possible.
+        </p>
+        <i class="material-icons medium green-text text-darken-2">email</i>
+      </div>
   </section>
 
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
 

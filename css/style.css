@@ -75,6 +75,14 @@ body{
   margin-top: 20px;
 }
 
+#addChipsBtn{
+  border: 1px solid rgb(145, 201, 238);
+}
+
+#closeBtn{
+  border: 1px solid rgb(145, 201, 238);
+}
+
 .icon-block {
   padding: 0 15px;
 }
@@ -144,7 +152,14 @@ body{
   
 }
 
-/* @media screen and (max-width:780px){
+#ThankYou{
+  padding: 15px;
+  font-size: 20px;
+  font-family: 'Abril Fatface', cursive;
+  background-color: rgba(56, 250, 120, 0.849);
+}
+
+@media screen and (max-width:780px){
 .top{
     font-size: 25px;
     padding-bottom: 10px;
@@ -161,7 +176,7 @@ body{
   }
 }
 
-@media screen and (max-width:550px){
+/* @media screen and (max-width:550px){
 .top{
     font-size: 18px;
     padding-bottom: 10px;
@@ -176,7 +191,7 @@ body{
     padding-left: 10px;
     padding-right: 10px;
   }
-} */
+}  */
 
 /* @media screen and (max-width:400px){
   .top{
