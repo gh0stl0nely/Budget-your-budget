@@ -281,7 +281,6 @@ function projectedSavings(x) {
     var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
     console.log(retirementSaving);
     //Put code here to append to budget template
-
 }
 
 // ** Ebrahim's code **
