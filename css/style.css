@@ -6,6 +6,83 @@
  * Made By MaterializeCSS.com
  */
 
+body{
+  width: 100%;
+}
+
+.logo{
+  font-family: 'Abril Fatface', cursive;
+}
+
+ .top{
+   text-align: center;
+   color: white;
+   font-size: 28px;
+   padding-top: 10px;
+   padding-bottom: 20px;
+   margin: 0 20px;
+ }
+
+ .instruction{
+   font-size: 20px;
+   color: white;
+   width: 80%;
+   margin: 0 auto;
+   padding-bottom: 20px;
+ }
+ 
+ .content {
+  position: relative;
+  border-bottom: 2px solid rgb(68, 141, 201);
+}
+ .header {
+  background: rgb(68, 141, 201);
+  z-index: 0;
+  position: relative;
+  border-bottom: 2px solid rgb(68, 141, 201);
+  z-index: 1;
+}
+
+ .circle-border {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  bottom: -30px;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  border: 3px solid rgb(68, 141, 201);
+  z-index: 0;
+}
+.circle {
+  width: 50px;
+  height: 50px;
+  background: white;
+  border-radius: 50%;
+  bottom: -32px;;
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 30px;
+  line-height: 60px;
+  z-index: 2;
+}
+
+#budget-options{
+  margin-top: 20px;
+}
+
+#addChipsBtn{
+  border: 1px solid rgb(145, 201, 238);
+}
+
+#closeBtn{
+  border: 1px solid rgb(145, 201, 238);
+}
+
 .icon-block {
   padding: 0 15px;
 }
@@ -75,12 +152,61 @@
   
 }
 
-.super{
-  height: 100%;
-  width: 100%;
-  background-image: repeating-linear-gradient(rgba(0,0,0,0,4),rgba(0,0,0,0,4)),url(northenlights.jpg.jpg);
-  background-position: center;
-  background-size: cover;
-  
-
+#ThankYou{
+  padding: 15px;
+  font-size: 20px;
+  font-family: 'Abril Fatface', cursive;
+  background-color: rgba(56, 250, 120, 0.849);
 }
+
+@media screen and (max-width:780px){
+.top{
+    font-size: 25px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  .instruction{
+    width: 80%;
+  }
+
+  .header{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+/* @media screen and (max-width:550px){
+.top{
+    font-size: 18px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+
+  .instruction{
+    font-size: 18px;
+  }
+
+  .header{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}  */
+
+/* @media screen and (max-width:400px){
+  .top{
+    font-size: 15px;
+    padding-bottom: 10px;
+    padding-top: 5px;
+  }
+
+  .instruction{
+    font-size: 15px;
+    width: 90%;
+  }
+
+  .header{
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+} */
