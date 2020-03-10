@@ -61,12 +61,15 @@ function proposeBudget(event) {
     // check for valid income and saving percentage input
     var salary = document.getElementById("salary");
     var saving = document.getElementById("saving");
+    var budgetLeft = document.getElementById("budgetLeft")
 
     // grab the value of salary
     var salaryCal = salary.value
     var savingCal = saving.value
     var calculation = ((salaryCal * savingCal)/100)
-    alert(calculation)
+    var budgetCalculation = (salaryCal - calculation)
+    alert(budgetCalculation)
+
     // grab the value of saving
     // do your calculation
     // alert calculation
@@ -140,39 +143,27 @@ function calculate() {
     });
 };
 
-var data = {
-    categories: [
-      {name: 'one', url_title: 'oneUrl'},
-      {name: 'two', url_title: 'twoUrl'}
-    ],
-  };
-  
-  var container = document.getElementsByClassName('chips');
-  var comma = document.createTextNode(', ');
-  
-  function createCategoryElement(name, url) {
-    var urlBase = '#journal-category-';
-    var cssClass = 'js-page-link';
-  
-    var el = document.createElement('a');
-    el.setAttribute('href', urlBase + url);
-    el.setAttribute('class', cssClass);
-    el.innerHTML = name;
-    return el;
-  }
-  
-  // puliing categories from index 
-  function appendToBudget(){
-  for (var i = 0; i < data.categories.length; i++) {
-    var category = data.categories[i];
-    var categoryElement = createCategoryElement(category.name, category.url_title);
-    container.appendChild(categoryElement);
-  
-    
-    if (i + 1 < data.categories.length) {
-      container.appendChild(salary);
-    }
-  }
-}
-          
+
+         
+
+          submitButton.onclick = function(){
+
+var salaryCal = salary.value
+    var savingCal = saving.value
+    var calculation = ((salaryCal * savingCal)/100)
+    var budgetCalculation = (salaryCal - calculation)
+            var submitButton = document.getElementById("submit-button")
+            var content = document.getElementsByClassName("chips")
+
+            if (content) {
+          (storage) 
+                var budgetOptions = document.getElementById('budget-options');
+                for (var i = 0; i < storage.length; i++){
+                    var categoryCalculation = document.getElementsByid("budget-options").value = budgetOptions / budgetCalculation 
+                }
+
+            }
+                }
+           
+
           
