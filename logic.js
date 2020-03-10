@@ -159,8 +159,10 @@ var salaryCal = salary.value
           (storage) 
                 var budgetOptions = document.getElementById('budget-options');
                 for (var i = 0; i < storage.length; i++){
-                    var categoryCalculation = document.getElementsByid("budget-options").value = budgetOptions / budgetCalculation 
+                    var categoryCalculation = document.getElementsByid("budget-options").value = budgetCalculation/ budgetOptions 
                 }
+                
+
 
             }
                 }
