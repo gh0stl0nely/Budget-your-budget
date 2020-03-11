@@ -3,35 +3,35 @@ displayTagsFromStorage();
 addEventListenerOnLoad();
 
 function toggleSections(e) {
-    if (e.target.innerHTML == 'Home') {
-        document.getElementById('BudgetPage').style.display = 'none';
-        document.getElementById('Home').style.display = 'block';
-        document.getElementById("ContactPage").style.display = 'none';
-    } else if (e.target.innerHTML == 'Budget Plan') {
-        document.getElementById('BudgetPage').style.display = 'block';
-        document.getElementById('Home').style.display = 'none';
-        document.getElementById("ContactPage").style.display = 'none';
-    } else if (e.target.innerHTML == 'Contact Us') {
-        document.getElementById('BudgetPage').style.display = 'none';
-        document.getElementById('Home').style.display = 'none';
-        document.getElementById("ContactPage").style.display = 'block';
-        document.getElementById("ThankYou").style.display = "none";
-    }
+  if (e.target.innerHTML == 'Home') {
+    document.getElementById('BudgetPage').style.display = 'none';
+    document.getElementById('Home').style.display = 'block';
+    document.getElementById("ContactPage").style.display = 'none';
+  } else if (e.target.innerHTML == 'Budget Plan') {
+    document.getElementById('BudgetPage').style.display = 'block';
+    document.getElementById('Home').style.display = 'none';
+    document.getElementById("ContactPage").style.display = 'none';
+  } else if (e.target.innerHTML == 'Contact Us') {
+    document.getElementById('BudgetPage').style.display = 'none';
+    document.getElementById('Home').style.display = 'none';
+    document.getElementById("ContactPage").style.display = 'block';
+    document.getElementById("ThankYou").style.display = "none";
+  }
 };
 
 function displayTagsFromStorage() {
-    var storage = JSON.parse(localStorage.getItem("chips")); // []
+  var storage = JSON.parse(localStorage.getItem("chips")); // []
 
-    if (storage) {
-        var budgetOptions = document.getElementById("budget-options");
+  if (storage) {
+    var budgetOptions = document.getElementById("budget-options");
 
-        for (var i = 0; i < storage.length; i++) {
-            createAndDisplayTag(storage, i, budgetOptions);
-        }
-    } else {
-        storage = [];
-        localStorage.setItem("chips", JSON.stringify(storage));
+    for (var i = 0; i < storage.length; i++) {
+      createAndDisplayTag(storage, i, budgetOptions);
     }
+  } else {
+    storage = [];
+    localStorage.setItem("chips", JSON.stringify(storage));
+  }
 }
 
 function addEventListenerOnLoad() {
@@ -56,7 +56,7 @@ function addEventListenerOnLoad() {
   document.getElementById('contact').addEventListener('click', toggleSections);
   document.getElementById('contactMobile').addEventListener('click', toggleSections);
   document.getElementById('feedbackForm').addEventListener('submit', sendMsg);
-  
+
   //Toggling graph hide and show
   document.getElementById('mySwitch').addEventListener('click', toggleOnAndOff);
 
@@ -67,13 +67,13 @@ function addEventListenerOnLoad() {
 /*                       **  **              */
 
 // ** Khoi's code **
-function toggleGraph(e){
+function toggleGraph(e) {
   e.preventDefault();
   console.log(e.target.innerHTML);
-  if(e.target.innerHTML == 'Bar Graph'){
+  if (e.target.innerHTML == 'Bar Graph') {
     document.getElementById('myChartBar').style.display = 'block';
     document.getElementById('myChartPie').style.display = 'none';
-  } else if(e.target.innerHTML == 'Pie Graph'){
+  } else if (e.target.innerHTML == 'Pie Graph') {
     document.getElementById('myChartBar').style.display = 'none';
     document.getElementById('myChartPie').style.display = 'block';
   }
@@ -81,91 +81,91 @@ function toggleGraph(e){
 
 //Helper for displayTagsFromStorage
 function createAndDisplayTag(storage, i, budgetOptions) {
-    var divItem = document.createElement("div");
-    divItem.classList.add("chip");
-    divItem.setAttribute("data-name", storage[i]);
-    divItem.innerHTML = storage[i];
+  var divItem = document.createElement("div");
+  divItem.classList.add("chip");
+  divItem.setAttribute("data-name", storage[i]);
+  divItem.innerHTML = storage[i];
 
-    var icon = document.createElement("i");
-    icon.classList.add("close");
-    icon.classList.add("material-icons");
-    icon.innerText = "close";
-    divItem.appendChild(icon);
-    budgetOptions.appendChild(divItem);
+  var icon = document.createElement("i");
+  icon.classList.add("close");
+  icon.classList.add("material-icons");
+  icon.innerText = "close";
+  divItem.appendChild(icon);
+  budgetOptions.appendChild(divItem);
 }
 
 // When click on Ok, append category into current category
 function addNewCategoryToHomePage() {
 
-    // Get the new values from the modal that the user typed in
-    var newValues = getNewCategory();
+  // Get the new values from the modal that the user typed in
+  var newValues = getNewCategory();
 
-    // Append new values to existing id="budget-options" list
-    appendToExistingOptions(newValues);
+  // Append new values to existing id="budget-options" list
+  appendToExistingOptions(newValues);
 
-    //Update local storage
-    setTimeout(updateLocalStorage, 500);
-    clearInputFields();
+  //Update local storage
+  setTimeout(updateLocalStorage, 500);
+  clearInputFields();
 }
 
 function getNewCategory() {
-    var newCategoryRaw;
-    var newCategory;
-    var newChips = [];
-    var inputDiv = document.getElementById('inputDiv').children;
+  var newCategoryRaw;
+  var newCategory;
+  var newChips = [];
+  var inputDiv = document.getElementById('inputDiv').children;
 
-    for (var i = 0; i < inputDiv.length; i++) {
-        newCategoryRaw = inputDiv[i].value.trim().toLowerCase();
-        newCategory = newCategoryRaw.charAt(0).toUpperCase() + newCategoryRaw.slice(1);
-        newChips.push(newCategory);
-    }
-    return newChips;
+  for (var i = 0; i < inputDiv.length; i++) {
+    newCategoryRaw = inputDiv[i].value.trim().toLowerCase();
+    newCategory = newCategoryRaw.charAt(0).toUpperCase() + newCategoryRaw.slice(1);
+    newChips.push(newCategory);
+  }
+  return newChips;
 
 }
 
 function appendToExistingOptions(newChips) {
-    var budgetOptions = document.getElementById("budget-options");
-    for (var i = 0; i < newChips.length; i++) {
-        var divItem = document.createElement("div");
-        divItem.classList.add("chip");
-        divItem.setAttribute("data-name", newChips[i]);
-        divItem.innerHTML = newChips[i];
+  var budgetOptions = document.getElementById("budget-options");
+  for (var i = 0; i < newChips.length; i++) {
+    var divItem = document.createElement("div");
+    divItem.classList.add("chip");
+    divItem.setAttribute("data-name", newChips[i]);
+    divItem.innerHTML = newChips[i];
 
-        var icon = document.createElement("i");
-        icon.classList.add("close");
-        icon.classList.add("material-icons");
-        icon.innerText = "close";
+    var icon = document.createElement("i");
+    icon.classList.add("close");
+    icon.classList.add("material-icons");
+    icon.innerText = "close";
 
-        divItem.appendChild(icon);
-        budgetOptions.appendChild(divItem);
-    }
+    divItem.appendChild(icon);
+    budgetOptions.appendChild(divItem);
+  }
 }
 
 function updateLocalStorage() {
-    var budgetOptions = document.getElementById("budget-options");
-    var chipsForLocalStorage = [];
-    var allCurrentTags = budgetOptions.children;
-    var item;
+  var budgetOptions = document.getElementById("budget-options");
+  var chipsForLocalStorage = [];
+  var allCurrentTags = budgetOptions.children;
+  var item;
 
-    for (var i = 0; i < allCurrentTags.length; i++) {
-        item = allCurrentTags[i].getAttribute('data-name');
-        chipsForLocalStorage.push(item);
-    }
+  for (var i = 0; i < allCurrentTags.length; i++) {
+    item = allCurrentTags[i].getAttribute('data-name');
+    chipsForLocalStorage.push(item);
+  }
 
-    localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
+  localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
 
 }
 
 // When click on Close or Ok in Modal, leave only 1 input field
 function clearInputFields() {
-    var inputDiv = document.getElementById('inputDiv'); // return object
-    var inputFields = inputDiv.children; // Return a list 
-    for (var i = 1; i < inputFields.length; i++) {
-        inputFields[i].remove();
-        i--;
-    }
-    // Clear the value of first input field
-    inputFields[0].value = "";
+  var inputDiv = document.getElementById('inputDiv'); // return object
+  var inputFields = inputDiv.children; // Return a list 
+  for (var i = 1; i < inputFields.length; i++) {
+    inputFields[i].remove();
+    i--;
+  }
+  // Clear the value of first input field
+  inputFields[0].value = "";
 }
 
 function exportToExcel() {
@@ -201,23 +201,24 @@ function exportToExcel() {
   XLSX.writeFile(workbook, "Your Budget.xls");
 }
 
-function visualize(){
-  // document.getElementById('myChartBar')
-  // document.getElementById('myChartBar')
+function visualize(years,savingData){
   //Empty out myChart 
   var myChart = document.getElementById('myChart');
   myChart.innerHTML = "";
 
-  //Create 2 new canvas
-  for(var i = 0; i < 2; i++){
+  //Create 3 new canvas
+  for (var i = 0; i <= 2; i++) {
     var canvas = document.createElement('canvas');
     canvas.setAttribute('width', '1500');
     canvas.setAttribute('height', '1200');
-    if(i == 0){
+    if (i == 0) {
       canvas.id = 'myChartBar';
-    } else {
+    } else if(i == 1){
       canvas.id = 'myChartPie';
       canvas.style.display = 'none';
+    } else if(i == 2){
+      canvas.id = 'myChartLine';
+      canvas.style.marginTop = '20px';
     }
 
     myChart.appendChild(canvas);
@@ -225,7 +226,8 @@ function visualize(){
 
   visualizeBar();
   visualizePie();
-  
+  visualizeLine(years,savingData);
+
   document.getElementById('barGraph').addEventListener('click', toggleGraph);
   document.getElementById('pieGraph').addEventListener('click', toggleGraph);
 }
@@ -238,7 +240,7 @@ function visualizeBar() {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [{
         label: 'Recommended amount',
-        data: [Math.floor((100-50) * Math.random()), Math.floor((100-50) * Math.random())],
+        data: [Math.floor((100 - 50) * Math.random()), Math.floor((100 - 50) * Math.random())],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -266,8 +268,8 @@ function visualizeBar() {
       },
       scales: {
         yAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Recommended spending amount ($CAD)',
             fontSize: 14,
             fontColor: '#26a69a',
@@ -275,8 +277,8 @@ function visualizeBar() {
           }
         }],
         xAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Category',
             fontSize: 20,
             fontColor: '#26a69a',
@@ -297,7 +299,7 @@ function visualizePie() {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [{
         label: 'Recommended spending per category',
-        data: [Math.floor((100-50) * Math.random()), Math.floor((100-50) * Math.random())],
+        data: [Math.floor((100 - 50) * Math.random()), Math.floor((100 - 50) * Math.random())],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -326,16 +328,16 @@ function visualizePie() {
       },
       scales: {
         yAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Recommended spending amount ($CAD)',
             fontSize: 14,
             fontColor: '#26a69a',
           }
         }],
         xAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Category',
             fontSize: 20,
             fontColor: '#26a69a',
@@ -347,13 +349,69 @@ function visualizePie() {
   });
 }
 
-function toggleOnAndOff(e){
+function visualizeLine(years,savingData){
+  var ctx = document.getElementById('myChartLine').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Saving over the years',
+        data: savingData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Your Saving Plan',
+        fontSize: 25,
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Savings ($CAD)',
+            fontSize: 14,
+            fontColor: '#26a69a',
+          }
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Future years',
+            fontSize: 20,
+            fontColor: '#26a69a',
+          }
+        }]
+
+      }
+    }
+
+  })
+}
+
+function toggleOnAndOff(e) {
   var toggle = e.target.checked;
   var graph = document.getElementById('myChart');
-  if(toggle){
-    graph.style.visibility = 'visible';
+  if (toggle) {
+    graph.style.display = 'block';
   } else {
-    graph.style.visibility = 'hidden';
+    graph.style.display = 'none';
   }
 }
 
@@ -422,40 +480,42 @@ function proposeBudget(event) {
     saving.style.backgroundColor = "white";
     saving.style.color = "black";
   }
+  // Update local storage
+  updateLocalStorage();
+
   // Move over to Your Budget section
   document.getElementById('Home').style.display = "none";
   document.getElementById('BudgetPage').style.display = "block";
 
-  // Wait until all numbers are calculated then call visualize to draw graph 
-  
-  visualize();
-
+  //Append budget values
+  appendToBudget();
+ 
   // Generating Inflation
   getInflation();
 };
 
 // For adding input fields to modal
 function addInputField() {
-    var inputDiv = document.getElementById("inputDiv");
-    var inputField = document.createElement("input");
-    inputField.setAttribute("type", "text");
-    inputField.setAttribute("id", "customCategory");
-    inputField.setAttribute('placeholder', 'New Category')
-    inputField.setAttribute('require', "");
-    inputField.setAttribute('aria-required', "true");
-    inputField.classList.add("validate");
-    inputDiv.appendChild(inputField);
+  var inputDiv = document.getElementById("inputDiv");
+  var inputField = document.createElement("input");
+  inputField.setAttribute("type", "text");
+  inputField.setAttribute("id", "customCategory");
+  inputField.setAttribute('placeholder', 'New Category')
+  inputField.setAttribute('require', "");
+  inputField.setAttribute('aria-required', "true");
+  inputField.classList.add("validate");
+  inputDiv.appendChild(inputField);
 }
 
 function sendMsg(event) {
-    event.preventDefault();
-    document.getElementById("nameInput").value = '';
-    document.getElementById("email").value = '';
-    document.getElementById("message").value = '';
-    document.getElementById("ThankYou").style.display = "block";
-    setTimeout(function () {
-        document.getElementById("ThankYou").style.display = "none";
-    }, 3000);
+  event.preventDefault();
+  document.getElementById("nameInput").value = '';
+  document.getElementById("email").value = '';
+  document.getElementById("message").value = '';
+  document.getElementById("ThankYou").style.display = "block";
+  setTimeout(function () {
+    document.getElementById("ThankYou").style.display = "none";
+  }, 3000);
 };
 
 
@@ -475,7 +535,7 @@ function getInflation() {
     .then(res => res.json())
     .then(response => {
       var countrySource = response.country.toLowerCase();
-      
+
       $.getJSON(apiUrl, {
           country: countrySource,
           start: prevDate,
@@ -489,49 +549,96 @@ function getInflation() {
           projectedSavings(inflation);
         });
 
-        })
+    })
 };
 
 // For calculating projected savings
 function projectedSavings(x) {
-    var salary = document.getElementById("salary");
-    var saving = document.getElementById("saving");
+  var salary = document.getElementById("salary");
+  var saving = document.getElementById("saving");
+  var salaryCal = salary.value;
+  var savingCal = saving.value;
+  
 
-    var salaryCal = salary.value
-    var savingCal = saving.value
+  //Calculation for each year saving
 
-    var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
-    console.log(retirementSaving);
-    //Put code here to append to budget template
+  var dropDownYearOption = document.getElementById('year');
+  var selectedRetirementYear = 30; 
+    // Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
+  
+  var chosenYearSpan = document.getElementById('chosenYear');
+  chosenYearSpan.innerHTML = selectedRetirementYear;
+  
+  //Get currentDay
+  var thisYear = new Date().getFullYear();
+  var eachYear = selectedRetirementYear/ 5; // I.e: If 10, eachYear is 2 years apart until retirement
+  var yearApart = eachYear; // If 10 then yearApart = 2 only, if 35 then 7 is yearApart
+
+  var savingsForEachYear = [];
+  var years = [];
+  var savingPerYear;
+
+  //Only get 4 years , not including the last year which is year the user selected
+
+  for(var i = 0; i <= 4; i++){
+    savingPerYear = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), eachYear));
+    savingsForEachYear.push(savingPerYear);
+    years.push(eachYear);
+    eachYear += yearApart;
+  }
+  var eachYearFactorInThisYear = years.map(each => each + thisYear)
+
+  console.log(savingsForEachYear);
+  console.log(years);
+  console.log(eachYearFactorInThisYear);
+  console.log(yearApart);
+
+  //Calculation for retirement
+
+  var retirementSaving = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), selectedRetirementYear));
+  var retireAmountDiv = document.getElementById('retirementAmount');
+  // retireAmountDiv.innerHTML = retirementSaving;
+
+  console.log(retirementSaving);
+
+  // visualize all graphs after data is ready 
+  visualize(eachYearFactorInThisYear,savingsForEachYear);
 }
 
 // ** Ebrahim's code **
 
-var container = document.getElementsByClassName('chips');
-var comma = document.createTextNode(', ');
-
-function createCategoryElement(name, url) {
-
-    var urlBase = '#journal-category-';
-    var cssClass = 'js-page-link';
-
-    var el = document.createElement('a');
-    el.setAttribute('href', urlBase + url);
-    el.setAttribute('class', cssClass);
-    el.innerHTML = name;
-    return el;
-}
-
-// Pulling categories from index
 
 function appendToBudget() {
-    for (var i = 0; i < data.categories.length; i++) {
-        var category = data.categories[i];
-        var categoryElement = createCategoryElement(category.name, category.url_title);
-        container.appendChild(categoryElement);
 
-        if (i + 1 < data.categories.length) {
-            container.appendChild(salary);
-        }
-    }
+  var container = JSON.parse(localStorage.getItem("chips"));
+  var categories = document.getElementById('cate')
+  var monthleyAll = document.getElementById('monthAll')
+  var salary = document.getElementById("salary");
+  var saving = document.getElementById("saving");
+
+  categories.innerHTML = "";
+  monthleyAll.innerHTML = "";
+
+  var salaryCal = salary.value;
+  var savingCal = saving.value;
+
+  // do your calculation
+  var calculation = ((salaryCal * savingCal) / 100);
+  var budgetLeft = (salaryCal - calculation)
+  var each = (budgetLeft / (container.length - 1))
+
+  for (var i = 0; i < container.length; i++) {
+
+    var node = document.createElement("p");
+
+    node.setAttribute('id', container[i]);
+    node.innerHTML = container[i];
+
+    categories.appendChild(node);
+
+    var allowance = document.createElement('p');
+    allowance.innerHTML = each;
+    monthleyAll.appendChild(allowance);
+  }
+
 }
