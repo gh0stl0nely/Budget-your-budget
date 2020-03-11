@@ -426,6 +426,8 @@ function proposeBudget(event) {
   document.getElementById('Home').style.display = "none";
   document.getElementById('BudgetPage').style.display = "block";
 
+  //Append budget values
+  appendToBudget();
   // Wait until all numbers are calculated then call visualize to draw graph 
   
   visualize();
@@ -520,31 +522,57 @@ var data = {
 
 };
 
-var container = document.getElementsByClassName('chips');
-var comma = document.createTextNode(', ');
 
-function createCategoryElement(name, url) {
+function appendToBudget(){
+  categories.innerHTML = "";
+  monthleyAll.innerHTML = "";
+  // var node = document.createElement("li");   
+ var container = JSON.parse(localStorage.getItem("chips"));
+ var budgetBox = document.getElementById('ur-budger')
+ var categories = document.getElementById('cate')
+ var monthleyAll = document.getElementById('monthAll')
+ var salary = document.getElementById("salary");
+  var saving = document.getElementById("saving");
 
-    var urlBase = '#journal-category-';
-    var cssClass = 'js-page-link';
+  var salaryCal = salary.value;
+  var savingCal = saving.value;
 
-    var el = document.createElement('a');
-    el.setAttribute('href', urlBase + url);
-    el.setAttribute('class', cssClass);
-    el.innerHTML = name;
-    return el;
+  // do your calculation
+  var calculation = ((salaryCal * savingCal) / 100);
+  var budgetLeft = (salaryCal - calculation) 
+  var each = (budgetLeft / (container.length - 1))
+ 
+//  console.log(container);
+
+
+ for(var i = 0; i < container.length; i++){
+  
+  var node = document.createElement("p");
+  // var salaryCal = salary.value;
+  // var savingCal = saving.value;
+
+  // // do your calculation
+  // var calculation = ((salaryCal * savingCal) / 100);
+  // var budgetLeft = (salaryCal - calculation)   
+
+  node.setAttribute('id', container[i]);
+  node.innerHTML = container[i];
+
+  categories.appendChild(node);  
+
+  var allowance = document.createElement('p');
+  allowance.innerHTML = each;
+  monthleyAll.appendChild(allowance);
 }
 
-// Pulling categories from index 
-function appendToBudget() {
-    for (var i = 0; i < data.categories.length; i++) {
-        var category = data.categories[i];
-        var categoryElement = createCategoryElement(category.name, category.url_title);
-        container.appendChild(categoryElement);
 
 
-        if (i + 1 < data.categories.length) {
-            container.appendChild(salary);
-        }
-    }
-}
+
+
+
+
+
+
+  }
+
+ 
