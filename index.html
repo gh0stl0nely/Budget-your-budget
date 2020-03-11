@@ -140,7 +140,7 @@
                 <!-- years until retirement -->
                 <div class="icon-block">
                   <label>Years until retirement</label>
-                  <select class="browser-default">
+                  <select id="year" class="browser-default">
                     <option value="5">5</option>
                     <option value="10">10</option>
                     <option value="15">15</option>
@@ -207,7 +207,7 @@
             </div>
             <div class="divider"></div>
             <div class="row center-align">
-              <p>projected saving until retirement after <span id="chosenYear">XXX</span> years: $ <span
+              <p>projected saving until retirement after <span id="chosenYear">XXX</span> years: $<span
                 id="retirementAmount">$$$$$</span></p>
             </div>
             <!-- Download Excel Button-->
@@ -215,41 +215,40 @@
               <a class="btn-large waves-effect waves-light orange" id="downloadExcel">Download Budget (.xls)</a>
             </div>
           </div>
+          <div class="col s12 m4"></div>
+        </div>
 
-
-
-          <!-- Graph -->
-          <div style="text-align: center;" id="Graph">
+           <!-- Graph -->
+           <div style="text-align: center;" id="Graph">
             <!-- Toggle between Hide And Show graph-->
             <div class="switch">
               <label>
                 Hide
                 <input id="mySwitch" type="checkbox" checked>
-
+  
                 <span class="lever"></span>
                 Show
               </label>
             </div>
-
+  
             <!-- Toggle between Bar and -->
             <div id="graphStyling">
               <br>
               <span><button id="barGraph" class="btn orange">Bar Graph</button></span>
               <span><button id="pieGraph" class="btn orange">Pie Graph</button></span>
             </div>
-
+  
             <!-- Actual Graph-->
             <div id="myChart">
               <!-- <canvas id="myChartBar" width="1500" height="1200"></canvas>
             <canvas style="display: none;" id="myChartPie" width="1500" height="1200"></canvas> -->
             </div>
-
+  
           </div>
-        </div>
-
       </div>
-
-    </section>
+     
+    </div>
+  </section>
 
     <!-- Contact us page -->
     <section class="section no-pad-bot center-align" style="display: none;" id="ContactPage">

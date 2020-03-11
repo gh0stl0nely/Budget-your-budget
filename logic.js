@@ -203,23 +203,24 @@ function exportToExcel() {
   XLSX.writeFile(workbook, "Your Budget.xls");
 }
 
-function visualize() {
-  // document.getElementById('myChartBar')
-  // document.getElementById('myChartBar')
+function visualize(years,savingData){
   //Empty out myChart 
   var myChart = document.getElementById('myChart');
   myChart.innerHTML = "";
 
-  //Create 2 new canvas
-  for (var i = 0; i < 2; i++) {
+  //Create 3 new canvas
+  for (var i = 0; i <= 2; i++) {
     var canvas = document.createElement('canvas');
     canvas.setAttribute('width', '1500');
     canvas.setAttribute('height', '1200');
     if (i == 0) {
       canvas.id = 'myChartBar';
-    } else {
+    } else if(i == 1){
       canvas.id = 'myChartPie';
       canvas.style.display = 'none';
+    } else if(i == 2){
+      canvas.id = 'myChartLine';
+      canvas.style.marginTop = '20px';
     }
 
     myChart.appendChild(canvas);
@@ -227,6 +228,7 @@ function visualize() {
 
   visualizeBar();
   visualizePie();
+  visualizeLine(years,savingData);
 
   document.getElementById('barGraph').addEventListener('click', toggleGraph);
   document.getElementById('pieGraph').addEventListener('click', toggleGraph);
@@ -349,13 +351,69 @@ function visualizePie() {
   });
 }
 
+function visualizeLine(years,savingData){
+  var ctx = document.getElementById('myChartLine').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [{
+        label: 'Saving over the years',
+        data: savingData,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Your Saving Plan',
+        fontSize: 25,
+      },
+      scales: {
+        yAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Savings ($CAD)',
+            fontSize: 14,
+            fontColor: '#26a69a',
+          }
+        }],
+        xAxes: [{
+          scaleLabel: {
+            display: true,
+            labelString: 'Future years',
+            fontSize: 20,
+            fontColor: '#26a69a',
+          }
+        }]
+
+      }
+    }
+
+  })
+}
+
 function toggleOnAndOff(e) {
   var toggle = e.target.checked;
   var graph = document.getElementById('myChart');
   if (toggle) {
-    graph.style.visibility = 'visible';
+    graph.style.display = 'block';
   } else {
-    graph.style.visibility = 'hidden';
+    graph.style.display = 'none';
   }
 }
 
@@ -422,16 +480,16 @@ document.getElementById("savingAmount").innerText = savingAmount;
     saving.style.backgroundColor = "white";
     saving.style.color = "black";
   }
+  // Update local storage
+  updateLocalStorage();
+
   // Move over to Your Budget section
   document.getElementById('Home').style.display = "none";
   document.getElementById('BudgetPage').style.display = "block";
 
   //Append budget values
   appendToBudget();
-  // Wait until all numbers are calculated then call visualize to draw graph 
-
-  visualize();
-
+ 
   // Generating Inflation
   getInflation();
 };
@@ -496,38 +554,68 @@ function getInflation() {
 
 // For calculating projected savings
 function projectedSavings(x) {
-  var budgetLeft = document.getElementById("budgetLeft");
-  var salaryVal = document.getElementById("salary").value;
-  var savingVal = document.getElementById("saving").value;
+  var salary = document.getElementById("salary");
+  var saving = document.getElementById("saving");
+  var salaryCal = salary.value;
+  var savingCal = saving.value;
+  
 
-  var retirementSaving = ((savingVal / 100) * salaryVal) * Math.pow((1 + x), 20);
+  //Calculation for each year saving
+
+  var dropDownYearOption = document.getElementById('year');
+  var selectedRetirementYear = Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
+
+  
+  var chosenYearSpan = document.getElementById('chosenYear');
+  chosenYearSpan.innerHTML = selectedRetirementYear;
+  
+  //Get currentDay
+  var thisYear = new Date().getFullYear();
+  var eachYear = selectedRetirementYear/ 5; // I.e: If 10, eachYear is 2 years apart until retirement
+  var yearApart = eachYear; // If 10 then yearApart = 2 only, if 35 then 7 is yearApart
+
+  var savingsForEachYear = [];
+  var years = [];
+  var savingPerYear;
+
+  //Only get 4 years , not including the last year which is year the user selected
+
+  for(var i = 0; i <= 4; i++){
+    savingPerYear = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), eachYear));
+    savingsForEachYear.push(savingPerYear);
+    years.push(eachYear);
+    eachYear += yearApart;
+  }
+  var eachYearFactorInThisYear = years.map(each => each + thisYear)
+
+  console.log(savingsForEachYear);
+  console.log(years);
+  console.log(eachYearFactorInThisYear);
+  console.log(yearApart);
+
+  //Calculation for retirement
+
+  var retirementSaving = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), selectedRetirementYear));
+  var retireAmountDiv = document.getElementById('retirementAmount');
+  retireAmountDiv.innerHTML = retirementSaving;
+
   console.log(retirementSaving);
-  //Put code here to append to budget template
+
+  // visualize all graphs after data is ready 
+  visualize(eachYearFactorInThisYear,savingsForEachYear);
 }
 
 // ** Ebrahim's code **
-var data = {
-  categories: [{
-    name: 'one',
-    url_title: 'oneUrl'
-  },
-  {
-    name: 'two',
-    url_title: 'twoUrl'
-  }
-  ],
-
-};
 
 
 function appendToBudget() {
-  // var node = document.createElement("li");   
+
   var container = JSON.parse(localStorage.getItem("chips"));
-  var categories = document.getElementById('cate');
-  var monthAll = document.getElementById('monthAll');
+  var categories = document.getElementById('cate')
+  var monthleyAll = document.getElementById('monthAll')
 
   categories.innerHTML = "";
-  monthAll.innerHTML = "";
+  monthleyAll.innerHTML = "";
 
   var salaryVal = document.getElementById("salary").value;
   var savingVal = document.getElementById("saving").value;
@@ -538,23 +626,17 @@ function appendToBudget() {
   var each = (budgetLeft / (container.length - 1))
 
   for (var i = 0; i < container.length; i++) {
+
     var node = document.createElement("p");
+
     node.setAttribute('id', container[i]);
     node.innerHTML = container[i];
+
     categories.appendChild(node);
 
     var allowance = document.createElement('p');
     allowance.innerHTML = each;
-    monthAll.appendChild(allowance);
+    monthleyAll.appendChild(allowance);
   }
 
-
-
-
-
-
-
-
-
 }
-
