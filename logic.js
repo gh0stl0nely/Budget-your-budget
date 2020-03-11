@@ -3,35 +3,35 @@ displayTagsFromStorage();
 addEventListenerOnLoad();
 
 function toggleSections(e) {
-    if (e.target.innerHTML == 'Home') {
-        document.getElementById('BudgetPage').style.display = 'none';
-        document.getElementById('Home').style.display = 'block';
-        document.getElementById("ContactPage").style.display = 'none';
-    } else if (e.target.innerHTML == 'Budget Plan') {
-        document.getElementById('BudgetPage').style.display = 'block';
-        document.getElementById('Home').style.display = 'none';
-        document.getElementById("ContactPage").style.display = 'none';
-    } else if (e.target.innerHTML == 'Contact Us') {
-        document.getElementById('BudgetPage').style.display = 'none';
-        document.getElementById('Home').style.display = 'none';
-        document.getElementById("ContactPage").style.display = 'block';
-        document.getElementById("ThankYou").style.display = "none";
-    }
+  if (e.target.innerHTML == 'Home') {
+    document.getElementById('BudgetPage').style.display = 'none';
+    document.getElementById('Home').style.display = 'block';
+    document.getElementById("ContactPage").style.display = 'none';
+  } else if (e.target.innerHTML == 'Budget Plan') {
+    document.getElementById('BudgetPage').style.display = 'block';
+    document.getElementById('Home').style.display = 'none';
+    document.getElementById("ContactPage").style.display = 'none';
+  } else if (e.target.innerHTML == 'Contact Us') {
+    document.getElementById('BudgetPage').style.display = 'none';
+    document.getElementById('Home').style.display = 'none';
+    document.getElementById("ContactPage").style.display = 'block';
+    document.getElementById("ThankYou").style.display = "none";
+  }
 };
 
 function displayTagsFromStorage() {
-    var storage = JSON.parse(localStorage.getItem("chips")); // []
+  var storage = JSON.parse(localStorage.getItem("chips")); // []
 
-    if (storage) {
-        var budgetOptions = document.getElementById("budget-options");
+  if (storage) {
+    var budgetOptions = document.getElementById("budget-options");
 
-        for (var i = 0; i < storage.length; i++) {
-            createAndDisplayTag(storage, i, budgetOptions);
-        }
-    } else {
-        storage = [];
-        localStorage.setItem("chips", JSON.stringify(storage));
+    for (var i = 0; i < storage.length; i++) {
+      createAndDisplayTag(storage, i, budgetOptions);
     }
+  } else {
+    storage = [];
+    localStorage.setItem("chips", JSON.stringify(storage));
+  }
 }
 
 function addEventListenerOnLoad() {
@@ -46,8 +46,10 @@ function addEventListenerOnLoad() {
   document.getElementById('addChipsBtn').addEventListener('click', addNewCategoryToHomePage);
 
   document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems);
+    var modalEl = document.querySelectorAll('.modal');
+    var instance1 = M.Modal.init(modalEl);
+    var selectEl = document.querySelectorAll('select');
+    var instance2 = M.FormSelect.init(selectEl);
   });
   document.getElementById('home').addEventListener('click', toggleSections);
   document.getElementById('budget').addEventListener('click', toggleSections);
@@ -56,7 +58,7 @@ function addEventListenerOnLoad() {
   document.getElementById('contact').addEventListener('click', toggleSections);
   document.getElementById('contactMobile').addEventListener('click', toggleSections);
   document.getElementById('feedbackForm').addEventListener('submit', sendMsg);
-  
+
   //Toggling graph hide and show
   document.getElementById('mySwitch').addEventListener('click', toggleOnAndOff);
 
@@ -67,13 +69,13 @@ function addEventListenerOnLoad() {
 /*                       **  **              */
 
 // ** Khoi's code **
-function toggleGraph(e){
+function toggleGraph(e) {
   e.preventDefault();
   console.log(e.target.innerHTML);
-  if(e.target.innerHTML == 'Bar Graph'){
+  if (e.target.innerHTML == 'Bar Graph') {
     document.getElementById('myChartBar').style.display = 'block';
     document.getElementById('myChartPie').style.display = 'none';
-  } else if(e.target.innerHTML == 'Pie Graph'){
+  } else if (e.target.innerHTML == 'Pie Graph') {
     document.getElementById('myChartBar').style.display = 'none';
     document.getElementById('myChartPie').style.display = 'block';
   }
@@ -81,91 +83,91 @@ function toggleGraph(e){
 
 //Helper for displayTagsFromStorage
 function createAndDisplayTag(storage, i, budgetOptions) {
-    var divItem = document.createElement("div");
-    divItem.classList.add("chip");
-    divItem.setAttribute("data-name", storage[i]);
-    divItem.innerHTML = storage[i];
+  var divItem = document.createElement("div");
+  divItem.classList.add("chip");
+  divItem.setAttribute("data-name", storage[i]);
+  divItem.innerHTML = storage[i];
 
-    var icon = document.createElement("i");
-    icon.classList.add("close");
-    icon.classList.add("material-icons");
-    icon.innerText = "close";
-    divItem.appendChild(icon);
-    budgetOptions.appendChild(divItem);
+  var icon = document.createElement("i");
+  icon.classList.add("close");
+  icon.classList.add("material-icons");
+  icon.innerText = "close";
+  divItem.appendChild(icon);
+  budgetOptions.appendChild(divItem);
 }
 
 // When click on Ok, append category into current category
 function addNewCategoryToHomePage() {
 
-    // Get the new values from the modal that the user typed in
-    var newValues = getNewCategory();
+  // Get the new values from the modal that the user typed in
+  var newValues = getNewCategory();
 
-    // Append new values to existing id="budget-options" list
-    appendToExistingOptions(newValues);
+  // Append new values to existing id="budget-options" list
+  appendToExistingOptions(newValues);
 
-    //Update local storage
-    setTimeout(updateLocalStorage, 500);
-    clearInputFields();
+  //Update local storage
+  setTimeout(updateLocalStorage, 500);
+  clearInputFields();
 }
 
 function getNewCategory() {
-    var newCategoryRaw;
-    var newCategory;
-    var newChips = [];
-    var inputDiv = document.getElementById('inputDiv').children;
+  var newCategoryRaw;
+  var newCategory;
+  var newChips = [];
+  var inputDiv = document.getElementById('inputDiv').children;
 
-    for (var i = 0; i < inputDiv.length; i++) {
-        newCategoryRaw = inputDiv[i].value.trim().toLowerCase();
-        newCategory = newCategoryRaw.charAt(0).toUpperCase() + newCategoryRaw.slice(1);
-        newChips.push(newCategory);
-    }
-    return newChips;
+  for (var i = 0; i < inputDiv.length; i++) {
+    newCategoryRaw = inputDiv[i].value.trim().toLowerCase();
+    newCategory = newCategoryRaw.charAt(0).toUpperCase() + newCategoryRaw.slice(1);
+    newChips.push(newCategory);
+  }
+  return newChips;
 
 }
 
 function appendToExistingOptions(newChips) {
-    var budgetOptions = document.getElementById("budget-options");
-    for (var i = 0; i < newChips.length; i++) {
-        var divItem = document.createElement("div");
-        divItem.classList.add("chip");
-        divItem.setAttribute("data-name", newChips[i]);
-        divItem.innerHTML = newChips[i];
+  var budgetOptions = document.getElementById("budget-options");
+  for (var i = 0; i < newChips.length; i++) {
+    var divItem = document.createElement("div");
+    divItem.classList.add("chip");
+    divItem.setAttribute("data-name", newChips[i]);
+    divItem.innerHTML = newChips[i];
 
-        var icon = document.createElement("i");
-        icon.classList.add("close");
-        icon.classList.add("material-icons");
-        icon.innerText = "close";
+    var icon = document.createElement("i");
+    icon.classList.add("close");
+    icon.classList.add("material-icons");
+    icon.innerText = "close";
 
-        divItem.appendChild(icon);
-        budgetOptions.appendChild(divItem);
-    }
+    divItem.appendChild(icon);
+    budgetOptions.appendChild(divItem);
+  }
 }
 
 function updateLocalStorage() {
-    var budgetOptions = document.getElementById("budget-options");
-    var chipsForLocalStorage = [];
-    var allCurrentTags = budgetOptions.children;
-    var item;
+  var budgetOptions = document.getElementById("budget-options");
+  var chipsForLocalStorage = [];
+  var allCurrentTags = budgetOptions.children;
+  var item;
 
-    for (var i = 0; i < allCurrentTags.length; i++) {
-        item = allCurrentTags[i].getAttribute('data-name');
-        chipsForLocalStorage.push(item);
-    }
+  for (var i = 0; i < allCurrentTags.length; i++) {
+    item = allCurrentTags[i].getAttribute('data-name');
+    chipsForLocalStorage.push(item);
+  }
 
-    localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
+  localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
 
 }
 
 // When click on Close or Ok in Modal, leave only 1 input field
 function clearInputFields() {
-    var inputDiv = document.getElementById('inputDiv'); // return object
-    var inputFields = inputDiv.children; // Return a list 
-    for (var i = 1; i < inputFields.length; i++) {
-        inputFields[i].remove();
-        i--;
-    }
-    // Clear the value of first input field
-    inputFields[0].value = "";
+  var inputDiv = document.getElementById('inputDiv'); // return object
+  var inputFields = inputDiv.children; // Return a list 
+  for (var i = 1; i < inputFields.length; i++) {
+    inputFields[i].remove();
+    i--;
+  }
+  // Clear the value of first input field
+  inputFields[0].value = "";
 }
 
 function exportToExcel() {
@@ -201,7 +203,7 @@ function exportToExcel() {
   XLSX.writeFile(workbook, "Your Budget.xls");
 }
 
-function visualize(){
+function visualize() {
   // document.getElementById('myChartBar')
   // document.getElementById('myChartBar')
   //Empty out myChart 
@@ -209,11 +211,11 @@ function visualize(){
   myChart.innerHTML = "";
 
   //Create 2 new canvas
-  for(var i = 0; i < 2; i++){
+  for (var i = 0; i < 2; i++) {
     var canvas = document.createElement('canvas');
     canvas.setAttribute('width', '1500');
     canvas.setAttribute('height', '1200');
-    if(i == 0){
+    if (i == 0) {
       canvas.id = 'myChartBar';
     } else {
       canvas.id = 'myChartPie';
@@ -225,7 +227,7 @@ function visualize(){
 
   visualizeBar();
   visualizePie();
-  
+
   document.getElementById('barGraph').addEventListener('click', toggleGraph);
   document.getElementById('pieGraph').addEventListener('click', toggleGraph);
 }
@@ -238,7 +240,7 @@ function visualizeBar() {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [{
         label: 'Recommended amount',
-        data: [Math.floor((100-50) * Math.random()), Math.floor((100-50) * Math.random())],
+        data: [Math.floor((100 - 50) * Math.random()), Math.floor((100 - 50) * Math.random())],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -266,8 +268,8 @@ function visualizeBar() {
       },
       scales: {
         yAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Recommended spending amount ($CAD)',
             fontSize: 14,
             fontColor: '#26a69a',
@@ -275,8 +277,8 @@ function visualizeBar() {
           }
         }],
         xAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Category',
             fontSize: 20,
             fontColor: '#26a69a',
@@ -297,7 +299,7 @@ function visualizePie() {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [{
         label: 'Recommended spending per category',
-        data: [Math.floor((100-50) * Math.random()), Math.floor((100-50) * Math.random())],
+        data: [Math.floor((100 - 50) * Math.random()), Math.floor((100 - 50) * Math.random())],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -326,16 +328,16 @@ function visualizePie() {
       },
       scales: {
         yAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Recommended spending amount ($CAD)',
             fontSize: 14,
             fontColor: '#26a69a',
           }
         }],
         xAxes: [{
-          scaleLabel:{
-            display:true,
+          scaleLabel: {
+            display: true,
             labelString: 'Category',
             fontSize: 20,
             fontColor: '#26a69a',
@@ -347,10 +349,10 @@ function visualizePie() {
   });
 }
 
-function toggleOnAndOff(e){
+function toggleOnAndOff(e) {
   var toggle = e.target.checked;
   var graph = document.getElementById('myChart');
-  if(toggle){
+  if (toggle) {
     graph.style.visibility = 'visible';
   } else {
     graph.style.visibility = 'hidden';
@@ -372,20 +374,18 @@ function proposeBudget(event) {
   };
 
   // check for valid income and saving percentage input
-  var salary = document.getElementById("salary");
-  var saving = document.getElementById("saving");
-
   // grab the value of salary and saving
-  var salaryCal = salary.value;
-  var savingCal = saving.value;
-
-  // do your calculation
-  var calculation = ((salaryCal * savingCal) / 100);
+  var salaryVal = document.getElementById("salary").value;
+  var savingVal = document.getElementById("saving").value;
+  var savingAmount = ((salaryVal * savingVal) / 100);
+// show on the budget page
+document.getElementById("incomeAmount").innerText = salaryVal;
+document.getElementById("savingAmount").innerText = savingAmount;
 
   var regex = /\d+\.{0,1}\d+/; // Check to see if it contains 2 or more . or + or -
 
   // if the input is not vaild, the input box will turn red
-  if (!regex.test(salaryCal)) {
+  if (!regex.test(salaryVal)) {
     M.toast({
       html: 'Please enter a valid number for income.',
       classes: 'red',
@@ -397,7 +397,7 @@ function proposeBudget(event) {
     salary.style.color = "black";
   };
 
-  if (!regex.test(savingCal)) {
+  if (!regex.test(savingVal)) {
     M.toast({
       html: 'Please enter a valid number for saving.',
       classes: 'red',
@@ -429,7 +429,7 @@ function proposeBudget(event) {
   //Append budget values
   appendToBudget();
   // Wait until all numbers are calculated then call visualize to draw graph 
-  
+
   visualize();
 
   // Generating Inflation
@@ -438,26 +438,26 @@ function proposeBudget(event) {
 
 // For adding input fields to modal
 function addInputField() {
-    var inputDiv = document.getElementById("inputDiv");
-    var inputField = document.createElement("input");
-    inputField.setAttribute("type", "text");
-    inputField.setAttribute("id", "customCategory");
-    inputField.setAttribute('placeholder', 'New Category')
-    inputField.setAttribute('require', "");
-    inputField.setAttribute('aria-required', "true");
-    inputField.classList.add("validate");
-    inputDiv.appendChild(inputField);
+  var inputDiv = document.getElementById("inputDiv");
+  var inputField = document.createElement("input");
+  inputField.setAttribute("type", "text");
+  inputField.setAttribute("id", "customCategory");
+  inputField.setAttribute('placeholder', 'New Category')
+  inputField.setAttribute('require', "");
+  inputField.setAttribute('aria-required', "true");
+  inputField.classList.add("validate");
+  inputDiv.appendChild(inputField);
 }
 
 function sendMsg(event) {
-    event.preventDefault();
-    document.getElementById("nameInput").value = '';
-    document.getElementById("email").value = '';
-    document.getElementById("message").value = '';
-    document.getElementById("ThankYou").style.display = "block";
-    setTimeout(function () {
-        document.getElementById("ThankYou").style.display = "none";
-    }, 3000);
+  event.preventDefault();
+  document.getElementById("nameInput").value = '';
+  document.getElementById("email").value = '';
+  document.getElementById("message").value = '';
+  document.getElementById("ThankYou").style.display = "block";
+  setTimeout(function () {
+    document.getElementById("ThankYou").style.display = "none";
+  }, 3000);
 };
 
 
@@ -477,102 +477,84 @@ function getInflation() {
     .then(res => res.json())
     .then(response => {
       var countrySource = response.country.toLowerCase();
-      
+
       $.getJSON(apiUrl, {
-          country: countrySource,
-          start: prevDate,
-          end: currentDate,
-          amount: 100,
-          format: true
-        })
+        country: countrySource,
+        start: prevDate,
+        end: currentDate,
+        amount: 100,
+        format: true
+      })
         .done(function (data) {
           var temp_val = data.replace("$", "");
           var inflation = (Number(temp_val) / 100) / 4;
           projectedSavings(inflation);
         });
 
-        })
+    })
 };
 
 // For calculating projected savings
 function projectedSavings(x) {
-    var salary = document.getElementById("salary");
-    var saving = document.getElementById("saving");
-    var budgetLeft = document.getElementById("budgetLeft")
+  var budgetLeft = document.getElementById("budgetLeft");
+  var salaryVal = document.getElementById("salary").value;
+  var savingVal = document.getElementById("saving").value;
 
-    var salaryCal = salary.value
-    var savingCal = saving.value
-
-    var retirementSaving = ((savingCal / 100) * salaryCal) * Math.pow((1 + x), 20);
-    console.log(retirementSaving);
-    //Put code here to append to budget template
+  var retirementSaving = ((savingVal / 100) * salaryVal) * Math.pow((1 + x), 20);
+  console.log(retirementSaving);
+  //Put code here to append to budget template
 }
 
 // ** Ebrahim's code **
 var data = {
-    categories: [{
-        name: 'one',
-        url_title: 'oneUrl'
-    },
-    {
-        name: 'two',
-        url_title: 'twoUrl'
-    }
-    ],
+  categories: [{
+    name: 'one',
+    url_title: 'oneUrl'
+  },
+  {
+    name: 'two',
+    url_title: 'twoUrl'
+  }
+  ],
 
 };
 
 
-function appendToBudget(){
-  categories.innerHTML = "";
-  monthleyAll.innerHTML = "";
+function appendToBudget() {
   // var node = document.createElement("li");   
- var container = JSON.parse(localStorage.getItem("chips"));
- var budgetBox = document.getElementById('ur-budger')
- var categories = document.getElementById('cate')
- var monthleyAll = document.getElementById('monthAll')
- var salary = document.getElementById("salary");
-  var saving = document.getElementById("saving");
+  var container = JSON.parse(localStorage.getItem("chips"));
+  var categories = document.getElementById('cate');
+  var monthAll = document.getElementById('monthAll');
 
-  var salaryCal = salary.value;
-  var savingCal = saving.value;
+  categories.innerHTML = "";
+  monthAll.innerHTML = "";
+
+  var salaryVal = document.getElementById("salary").value;
+  var savingVal = document.getElementById("saving").value;
 
   // do your calculation
-  var calculation = ((salaryCal * savingCal) / 100);
-  var budgetLeft = (salaryCal - calculation) 
+  var calculation = ((salaryVal * savingVal) / 100);
+  var budgetLeft = (salaryVal - calculation)
   var each = (budgetLeft / (container.length - 1))
- 
-//  console.log(container);
 
+  for (var i = 0; i < container.length; i++) {
+    var node = document.createElement("p");
+    node.setAttribute('id', container[i]);
+    node.innerHTML = container[i];
+    categories.appendChild(node);
 
- for(var i = 0; i < container.length; i++){
-  
-  var node = document.createElement("p");
-  // var salaryCal = salary.value;
-  // var savingCal = saving.value;
-
-  // // do your calculation
-  // var calculation = ((salaryCal * savingCal) / 100);
-  // var budgetLeft = (salaryCal - calculation)   
-
-  node.setAttribute('id', container[i]);
-  node.innerHTML = container[i];
-
-  categories.appendChild(node);  
-
-  var allowance = document.createElement('p');
-  allowance.innerHTML = each;
-  monthleyAll.appendChild(allowance);
-}
-
-
-
-
-
-
-
-
-
+    var allowance = document.createElement('p');
+    allowance.innerHTML = each;
+    monthAll.appendChild(allowance);
   }
 
- 
+
+
+
+
+
+
+
+
+}
+
