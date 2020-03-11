@@ -161,13 +161,20 @@ function updateLocalStorage() {
 // When click on Close or Ok in Modal, leave only 1 input field
 function clearInputFields() {
   var inputDiv = document.getElementById('inputDiv'); // return object
+  var percentDiv = document.getElementById('percentDiv');
   var inputFields = inputDiv.children; // Return a list 
+  var percentInput = percentDiv.children;
   for (var i = 1; i < inputFields.length; i++) {
     inputFields[i].remove();
     i--;
   }
+  for (var i = 1; i < percentInput.length; i++) {
+    percentInput[i].remove();
+    i--
+  }
   // Clear the value of first input field
   inputFields[0].value = "";
+  percentInput[0].value = "";
 }
 
 function exportToExcel() {
@@ -203,7 +210,7 @@ function exportToExcel() {
   XLSX.writeFile(workbook, "Your Budget.xls");
 }
 
-function visualize(years,savingData){
+function visualize(years, savingData) {
   //Empty out myChart 
   var myChart = document.getElementById('myChart');
   myChart.innerHTML = "";
@@ -215,10 +222,10 @@ function visualize(years,savingData){
     canvas.setAttribute('height', '1200');
     if (i == 0) {
       canvas.id = 'myChartBar';
-    } else if(i == 1){
+    } else if (i == 1) {
       canvas.id = 'myChartPie';
       canvas.style.display = 'none';
-    } else if(i == 2){
+    } else if (i == 2) {
       canvas.id = 'myChartLine';
       canvas.style.marginTop = '20px';
     }
@@ -228,7 +235,7 @@ function visualize(years,savingData){
 
   visualizeBar();
   visualizePie();
-  visualizeLine(years,savingData);
+  visualizeLine(years, savingData);
 
   document.getElementById('barGraph').addEventListener('click', toggleGraph);
   document.getElementById('pieGraph').addEventListener('click', toggleGraph);
@@ -351,7 +358,7 @@ function visualizePie() {
   });
 }
 
-function visualizeLine(years,savingData){
+function visualizeLine(years, savingData) {
   var ctx = document.getElementById('myChartLine').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'line',
@@ -436,9 +443,9 @@ function proposeBudget(event) {
   var salaryVal = document.getElementById("salary").value;
   var savingVal = document.getElementById("saving").value;
   var savingAmount = ((salaryVal * savingVal) / 100);
-// show on the budget page
-document.getElementById("incomeAmount").innerText = salaryVal;
-document.getElementById("savingAmount").innerText = savingAmount;
+  // show on the budget page
+  document.getElementById("incomeAmount").innerText = salaryVal;
+  document.getElementById("savingAmount").innerText = savingAmount;
 
   var regex = /\d+\.{0,1}\d+/; // Check to see if it contains 2 or more . or + or -
 
@@ -489,7 +496,7 @@ document.getElementById("savingAmount").innerText = savingAmount;
 
   //Append budget values
   appendToBudget();
- 
+
   // Generating Inflation
   getInflation();
 };
@@ -497,14 +504,23 @@ document.getElementById("savingAmount").innerText = savingAmount;
 // For adding input fields to modal
 function addInputField() {
   var inputDiv = document.getElementById("inputDiv");
+  var percentDiv = document.getElementById("percentDiv");
   var inputField = document.createElement("input");
+  var inputPercent = document.createElement("input");
   inputField.setAttribute("type", "text");
   inputField.setAttribute("id", "customCategory");
   inputField.setAttribute('placeholder', 'New Category')
   inputField.setAttribute('require', "");
   inputField.setAttribute('aria-required', "true");
   inputField.classList.add("validate");
+  inputPercent.setAttribute("type", "number");
+  inputPercent.setAttribute("id", "cetePercent");
+  inputPercent.setAttribute("placeholder", "percent");
+  inputPercent.setAttribute('require', "");
+  inputPercent.setAttribute('aria-required', "true");
+  inputPercent.classList.add("validate");
   inputDiv.appendChild(inputField);
+  percentDiv.appendChild(inputPercent);
 }
 
 function sendMsg(event) {
@@ -558,20 +574,20 @@ function projectedSavings(x) {
   var saving = document.getElementById("saving");
   var salaryCal = salary.value;
   var savingCal = saving.value;
-  
+
 
   //Calculation for each year saving
 
   var dropDownYearOption = document.getElementById('year');
   var selectedRetirementYear = Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
 
-  
+
   var chosenYearSpan = document.getElementById('chosenYear');
   chosenYearSpan.innerHTML = selectedRetirementYear;
-  
+
   //Get currentDay
   var thisYear = new Date().getFullYear();
-  var eachYear = selectedRetirementYear/ 5; // I.e: If 10, eachYear is 2 years apart until retirement
+  var eachYear = selectedRetirementYear / 5; // I.e: If 10, eachYear is 2 years apart until retirement
   var yearApart = eachYear; // If 10 then yearApart = 2 only, if 35 then 7 is yearApart
 
   var savingsForEachYear = [];
@@ -580,7 +596,7 @@ function projectedSavings(x) {
 
   //Only get 4 years , not including the last year which is year the user selected
 
-  for(var i = 0; i <= 4; i++){
+  for (var i = 0; i <= 4; i++) {
     savingPerYear = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), eachYear));
     savingsForEachYear.push(savingPerYear);
     years.push(eachYear);
@@ -602,7 +618,7 @@ function projectedSavings(x) {
   console.log(retirementSaving);
 
   // visualize all graphs after data is ready 
-  visualize(eachYearFactorInThisYear,savingsForEachYear);
+  visualize(eachYearFactorInThisYear, savingsForEachYear);
 }
 
 // ** Ebrahim's code **
