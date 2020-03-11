@@ -46,8 +46,10 @@ function addEventListenerOnLoad() {
   document.getElementById('addChipsBtn').addEventListener('click', addNewCategoryToHomePage);
 
   document.addEventListener('DOMContentLoaded', function () {
-    var elems = document.querySelectorAll('.modal');
-    var instances = M.Modal.init(elems);
+    var modalEl = document.querySelectorAll('.modal');
+    var instance1 = M.Modal.init(modalEl);
+    var selectEl = document.querySelectorAll('select');
+    var instance2 = M.FormSelect.init(selectEl);
   });
   document.getElementById('home').addEventListener('click', toggleSections);
   document.getElementById('budget').addEventListener('click', toggleSections);
@@ -430,20 +432,18 @@ function proposeBudget(event) {
   };
 
   // check for valid income and saving percentage input
-  var salary = document.getElementById("salary");
-  var saving = document.getElementById("saving");
-
   // grab the value of salary and saving
-  var salaryCal = salary.value;
-  var savingCal = saving.value;
-
-  // do your calculation
-  var calculation = ((salaryCal * savingCal) / 100);
+  var salaryVal = document.getElementById("salary").value;
+  var savingVal = document.getElementById("saving").value;
+  var savingAmount = ((salaryVal * savingVal) / 100);
+// show on the budget page
+document.getElementById("incomeAmount").innerText = salaryVal;
+document.getElementById("savingAmount").innerText = savingAmount;
 
   var regex = /\d+\.{0,1}\d+/; // Check to see if it contains 2 or more . or + or -
 
   // if the input is not vaild, the input box will turn red
-  if (!regex.test(salaryCal)) {
+  if (!regex.test(salaryVal)) {
     M.toast({
       html: 'Please enter a valid number for income.',
       classes: 'red',
@@ -455,7 +455,7 @@ function proposeBudget(event) {
     salary.style.color = "black";
   };
 
-  if (!regex.test(savingCal)) {
+  if (!regex.test(savingVal)) {
     M.toast({
       html: 'Please enter a valid number for saving.',
       classes: 'red',
@@ -537,12 +537,12 @@ function getInflation() {
       var countrySource = response.country.toLowerCase();
 
       $.getJSON(apiUrl, {
-          country: countrySource,
-          start: prevDate,
-          end: currentDate,
-          amount: 100,
-          format: true
-        })
+        country: countrySource,
+        start: prevDate,
+        end: currentDate,
+        amount: 100,
+        format: true
+      })
         .done(function (data) {
           var temp_val = data.replace("$", "");
           var inflation = (Number(temp_val) / 100) / 4;
@@ -563,8 +563,8 @@ function projectedSavings(x) {
   //Calculation for each year saving
 
   var dropDownYearOption = document.getElementById('year');
-  var selectedRetirementYear = 30; 
-    // Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
+  var selectedRetirementYear = Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
+
   
   var chosenYearSpan = document.getElementById('chosenYear');
   chosenYearSpan.innerHTML = selectedRetirementYear;
@@ -597,7 +597,7 @@ function projectedSavings(x) {
 
   var retirementSaving = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), selectedRetirementYear));
   var retireAmountDiv = document.getElementById('retirementAmount');
-  // retireAmountDiv.innerHTML = retirementSaving;
+  retireAmountDiv.innerHTML = retirementSaving;
 
   console.log(retirementSaving);
 
@@ -613,18 +613,16 @@ function appendToBudget() {
   var container = JSON.parse(localStorage.getItem("chips"));
   var categories = document.getElementById('cate')
   var monthleyAll = document.getElementById('monthAll')
-  var salary = document.getElementById("salary");
-  var saving = document.getElementById("saving");
 
   categories.innerHTML = "";
   monthleyAll.innerHTML = "";
 
-  var salaryCal = salary.value;
-  var savingCal = saving.value;
+  var salaryVal = document.getElementById("salary").value;
+  var savingVal = document.getElementById("saving").value;
 
   // do your calculation
-  var calculation = ((salaryCal * savingCal) / 100);
-  var budgetLeft = (salaryCal - calculation)
+  var calculation = ((salaryVal * savingVal) / 100);
+  var budgetLeft = (salaryVal - calculation)
   var each = (budgetLeft / (container.length - 1))
 
   for (var i = 0; i < container.length; i++) {

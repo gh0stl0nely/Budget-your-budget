@@ -20,268 +20,293 @@
   <section>
 
 
-  <div class="navbar-fixed">
-    <nav class="blue lighten-1" role="navigation">
-      <div class="nav-wrapper">
-        <a class="brand-logo hide-on-small-only logo" style="padding-left: 20px; cursor: pointer;">Budget Your Budget</a>
-        <a class="brand-logo show-on-small hide-on-med-and-up logo" style="font-size: 15px;">Budget
-          Your
-          Budget</a>
-        <ul class="right hide-on-med-and-down">
-          <li id="home"><a>Home</a></li>
-          <li id="budget"><a>Budget Plan</a></li>
-          <li id="contact"><a>Contact Us</a></li>
-        </ul>
-        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-    </nav>
-  </div>
-
-  <!-- side nav shown on mobile screen -->
-  <ul id="nav-mobile" class="sidenav">
-    <li id="homeMobile"><a>Home</a></li>
-    <li id="budgetMobile"><a>Budget Plan</a></li>
-    <li id="contactMobile"><a>Contact Us</a></li>
-  </ul>
-
-  <!--Home Page-->
-  <section id="Home">
-    <!-- Header Introduction-->
-    <div class="content">
-      <div class="header">
-        <p class="top">Welcome!</p>
-        <p class="top">This app is
-          for creating a budget plan and working
-          towards your saving goal.</p>
-        <ol class="instruction">
-          <li>Click the orange "+" button to add categories you will spend money on monthly. (i.e: Food, Rent,
-            Transportation)</li>
-            <br>
-          <li>Enter your monthly income</li>
-          <br>
-          <li>Enter the percentage of your income that you want to save</li>
-          <br>
-          <li>Press "Calculate Budget"</li>
-        </ol>
-      </div>
-      <div class="circle-border">
-      </div>
-      <div class="circle">
-        <i class="material-icons small orange-text">arrow_downward</i>
-      </div>
+    <div class="navbar-fixed">
+      <nav class="blue lighten-1" role="navigation">
+        <div class="nav-wrapper">
+          <a class="brand-logo hide-on-small-only logo" style="padding-left: 20px; cursor: pointer;">Budget Your
+            Budget</a>
+          <a class="brand-logo show-on-small hide-on-med-and-up logo" style="font-size: 15px;">Budget
+            Your
+            Budget</a>
+          <ul class="right hide-on-med-and-down">
+            <li id="home"><a>Home</a></li>
+            <li id="budget"><a>Budget Plan</a></li>
+            <li id="contact"><a>Contact Us</a></li>
+          </ul>
+          <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </nav>
     </div>
 
-    <!-- Category Chips (or Tags) -->
-    <div class="section no-pad-bot">
-      <div class="container">
-        <div id="budget-options">
-          <!-- 
+    <!-- side nav shown on mobile screen -->
+    <ul id="nav-mobile" class="sidenav">
+      <li id="homeMobile"><a>Home</a></li>
+      <li id="budgetMobile"><a>Budget Plan</a></li>
+      <li id="contactMobile"><a>Contact Us</a></li>
+    </ul>
+
+    <!--Home Page-->
+    <section id="Home">
+      <!-- Header Introduction-->
+      <div class="content">
+        <div class="header">
+          <p class="top">Welcome!</p>
+          <p class="top">This app is
+            for creating a budget plan and working
+            towards your saving goal.</p>
+          <ol class="instruction">
+            <li>Click the orange "+" button to add categories you will spend money on monthly (i.e: Food, Rent,
+              Transportation)</li>
+            <br>
+            <li>Enter your monthly income</li>
+            <br>
+            <li>Enter the percentage of your income that you want to save</li>
+            <br>
+            <li>Press "Calculate Budget"</li>
+          </ol>
+        </div>
+        <div class="circle-border">
+        </div>
+        <div class="circle">
+          <i class="material-icons small orange-text">arrow_downward</i>
+        </div>
+      </div>
+
+      <!-- Category Chips (or Tags) -->
+      <div class="section no-pad-bot">
+        <div class="container">
+          <div id="budget-options">
+            <!-- 
         <div data-name="Food" class="chip">
           Food
           <i class="close material-icons">close</i>
         </div>
       -->
-        </div>
+          </div>
+          <br><br>
 
-        <br><br>
+          <!-- Add category bttn -->
+          <div class="center-align">
+            <a class="waves-effect waves-yellow btn modal-trigger orange" href="#modal"><i
+                class="material-icons">add</i></a>
+          </div>
 
-        <!-- Add category bttn -->
-        <div class="center-align">
-          <a class="waves-effect waves-yellow btn modal-trigger orange" href="#modal"><i
-              class="material-icons">add</i></a>
-        </div>
-
-
-        <!-- Modal Structure -->
-        <div id="modal" class="modal">
-          <div class="modal-content">
-            <h4>Add your own categories</h4>
-            <div class="divider"></div>
-            <div class="row">
-              <div class="col s6">
-                <div class="input-field" id="inputDiv">
-                  <input placeholder="New Category" id="customCategory" type="text" class="validate" required>
+          <!-- Modal Structure -->
+          <div id="modal" class="modal">
+            <div class="modal-content">
+              <h4>Add your own categories</h4>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="col s6">
+                  <div class="input-field" id="inputDiv">
+                    <input placeholder="New Category" id="customCategory" type="text" class="validate" required>
+                  </div>
+                  <button class="waves-effect waves-yellow btn orange" id="addInputBttn">Add categories</button>
                 </div>
-                <button class="waves-effect waves-yellow btn orange" id="addInputBttn">Add categories</button>
               </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <a class="modal-close waves-effect waves-yellow btn-flat" id="addChipsBtn">Save Categories</a>
-            <a class="modal-close waves-effect waves-yellow btn-flat" id="closeBtn">Close</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Input section for Income and Expected Saving -->
-    <div class="container">
-      <div class="section">
-        <div class="row">
-          <div class="col s12 m4"></div>
-          <div class="col s12 m4">
-            <div class="icon-block">
-              <input placeholder="Monthly Salary" id="salary" type="number" step="any" class="validate" min="0">
-              <label for="Salary">Income in $CAD</label>
-              <label style="display: block;">Valid input: 24000, 38493.29</label>
+            <div class="modal-footer">
+              <a class="modal-close waves-effect waves-yellow btn-flat" id="addChipsBtn">Save Categories</a>
+              <a class="modal-close waves-effect waves-yellow btn-flat" id="closeBtn">Close</a>
             </div>
           </div>
-          <div class="col s12 m4"></div>
         </div>
-
-        <div class="row">
-          <div class="col s12 m4"></div>
-          <div class="col s12 m4">
-            <div class="icon-block">
-              <input placeholder="Saving Rate" id="saving" type="number" step="any" class="validate" min="0" max="100">
-              <label for="Saving">Desired Saving Percentage</label>
-              <label style="display: block;">Valid input: 28.5, 95</label>
-            </div>
-          </div>
-          <div class="col s12 m4"></div>
-        </div>
-
       </div>
-      <!-- Calculate bttn -->
-      <div class="row center">
-        <a id="submit-button" class="btn-large waves-effect waves-light orange">Calculate Budget</a>
-      </div>
-    </div>
-  </section>
 
-  <!--                                    Budget Page                             -->
-  <section style="display: none;" id="BudgetPage" class="section no-pad-bot">
-    <div class="container">
-      <!-- Numbers And Calculations-->
-      <div class="section">
-        <h4 class="center-align">Your Budget Plan</h4>
-        <p class="center-align">Income <span id="incomeAmount">$$$$</span></p>
-        <p class="center-align">Saving goal <span id="savingAmount">$$$$</span></p>
-        <div class="divider"></div>
-        <div class="budget-box">
-          <ul>
-            <li id="customer-budget">
-              <div id="ur-budger" class="title">Your budget</div>
 
-            </li>
-            <li>
-              <div id="cate" class="title"> categories
-
+      <!-- Input section for Income and Expected Saving -->
+      <div class="container">
+        <div class="section">
+          <div class="row">
+            <div class="col s12 m4"></div>
+            <div class="col s12 m4">
+              <!-- monthly income -->
+              <div class="row">
+                <div class="icon-block">
+                  <input placeholder="Monthly Salary" id="salary" type="number" step="any" class="validate" min="0">
+                  <label for="Salary">Income in $CAD</label><br>
+                  <label style="display: block;">Valid input: 24000, 38493.29</label>
+                </div>
               </div>
-              <!-- <div class="input"><input value="%" class="percentage"></div> -->
-            </li>
-            <li>
-              <div id="monthAll" class="title">Monthly allowance</div>
-            </li>
-            <li>
-              <div class="title">Projected saving at retirement</div>
-            </li>
-          </ul>
-
+              <!-- saving percentage -->
+              <div class="row">
+                <div class="icon-block">
+                  <input placeholder="Saving Rate" id="saving" type="number" step="any" class="validate" min="0"
+                    max="100">
+                  <label for="Saving">Desired Saving Percentage</label>
+                  <label style="display: block;">Valid input: 28.5, 95</label>
+                </div>
+              </div>
+              <div class="row">
+                <!-- years until retirement -->
+                <div class="icon-block">
+                  <label>Years until retirement</label>
+                  <select id="year" class="browser-default">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20" selected>20</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col s12 m4"></div>
+            </div>
+          </div>
+          <!-- Calculate bttn -->
+          <div class="row center">
+            <a id="submit-button" class="btn-large waves-effect waves-light orange">Calculate Budget</a>
+          </div>
         </div>
-             <!-- Download Excel Button-->
-             <div class="row center-align">
-                <a class="btn-large waves-effect waves-light orange" id="downloadExcel">Download Budget (.xls)</a>
+    </section>
+
+    <!--Budget Page-->
+    <section style="display: none;" id="BudgetPage" class="section no-pad-bot">
+      <div class="container">
+        <!-- Numbers And Calculations-->
+        <div class="section">
+          <h4 class="center-align">Your Budget Plan</h4>
+          <p class="center-align">Monthly Income: $<span id="incomeAmount"></span></p>
+          <p class="center-align">Monthly Saving Amount: $<span id="savingAmount"></span></p>
+          <div class="divider"></div>
+          <div class="section">
+            <!-- category col -->
+            <div class="row">
+              <div class="col s6 m6 l7" id="categoryList">
+                <div class="row title center-align">Categories</div>
+                <div class="row green">
+                  <div class="col s12" id="cate">
+                    <p>Food</p>
+                    <p>Food</p>
+                    <p>Food</p>
+                    <p>Food</p>
+                    <p>Food</p>
+                  </div>
+                </div>
+              </div>
+              <!-- detail col -->
+              <div class="col s6 m6 l5" id="details">
+                <div class="row title center-align">Monthly allowance</div>
+                <div class="row">
+                  <div class="col s6 m8 blue" id="monthAll">
+                    <p>300</p>
+                    <p>300</p>
+                    <p>300</p>
+                    <p>300</p>
+                    <p>300</p>
+                  </div>
+                  <div class="col s6 m4 red" id="percentage">
+                    <p>20%</p>
+                    <p>20%</p>
+                    <p>20%</p>
+                    <p>20%</p>
+                    <p>20%</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="row center-align">
+              <p>projected saving until retirement after <span id="chosenYear">XXX</span> years: $<span
+                id="retirementAmount">$$$$$</span></p>
+            </div>
+            <!-- Download Excel Button-->
+            <div class="row center-align">
+              <a class="btn-large waves-effect waves-light orange" id="downloadExcel">Download Budget (.xls)</a>
+            </div>
           </div>
-      </div>
+          <div class="col s12 m4"></div>
+        </div>
 
-      <div class="section">
-        <!-- category col -->
-        <!-- <div class="row">
-          <div class="col s6 m6 l4" id="categoryList">
-          </div> -->
-          <!-- detail col -->
-          <!-- <div class="col s6 m6 l8" id="details">
-          </div>
-        </div> -->
-
-        <!-- Graph -->
-        <div style="text-align: center;" id="Graph">
-          <!-- Toggle between Hide And Show graph-->
-          <div class="switch">
-            <label>
-              Hide
-              <input id="mySwitch" type="checkbox" checked>
-      
-              <span class="lever"></span>
-              Show
-            </label>
-          </div>  
-
-          <!-- Toggle between Bar and -->
-          <div id="graphStyling">
-            <br>
-           <span><button id="barGraph" class="btn">Bar Graph</button></span>
-           <span><button id="pieGraph" class="btn">Pie Graph</button></span>
-          </div>  
-
-          <!-- Actual Graph-->
-          <div id="myChart">
-            <!-- <canvas id="myChartBar" width="1500" height="1200"></canvas>
+           <!-- Graph -->
+           <div style="text-align: center;" id="Graph">
+            <!-- Toggle between Hide And Show graph-->
+            <div class="switch">
+              <label>
+                Hide
+                <input id="mySwitch" type="checkbox" checked>
+  
+                <span class="lever"></span>
+                Show
+              </label>
+            </div>
+  
+            <!-- Toggle between Bar and -->
+            <div id="graphStyling">
+              <br>
+              <span><button id="barGraph" class="btn orange">Bar Graph</button></span>
+              <span><button id="pieGraph" class="btn orange">Pie Graph</button></span>
+            </div>
+  
+            <!-- Actual Graph-->
+            <div id="myChart">
+              <!-- <canvas id="myChartBar" width="1500" height="1200"></canvas>
             <canvas style="display: none;" id="myChartPie" width="1500" height="1200"></canvas> -->
+            </div>
+  
           </div>
-
-        </div>
       </div>
-
+     
     </div>
- 
-  </section>
-  
-  <!--                                    Contact us Page                             -->
-  <section class="section no-pad-bot center-align" style="display: none;" id="ContactPage">
-    <h4 class="indigo-text text-darken-3">Contact Us</h4>
-    <p class="indigo-text text-darken-3">Feel free shoot us an message if you have any questions or feedbacks for us :)</p>
-    <div class="container">
-      <form class="col s12 m12 l12" id="feedbackForm">
-        <div class="row">
-          <div class="col m2 l3 hide-on-small-only"></div>
-          <div class="input-field col s6 m4 l3">
-            <input id="nameInput" type="text" class="validate" required>
-            <label for="nameInput">Name</label>
-          </div>
-          <div class="input-field col s6 m4 l3">
-            <input id="email" type="email" class="validate" required>
-            <label for="email">Email</label>
-          </div>
-          <div class="col m2 l3 hide-on-small-only"></div>
-        </div>
-        <div class="row">
-          <div class="col m2 l3 hide-on-small-only"></div>
-          <div class="input-field col s12 m8 l6">
-            <textarea id="message" class="materialize-textarea" required></textarea>
-            <label for="message">Your message</label>
-          </div>
-          <div class="col m2 l3 hide-on-small-only"></div>
-        </div>
-        <div class="row">
-          <button class="btn waves-effect waves-yellow orange" type="submit" id="sendBtn">Submit
-            <i class="material-icons right">send</i>
-          </button>
-        </div>
-      </form>
-
-      <!-- This message will appear if you successfully submit form -->
-      <div id="ThankYou">
-        <p class="green-text text-darken-2">Thank you for your message! We will get back to you as soon as possible.
-        </p>
-        <i class="material-icons medium green-text text-darken-2">email</i>
-      </div>
   </section>
 
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+    <!-- Contact us page -->
+    <section class="section no-pad-bot center-align" style="display: none;" id="ContactPage">
+      <h4 class="indigo-text text-darken-3">Contact Us</h4>
+      <p class="indigo-text text-darken-3">Feel free shoot us an message if you have any questions or feedbacks for us
+        :)</p>
+      <div class="container">
+        <form class="col s12 m12 l12" id="feedbackForm">
+          <div class="row">
+            <div class="col m2 l3 hide-on-small-only"></div>
+            <div class="input-field col s6 m4 l3">
+              <input id="nameInput" type="text" class="validate" required>
+              <label for="nameInput">Name</label>
+            </div>
+            <div class="input-field col s6 m4 l3">
+              <input id="email" type="email" class="validate" required>
+              <label for="email">Email</label>
+            </div>
+            <div class="col m2 l3 hide-on-small-only"></div>
+          </div>
+          <div class="row">
+            <div class="col m2 l3 hide-on-small-only"></div>
+            <div class="input-field col s12 m8 l6">
+              <textarea id="message" class="materialize-textarea" required></textarea>
+              <label for="message">Your message</label>
+            </div>
+            <div class="col m2 l3 hide-on-small-only"></div>
+          </div>
+          <div class="row">
+            <button class="btn waves-effect waves-yellow orange" type="submit" id="sendBtn">Submit
+              <i class="material-icons right">send</i>
+            </button>
+          </div>
+        </form>
 
-  <!-- Sheetjs for Excel -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.min.js" integrity="sha256-6KtblFoCFV8zf19mVStSMp7nx2+hE1vQB6bDJyBVnEY=" crossorigin="anonymous"></script>
-  
-  <!-- This is Chart-->
-  <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/6.0.2/cash.min.js"></script> -->
-  <script src="logic.js"></script>
+        <!-- This message will appear if you successfully submit form -->
+        <div id="ThankYou">
+          <p class="green-text text-darken-2">Thank you for your message! We will get back to you as soon as possible.
+          </p>
+          <i class="material-icons medium green-text text-darken-2">email</i>
+        </div>
+    </section>
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+
+    <!-- Sheetjs for Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.min.js"
+      integrity="sha256-6KtblFoCFV8zf19mVStSMp7nx2+hE1vQB6bDJyBVnEY=" crossorigin="anonymous"></script>
+
+    <!-- This is Chart-->
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.2.0"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"
+      integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/cash/6.0.2/cash.min.js"></script> -->
+    <script src="logic.js"></script>
 
 
 </body>
