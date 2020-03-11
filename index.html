@@ -4,14 +4,14 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
-  <title>Budget your budget Template</title>
+  <title>Budget Your Budget</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Amaranth&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -23,7 +23,7 @@
     <div class="navbar-fixed">
       <nav class="blue lighten-1" role="navigation">
         <div class="nav-wrapper">
-          <a class="brand-logo hide-on-small-only logo" style="padding-left: 20px; cursor: pointer;">Budget Your
+          <a class="brand-logo hide-on-small-only logo" style="padding-left: 20px;">Budget Your
             Budget</a>
           <a class="brand-logo show-on-small hide-on-med-and-up logo" style="font-size: 15px;">Budget
             Your
@@ -67,7 +67,7 @@
         <div class="circle-border">
         </div>
         <div class="circle">
-          <i class="material-icons small orange-text">arrow_downward</i>
+          <i class="material-icons medium orange-text">arrow_downward</i>
         </div>
       </div>
 
@@ -96,11 +96,16 @@
               <h4>Add your own categories</h4>
               <div class="divider"></div>
               <div class="row">
-                <div class="col s6">
+                <div class="col s8">
                   <div class="input-field" id="inputDiv">
                     <input placeholder="New Category" id="customCategory" type="text" class="validate" required>
                   </div>
                   <button class="waves-effect waves-yellow btn orange" id="addInputBttn">Add categories</button>
+                </div>
+                <div class="col s4">
+                  <div class="input-field" id="percentDiv">
+                    <input placeholder="percent" id="catePercent" type="number" step="any" class="validate" min="0" max="100" required>
+                  </div>
                 </div>
               </div>
             </div>
@@ -164,51 +169,38 @@
     <section style="display: none;" id="BudgetPage" class="section no-pad-bot">
       <div class="container">
         <!-- Numbers And Calculations-->
-        <div class="section">
+        <div class="section indigo-text text-darken-3">
           <h4 class="center-align">Your Budget Plan</h4>
           <p class="center-align">Monthly Income: $<span id="incomeAmount"></span></p>
           <p class="center-align">Monthly Saving Amount: $<span id="savingAmount"></span></p>
           <div class="divider"></div>
           <div class="section">
             <!-- category col -->
-            <div class="row">
+            <div class="row amber lighten-4">
               <div class="col s6 m6 l7" id="categoryList">
-                <div class="row title center-align">Categories</div>
-                <div class="row green">
+                <div class="row title center-align hide-on-small-only show-on-medium-and-up">Categories</div>
+                <div class="row title center-align show-on-small hide-on-med-and-up" style="font-size: 14px;">Categories</div>
+                <div class="row">
                   <div class="col s12" id="cate">
-                    <p>Food</p>
-                    <p>Food</p>
-                    <p>Food</p>
-                    <p>Food</p>
-                    <p>Food</p>
                   </div>
                 </div>
               </div>
               <!-- detail col -->
               <div class="col s6 m6 l5" id="details">
-                <div class="row title center-align">Monthly allowance</div>
+                <div class="row title center-align hide-on-small-only show-on-medium-and-up">Monthly allowance</div>
+                <div class="row title center-align show-on-small hide-on-med-and-up" style="font-size: 14px;">Monthly allowance</div>
                 <div class="row">
-                  <div class="col s6 m8 blue" id="monthAll">
-                    <p>300</p>
-                    <p>300</p>
-                    <p>300</p>
-                    <p>300</p>
-                    <p>300</p>
+                  <div class="col s6 m8 center-align" id="monthAll">
                   </div>
-                  <div class="col s6 m4 red" id="percentage">
-                    <p>20%</p>
-                    <p>20%</p>
-                    <p>20%</p>
-                    <p>20%</p>
-                    <p>20%</p>
+                  <div class="col s6 m4 center-align" id="percentage">
                   </div>
                 </div>
               </div>
             </div>
             <div class="divider"></div>
             <div class="row center-align">
-              <p>projected saving until retirement after <span id="chosenYear">XXX</span> years: $<span
-                id="retirementAmount">$$$$$</span></p>
+              <p>projected saving until retirement after <span id="chosenYear"></span> years: $<span
+                id="retirementAmount"></span></p>
             </div>
             <!-- Download Excel Button-->
             <div class="row center-align">
@@ -219,7 +211,7 @@
         </div>
 
            <!-- Graph -->
-           <div style="text-align: center;" id="Graph">
+           <div class="center-align" id="Graph">
             <!-- Toggle between Hide And Show graph-->
             <div class="switch">
               <label>
