@@ -38,8 +38,8 @@ function displayTagsFromStorage() {
     percentStorage = [];
     document.getElementById('remainingPercentage').innerHTML = 100;
     localStorage.setItem("chips", JSON.stringify(storage));
-    localStorage.setItem("percent" , JSON.stringify(percentStorage));
-    localStorage.setItem("remainingPercentage" , 100);
+    localStorage.setItem("percent", JSON.stringify(percentStorage));
+    localStorage.setItem("remainingPercentage", 100);
   }
 
 }
@@ -136,7 +136,7 @@ function getNewCategory() {
 
 }
 
-function getNewPercentage(){
+function getNewPercentage() {
   var newPercentage;
   var percentages = [];
   var percentDiv = document.getElementById('percentDiv').children;
@@ -213,7 +213,7 @@ function exportToExcel(inflation) {
   var dropDownYearOption = document.getElementById('year');
   var selectedRetirementYear = Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
   var retirementAmount = Number(document.getElementById('retirementAmount').innerHTML);
-  
+
   // Create an empty note book
   var workbook = XLSX.utils.book_new();
   var ws_name = "Budget";
@@ -225,21 +225,21 @@ function exportToExcel(inflation) {
   var percentagesBudget = document.getElementById('percentageBudget').children;
   var eachCategory;
 
-    /* Make worksheet */
+  /* Make worksheet */
   var ws_data = [
-      ["", "Your Monthly Income ($CAD)",income ],
-      ["", "Your Monthly Saving ($CAD)", saving],
-      ["", "Years To Retirement", selectedRetirementYear],
-      [" "],
-      ["Category", "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
-    ];
+    ["", "Your Monthly Income ($CAD)", income],
+    ["", "Your Monthly Saving ($CAD)", saving],
+    ["", "Years To Retirement", selectedRetirementYear],
+    [" "],
+    ["Category", "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
+  ];
 
-  for(var i = 0; i < categories.length;i++){
-      eachCategory = [];
-      eachCategory.push(categories[i].innerHTML);
-      eachCategory.push(Number(monthlyAllowance[i].innerHTML));
-      eachCategory.push(percentagesBudget[i].innerHTML);
-      ws_data.push(eachCategory)
+  for (var i = 0; i < categories.length; i++) {
+    eachCategory = [];
+    eachCategory.push(categories[i].innerHTML);
+    eachCategory.push(Number(monthlyAllowance[i].innerHTML));
+    eachCategory.push(percentagesBudget[i].innerHTML);
+    ws_data.push(eachCategory)
   }
 
   ws_data.push([" "]);
@@ -287,7 +287,7 @@ function visualize(years, savingData) {
   document.getElementById('pieGraph').addEventListener('click', toggleGraph);
 }
 
-function getRandomRGBA(lengthOfArray){
+function getRandomRGBA(lengthOfArray) {
   var colorMix = [];
   const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
@@ -295,8 +295,8 @@ function getRandomRGBA(lengthOfArray){
   var randomPercent = () => (randomNumber(50, 100) * 0.01).toFixed(2);
 
   var randomCssRgba;
-  
-  for(var i = 0; i < lengthOfArray.length; i++){
+
+  for (var i = 0; i < lengthOfArray.length; i++) {
     randomCssRgba = `rgba(${[randomByte(), randomByte(), randomByte(), randomPercent()].join(',')})`;
     colorMix.push(randomCssRgba);
   }
@@ -309,7 +309,7 @@ function visualizeBarAndGraph() {
   var monthlyAllowance = document.getElementById('monthlyAllowanceBudget').children;
   var monthlyAllowanceData = [];
 
-  for(var i = 0; i < monthlyAllowance.length; i++){
+  for (var i = 0; i < monthlyAllowance.length; i++) {
     monthlyAllowanceData.push(monthlyAllowance[i].innerHTML);
   }
 
@@ -326,7 +326,7 @@ function visualizeBarAndGraph() {
         backgroundColor: color,
         //   // 'rgba(255, 206, 86, 0.2)',
         borderColor: color,
-          // 'rgba(255, 99, 132, 1)',
+        // 'rgba(255, 99, 132, 1)',
         borderWidth: 2
       }]
     },
@@ -368,9 +368,9 @@ function visualizeBarAndGraph() {
         label: 'Per category budget ($CAD)',
         data: monthlyAllowanceData,
         backgroundColor: color,
-          // 'rgba(255, 99, 132, 0.2)'
+        // 'rgba(255, 99, 132, 0.2)'
         borderColor: color,
-          // 'rgba(255, 99, 132, 1)',
+        // 'rgba(255, 99, 132, 1)',
         borderWidth: 2
       }]
     },
@@ -483,6 +483,16 @@ function proposeBudget(event) {
     });
     return;
   };
+  // make sure spend money amount is less than or equal to income
+  var percentageLeft = document.getElementById("remainingPercentage").innerHTML;
+  if (percentageLeft < 0) {
+    M.toast({
+      html: "Please make sure the percentage remaining is not negative.",
+      classes: 'red',
+      displayLength: '1500'
+    });
+    return;
+  };
 
   // check for valid income and saving percentage input
   // grab the value of salary and saving
@@ -580,13 +590,13 @@ function sendMsg(event) {
   }, 3000);
 };
 
-function checkPercentageLeft(){
+function checkPercentageLeft() {
   var percentageLeft = document.getElementById("remainingPercentage").innerHTML;
-  if (percentageLeft < 0){
+  if (percentageLeft < 0) {
     document.getElementById("remainingDiv").classList.add("red");
     document.getElementById("remainingDiv").classList.remove("green");
     document.getElementById("remainingDiv").classList.remove("indigo");
-  } else if (percentageLeft == 0){
+  } else if (percentageLeft == 0) {
     document.getElementById("remainingDiv").classList.add("indigo");
     document.getElementById("remainingDiv").classList.remove("red");
     document.getElementById("remainingDiv").classList.remove("green");
@@ -704,7 +714,7 @@ function appendToBudget() {
   var calculation = ((salaryVal * savingVal) / 100); // Literally the saving 
   var budgetLeft = (salaryVal - calculation) // What's left after deducted saving (this amount will be used for spending on each category2)
   var eachCategoryAmount; // Monthly allowance for each category
-  var eachPercentageAmount; 
+  var eachPercentageAmount;
 
   for (var i = 0; i < chipStorage.length; i++) {
     // Append to id="categoryBudget"
@@ -715,7 +725,7 @@ function appendToBudget() {
 
     //Append to id="monthlyAllowanceBudget"
     var allowance = document.createElement('p');
-    eachCategoryAmount = Math.floor(((budgetLeft * percentStorage[i]) /100) * 100) / 100; // Only 2 decimal places
+    eachCategoryAmount = Math.floor(((budgetLeft * percentStorage[i]) / 100) * 100) / 100; // Only 2 decimal places
     allowance.innerHTML = eachCategoryAmount;
     monthlyAllowance.appendChild(allowance);
 
