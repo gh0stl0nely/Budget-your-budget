@@ -1,4 +1,6 @@
 /* Onload Functions (Do Not Touch)                     **  **              */
+
+localStorage.setItem("remainingPercentage", 100); // This variable is fixed
 displayTagsFromStorage();
 addEventListenerOnLoad();
 setInterval(updateLocalStorage, 0);
@@ -24,7 +26,6 @@ function toggleSections(e) {
 function displayTagsFromStorage() {
   var storage = JSON.parse(localStorage.getItem("chips")); // []
   var percentStorage = JSON.parse(localStorage.getItem('percent'));
-  var remainingPercentage = JSON.parse(localStorage.getItem('remainingPercentage'))
 
   if (storage) {
     var budgetOptions = document.getElementById("budget-options");
@@ -33,13 +34,21 @@ function displayTagsFromStorage() {
       createAndDisplayTag(storage, i, budgetOptions, percentStorage, remainingPercentage);
     }
 
+    if (percentStorage.length == 0) {
+      document.getElementById('remainingPercentage').innerHTML = 100;
+      return;
+    } else {
+      var totalPercentageUsed = percentStorage.reduce((acc, value) => acc += value);
+      var newRemainingPercentage = 100 - Number(totalPercentageUsed);
+      document.getElementById('remainingPercentage').innerHTML = newRemainingPercentage;
+    }
+
   } else {
     storage = [];
     percentStorage = [];
     document.getElementById('remainingPercentage').innerHTML = 100;
     localStorage.setItem("chips", JSON.stringify(storage));
     localStorage.setItem("percent", JSON.stringify(percentStorage));
-    localStorage.setItem("remainingPercentage", 100);
   }
 
 }
@@ -71,9 +80,6 @@ function addEventListenerOnLoad() {
 
   //Toggling graph hide and show
   document.getElementById('mySwitch').addEventListener('click', toggleOnAndOff);
-
-  //Download Budget to Excel
-  // document.getElementById('downloadExcel').addEventListener('click', exportToExcel);
 }
 /*                       **  **              */
 
@@ -117,7 +123,7 @@ function addNewCategoryToHomePage() {
   appendToExistingOptions(newValues, correspondingPercentage);
 
   //Update local storage
-  setTimeout(updateLocalStorage, 500);
+  updateLocalStorage();
   clearInputFields();
 }
 
@@ -169,7 +175,7 @@ function appendToExistingOptions(newChips, newPercentage) {
 
 function updateLocalStorage() {
   var budgetOptions = document.getElementById("budget-options");
-  var currentRemainingPercentage = document.getElementById('remainingPercentage').innerHTML;
+
   var chipsForLocalStorage = [];
   var percentForLocalStorage = [];
   var allCurrentTags = budgetOptions.children;
@@ -185,7 +191,16 @@ function updateLocalStorage() {
 
   localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
   localStorage.setItem('percent', JSON.stringify(percentForLocalStorage));
-  localStorage.setItem('remainingPercentage', currentRemainingPercentage);
+  //
+  var usedPercentagesInStorage = JSON.parse(localStorage.getItem('percent')); // The most updated percentages used
+  if (usedPercentagesInStorage.length == 0) {
+    document.getElementById('remainingPercentage').innerHTML = 100;
+    return;
+  } else {
+    var totalPercentageUsed = usedPercentagesInStorage.reduce((acc, value) => Number(acc) + Number(value));
+    var newRemainingPercentage = 100 - Number(totalPercentageUsed);
+    document.getElementById('remainingPercentage').innerHTML = newRemainingPercentage;
+  }
 }
 
 // When click on Close or Ok in Modal, leave only 1 input field
@@ -280,7 +295,7 @@ function visualize(years, savingData) {
     myChart.appendChild(canvas);
   }
 
-  visualizeBarAndGraph();
+  visualizeBarAndPieGraph();
   visualizeLine(years, savingData);
 
   document.getElementById('barGraph').addEventListener('click', toggleGraph);
@@ -304,7 +319,7 @@ function getRandomRGBA(lengthOfArray) {
   return colorMix;
 }
 
-function visualizeBarAndGraph() {
+function visualizeBarAndPieGraph() {
   var chipStorage = JSON.parse(localStorage.getItem("chips"));
   var monthlyAllowance = document.getElementById('monthlyAllowanceBudget').children;
   var monthlyAllowanceData = [];
@@ -473,35 +488,64 @@ function toggleOnAndOff(e) {
 // ** Demi's code **
 function proposeBudget(event) {
   event.preventDefault();
+  // checking user input
+  var validInputs = checkAndGetUserInput();
+  if(!validInputs){
+    return;
+  }
+
+  // Display data on budget page
+  document.getElementById("incomeAmount").innerText = validInputs[0];
+  document.getElementById("savingAmount").innerText = validInputs[1];
+  document.getElementById("unusedAmount").innerText = validInputs[2] + '(Spend on anything you want!)';
+  // Move over to Your Budget section
+
+  document.getElementById('Home').style.display = "none";
+  document.getElementById('BudgetPage').style.display = "block";
+
+  //Append budget values
+  appendToBudget();
+
+  // Generating Inflation
+  getInflation();
+};
+
+function checkAndGetUserInput() {
   // Check there is at least one category 
   var chips = document.getElementsByClassName("chip");
   if (chips.length == 0 || !chips) {
     M.toast({
-      html: "Please choose at least one category.",
+      html: "Please select at least one category.",
       classes: 'red',
       displayLength: '1500'
     });
-    return;
+    return false;
   };
-  // make sure spend money amount is less than or equal to income
-  var percentageLeft = document.getElementById("remainingPercentage").innerHTML;
-  if (percentageLeft < 0) {
-    M.toast({
-      html: "Please make sure the percentage remaining is not negative.",
-      classes: 'red',
-      displayLength: '1500'
-    });
+
+  //Check if user enters blank percentage
+  var isContainBlank = isContainBlankPercentage();
+
+  if(isContainBlank){
     return;
-  };
+  }
 
   // check for valid income and saving percentage input
   // grab the value of salary and saving
-  var salaryVal = document.getElementById("salary").value;
-  var savingVal = document.getElementById("saving").value;
-  var savingAmount = ((salaryVal * savingVal) / 100);
-  // show on the budget page
-  document.getElementById("incomeAmount").innerText = salaryVal;
-  document.getElementById("savingAmount").innerText = savingAmount;
+  var salaryVal = document.getElementById("salary").value; // 1000
+  var savingVal = document.getElementById("saving").value; // 10%
+  if (salaryVal == '' || savingVal == '') {
+    M.toast({
+      html: "Please fill in the missing field for income/saving rate.",
+      classes: 'red',
+      displayLength: '1500'
+    });
+    return false;
+  }
+
+  var savingAmount = Math.floor((((salaryVal * savingVal) / 100)) * 100) / 100; // 100
+  var salaryAfterSavingRate = salaryVal - savingAmount; // 1000 - 100 = 900
+  var remainingPercentage = document.getElementById("remainingPercentage").innerHTML;
+  var unusedAmount = Math.floor(((salaryAfterSavingRate * remainingPercentage) / 100) * 100) / 100;
 
   var regex = /\d*\.{0,1}\d*/;
 
@@ -512,7 +556,7 @@ function proposeBudget(event) {
       classes: 'red',
       displayLength: '2000'
     });
-    return;
+    return false;
   } else {
     salary.style.backgroundColor = "white";
     salary.style.color = "black";
@@ -524,7 +568,7 @@ function proposeBudget(event) {
       classes: 'red',
       displayLength: '2000'
     });
-    return;
+    return false;
   } else {
     saving.style.backgroundColor = "white";
     saving.style.color = "black";
@@ -532,30 +576,46 @@ function proposeBudget(event) {
 
   // user need to enter a number between 0-100 for percentage
 
-  if (saving.value > 100 || saving.value < 0) {
+  if (saving.value > 100 || saving.value <= 0) {
     M.toast({
-      html: 'Please enter a number from 0 to 100.',
+      html: 'Please enter a number between 1 and 100 for saving rate.',
       classes: 'red',
       displayLength: '2000'
     });
-    return;
+    return false;
   } else {
     saving.style.backgroundColor = "white";
     saving.style.color = "black";
   }
-  // Update local storage
-  updateLocalStorage();
 
-  // Move over to Your Budget section
-  document.getElementById('Home').style.display = "none";
-  document.getElementById('BudgetPage').style.display = "block";
+  // make sure spend money amount is less than or equal to income
+  var percentageLeft = document.getElementById("remainingPercentage").innerHTML;
+  if (percentageLeft < 0) {
+    M.toast({
+      html: "Please make sure the percentage remaining is not negative.",
+      classes: 'red',
+      displayLength: '1500'
+    });
+    return false;
+  };
 
-  //Append budget values
-  appendToBudget();
+  return [salaryVal, savingAmount, unusedAmount];
+}
 
-  // Generating Inflation
-  getInflation();
-};
+function isContainBlankPercentage(){
+  var percent = JSON.parse(localStorage.getItem('percent'));
+  for(var i = 0; i < percent.length;i++){
+    if(percent[i] == ''){
+      M.toast({
+        html: "Percentage cannot be empty",
+        classes: 'red',
+        displayLength: '1500'
+      });
+      return true;
+    }
+  }
+  return false;
+}
 
 // For adding input fields to modal
 function addInputField() {
@@ -625,12 +685,12 @@ function getInflation() {
       var countrySource = response.country.toLowerCase();
 
       $.getJSON(apiUrl, {
-        country: countrySource,
-        start: prevDate,
-        end: currentDate,
-        amount: 100,
-        format: true
-      })
+          country: countrySource,
+          start: prevDate,
+          end: currentDate,
+          amount: 100,
+          format: true
+        })
         .done(function (data) {
           var temp_val = data.replace("$", "");
           var inflation = (Number(temp_val) / 100) / 4;
