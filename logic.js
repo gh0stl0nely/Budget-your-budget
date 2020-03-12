@@ -447,7 +447,7 @@ function proposeBudget(event) {
   document.getElementById("incomeAmount").innerText = salaryVal;
   document.getElementById("savingAmount").innerText = savingAmount;
 
-  var regex = /\d+\.{0,1}\d+/; // Check to see if it contains 2 or more . or + or -
+  var regex = /\d*\.{0,1}\d*/;
 
   // if the input is not vaild, the input box will turn red
   if (!regex.test(salaryVal)) {
@@ -464,7 +464,7 @@ function proposeBudget(event) {
 
   if (!regex.test(savingVal)) {
     M.toast({
-      html: 'Please enter a valid number for saving.',
+      html: 'Please enter a valid number for saving percentage.',
       classes: 'red',
       displayLength: '2000'
     });
@@ -625,7 +625,6 @@ function projectedSavings(x) {
 
 
 function appendToBudget() {
-
   var container = JSON.parse(localStorage.getItem("chips"));
   var categories = document.getElementById('cate')
   var monthleyAll = document.getElementById('monthAll')
