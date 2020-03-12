@@ -2,6 +2,7 @@
 displayTagsFromStorage();
 addEventListenerOnLoad();
 setInterval(updateLocalStorage, 0);
+setInterval(checkPercentageLeft, 100);
 
 function toggleSections(e) {
   if (e.target.innerHTML == 'Home') {
@@ -579,6 +580,22 @@ function sendMsg(event) {
   }, 3000);
 };
 
+function checkPercentageLeft(){
+  var percentageLeft = document.getElementById("remainingPercentage").innerHTML;
+  if (percentageLeft < 0){
+    document.getElementById("remainingDiv").classList.add("red");
+    document.getElementById("remainingDiv").classList.remove("green");
+    document.getElementById("remainingDiv").classList.remove("indigo");
+  } else if (percentageLeft == 0){
+    document.getElementById("remainingDiv").classList.add("indigo");
+    document.getElementById("remainingDiv").classList.remove("red");
+    document.getElementById("remainingDiv").classList.remove("green");
+  } else {
+    document.getElementById("remainingDiv").classList.remove("indigo");
+    document.getElementById("remainingDiv").classList.remove("red");
+    document.getElementById("remainingDiv").classList.add("green");
+  };
+};
 
 // ** Bin's code **
 function getInflation() {
