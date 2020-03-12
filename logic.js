@@ -359,7 +359,10 @@ function visualizeBarAndPieGraph() {
             fontSize: 14,
             fontColor: '#26a69a',
             foneWeight: 'bold',
-          }
+          },
+          ticks: {
+            beginAtZero: true
+         }  
         }],
         xAxes: [{
           scaleLabel: {
