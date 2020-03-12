@@ -3,12 +3,8 @@
 We want to build an application that helps user plan and track their budget.
 Being able to pull in economic information from your area and track your budget relative to that information.
 https://open.canada.ca/en
-https://www.statbureau.org/en/inflation-api
 
 For each category, split out links for how much to spend.
-
-Build out shareable links for budget and share it with someone to help keep you accountable.
-https://developers.google.com/drive/
 
 ## User story
 
@@ -16,11 +12,15 @@ https://developers.google.com/drive/
 * HTML
 * Materialize
 * JavaScript
+* Chart.js
+* Love :)
 
-## API
-* [inflation](https://www.statbureau.org/en/inflation-api)
-* [location](https://extreme-ip-lookup.com/)
-* 
+## Sever-side API
+* [Inflation data API](https://www.statbureau.org/en/inflation-api)
+* [Geolocation data API](https://extreme-ip-lookup.com/)
+
+## Third-party API
+* [Sheet.js](https://sheetjs.com)
 
 ## Credits
 * [Bin Hu](https://github.com/waveshocker)
