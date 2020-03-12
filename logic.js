@@ -1,6 +1,7 @@
 /* Onload Functions (Do Not Touch)                     **  **              */
 displayTagsFromStorage();
 addEventListenerOnLoad();
+setInterval(updateLocalStorage, 0);
 
 function toggleSections(e) {
   if (e.target.innerHTML == 'Home') {
@@ -21,17 +22,25 @@ function toggleSections(e) {
 
 function displayTagsFromStorage() {
   var storage = JSON.parse(localStorage.getItem("chips")); // []
+  var percentStorage = JSON.parse(localStorage.getItem('percent'));
+  var remainingPercentage = JSON.parse(localStorage.getItem('remainingPercentage'))
 
   if (storage) {
     var budgetOptions = document.getElementById("budget-options");
 
     for (var i = 0; i < storage.length; i++) {
-      createAndDisplayTag(storage, i, budgetOptions);
+      createAndDisplayTag(storage, i, budgetOptions, percentStorage, remainingPercentage);
     }
+
   } else {
     storage = [];
+    percentStorage = [];
+    document.getElementById('remainingPercentage').innerHTML = 100;
     localStorage.setItem("chips", JSON.stringify(storage));
+    localStorage.setItem("percent" , JSON.stringify(percentStorage));
+    localStorage.setItem("remainingPercentage" , 100);
   }
+
 }
 
 function addEventListenerOnLoad() {
@@ -63,8 +72,7 @@ function addEventListenerOnLoad() {
   document.getElementById('mySwitch').addEventListener('click', toggleOnAndOff);
 
   //Download Budget to Excel
-  document.getElementById('downloadExcel').addEventListener('click', exportToExcel);
-
+  // document.getElementById('downloadExcel').addEventListener('click', exportToExcel);
 }
 /*                       **  **              */
 
@@ -82,11 +90,12 @@ function toggleGraph(e) {
 }
 
 //Helper for displayTagsFromStorage
-function createAndDisplayTag(storage, i, budgetOptions) {
+function createAndDisplayTag(storage, i, budgetOptions, percentStorage) {
   var divItem = document.createElement("div");
   divItem.classList.add("chip");
   divItem.setAttribute("data-name", storage[i]);
-  divItem.innerHTML = storage[i];
+  divItem.setAttribute("data-percent", percentStorage[i]);
+  divItem.innerHTML = storage[i] + ' (' + percentStorage[i] + '%' + ')';
 
   var icon = document.createElement("i");
   icon.classList.add("close");
@@ -101,9 +110,10 @@ function addNewCategoryToHomePage() {
 
   // Get the new values from the modal that the user typed in
   var newValues = getNewCategory();
+  var correspondingPercentage = getNewPercentage();
 
   // Append new values to existing id="budget-options" list
-  appendToExistingOptions(newValues);
+  appendToExistingOptions(newValues, correspondingPercentage);
 
   //Update local storage
   setTimeout(updateLocalStorage, 500);
@@ -125,13 +135,26 @@ function getNewCategory() {
 
 }
 
-function appendToExistingOptions(newChips) {
+function getNewPercentage(){
+  var newPercentage;
+  var percentages = [];
+  var percentDiv = document.getElementById('percentDiv').children;
+
+  for (var i = 0; i < percentDiv.length; i++) {
+    newPercentage = percentDiv[i].value.trim();
+    percentages.push(newPercentage);
+  }
+  return percentages;
+}
+
+function appendToExistingOptions(newChips, newPercentage) {
   var budgetOptions = document.getElementById("budget-options");
   for (var i = 0; i < newChips.length; i++) {
     var divItem = document.createElement("div");
     divItem.classList.add("chip");
     divItem.setAttribute("data-name", newChips[i]);
-    divItem.innerHTML = newChips[i];
+    divItem.setAttribute("data-percent", newPercentage[i]);
+    divItem.innerHTML = newChips[i] + ' (' + newPercentage[i] + '%' + ')';
 
     var icon = document.createElement("i");
     icon.classList.add("close");
@@ -145,17 +168,23 @@ function appendToExistingOptions(newChips) {
 
 function updateLocalStorage() {
   var budgetOptions = document.getElementById("budget-options");
+  var currentRemainingPercentage = document.getElementById('remainingPercentage').innerHTML;
   var chipsForLocalStorage = [];
+  var percentForLocalStorage = [];
   var allCurrentTags = budgetOptions.children;
   var item;
+  var percentage;
 
   for (var i = 0; i < allCurrentTags.length; i++) {
     item = allCurrentTags[i].getAttribute('data-name');
+    percentage = allCurrentTags[i].getAttribute('data-percent');
     chipsForLocalStorage.push(item);
+    percentForLocalStorage.push(percentage);
   }
 
   localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
-
+  localStorage.setItem('percent', JSON.stringify(percentForLocalStorage));
+  localStorage.setItem('remainingPercentage', currentRemainingPercentage);
 }
 
 // When click on Close or Ok in Modal, leave only 1 input field
@@ -177,27 +206,44 @@ function clearInputFields() {
   percentInput[0].value = "";
 }
 
-function exportToExcel() {
+function exportToExcel(inflation) {
+  var income = Number(document.getElementById('incomeAmount').innerHTML);
+  var saving = Number(document.getElementById('savingAmount').innerText);
+  var dropDownYearOption = document.getElementById('year');
+  var selectedRetirementYear = Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
+  var retirementAmount = Number(document.getElementById('retirementAmount').innerHTML);
+  
   // Create an empty note book
   var workbook = XLSX.utils.book_new();
   var ws_name = "Budget";
 
-  // Take data from Ibraheim stuff, amount and percentage
-  // Do a for loop using "" as length
+  // Pull data from Category and Monthly allowance and %
 
-  /* Make worksheet */
+  var categories = document.getElementById('categoryBudget').children;
+  var monthlyAllowance = document.getElementById('monthlyAllowanceBudget').children;
+  var percentagesBudget = document.getElementById('percentageBudget').children;
+  var eachCategory;
+
+    /* Make worksheet */
   var ws_data = [
-    [
-      "Item",
-      "Amount spent monthly ($CAD)",
-      "Amount spent monthly (%)"
-    ],
-    ["Item1", 2, "20%"],
-    ["Item2", 3, "30%"],
-    [""],
-    [" ", "Projected Saving With Inflation", 1000],
-    [" ", "Projected Saving Without Inflation", 2000]
-  ];
+      ["", "Your Monthly Income ($CAD)",income ],
+      ["", "Your Monthly Saving ($CAD)", saving],
+      ["", "Years To Retirement", selectedRetirementYear],
+      [" "],
+      ["Category", "Amount spent monthly ($CAD)", "Amount spent monthly (%)"],
+    ];
+
+  for(var i = 0; i < categories.length;i++){
+      eachCategory = [];
+      eachCategory.push(categories[i].innerHTML);
+      eachCategory.push(Number(monthlyAllowance[i].innerHTML));
+      eachCategory.push(percentagesBudget[i].innerHTML);
+      ws_data.push(eachCategory)
+  }
+
+  ws_data.push([" "]);
+  ws_data.push([" ", "Current inflation rate (May subject to change over time)", inflation]);
+  ws_data.push([" ", "Projected Saving after " + selectedRetirementYear + " year With Inflation", retirementAmount]);
 
   // Create worksheet
 
@@ -207,7 +253,7 @@ function exportToExcel() {
   XLSX.utils.book_append_sheet(workbook, ws, ws_name);
 
   //Download the file in Excel
-  XLSX.writeFile(workbook, "Your Budget.xls");
+  XLSX.writeFile(workbook, "Your Monthly Budget.xls");
 }
 
 function visualize(years, savingData) {
@@ -233,40 +279,54 @@ function visualize(years, savingData) {
     myChart.appendChild(canvas);
   }
 
-  visualizeBar();
-  visualizePie();
+  visualizeBarAndGraph();
   visualizeLine(years, savingData);
 
   document.getElementById('barGraph').addEventListener('click', toggleGraph);
   document.getElementById('pieGraph').addEventListener('click', toggleGraph);
 }
 
-function visualizeBar() {
-  var ctx = document.getElementById('myChartBar').getContext('2d');
-  var myChart = new Chart(ctx, {
+function getRandomRGBA(lengthOfArray){
+  var colorMix = [];
+  const randomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+  var randomByte = () => randomNumber(0, 255);
+  var randomPercent = () => (randomNumber(50, 100) * 0.01).toFixed(2);
+
+  var randomCssRgba;
+  
+  for(var i = 0; i < lengthOfArray.length; i++){
+    randomCssRgba = `rgba(${[randomByte(), randomByte(), randomByte(), randomPercent()].join(',')})`;
+    colorMix.push(randomCssRgba);
+  }
+
+  return colorMix;
+}
+
+function visualizeBarAndGraph() {
+  var chipStorage = JSON.parse(localStorage.getItem("chips"));
+  var monthlyAllowance = document.getElementById('monthlyAllowanceBudget').children;
+  var monthlyAllowanceData = [];
+
+  for(var i = 0; i < monthlyAllowance.length; i++){
+    monthlyAllowanceData.push(monthlyAllowance[i].innerHTML);
+  }
+
+  var color = getRandomRGBA(chipStorage);
+
+  var ctxBar = document.getElementById('myChartBar').getContext('2d');
+  var myChartBar = new Chart(ctxBar, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: chipStorage,
       datasets: [{
-        label: 'Recommended amount',
-        data: [Math.floor((100 - 50) * Math.random()), Math.floor((100 - 50) * Math.random())],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          // 'rgba(255, 206, 86, 0.2)',
-          // 'rgba(75, 192, 192, 0.2)',
-          // 'rgba(153, 102, 255, 0.2)',
-          // 'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          // 'rgba(255, 206, 86, 1)',
-          // 'rgba(75, 192, 192, 1)',
-          // 'rgba(153, 102, 255, 1)',
-          // 'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
+        label: 'Per category budget ($CAD)',
+        data: monthlyAllowanceData,
+        backgroundColor: color,
+        //   // 'rgba(255, 206, 86, 0.2)',
+        borderColor: color,
+          // 'rgba(255, 99, 132, 1)',
+        borderWidth: 2
       }]
     },
     options: {
@@ -279,7 +339,7 @@ function visualizeBar() {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Recommended spending amount ($CAD)',
+            labelString: 'Per category budget ($CAD)',
             fontSize: 14,
             fontColor: '#26a69a',
             foneWeight: 'bold',
@@ -297,35 +357,20 @@ function visualizeBar() {
 
     }
   });
-}
 
-function visualizePie() {
-
-  var ctx = document.getElementById('myChartPie').getContext('2d');
-  var myChart = new Chart(ctx, {
+  var ctxPie = document.getElementById('myChartPie').getContext('2d');
+  var myChartPie = new Chart(ctxPie, {
     type: 'pie',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: chipStorage,
       datasets: [{
-        label: 'Recommended spending per category',
-        data: [Math.floor((100 - 50) * Math.random()), Math.floor((100 - 50) * Math.random())],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          // 'rgba(255, 206, 86, 0.2)',
-          // 'rgba(75, 192, 192, 0.2)',
-          // 'rgba(153, 102, 255, 0.2)',
-          // 'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
+        label: 'Per category budget ($CAD)',
+        data: monthlyAllowanceData,
+        backgroundColor: color,
+          // 'rgba(255, 99, 132, 0.2)'
+        borderColor: color,
+          // 'rgba(255, 99, 132, 1)',
+        borderWidth: 2
       }]
     },
 
@@ -339,7 +384,7 @@ function visualizePie() {
         yAxes: [{
           scaleLabel: {
             display: true,
-            labelString: 'Recommended spending amount ($CAD)',
+            labelString: 'Per category budget ($CAD)',
             fontSize: 14,
             fontColor: '#26a69a',
           }
@@ -562,7 +607,11 @@ function getInflation() {
         .done(function (data) {
           var temp_val = data.replace("$", "");
           var inflation = (Number(temp_val) / 100) / 4;
+          console.log(inflation);
           projectedSavings(inflation);
+          document.getElementById('downloadExcel').addEventListener('click', () => {
+            exportToExcel(inflation)
+          });
         });
 
     })
@@ -575,12 +624,10 @@ function projectedSavings(x) {
   var salaryCal = salary.value;
   var savingCal = saving.value;
 
-
   //Calculation for each year saving
 
   var dropDownYearOption = document.getElementById('year');
   var selectedRetirementYear = Number(dropDownYearOption.options[dropDownYearOption.selectedIndex].value);
-
 
   var chosenYearSpan = document.getElementById('chosenYear');
   chosenYearSpan.innerHTML = selectedRetirementYear;
@@ -592,22 +639,19 @@ function projectedSavings(x) {
 
   var savingsForEachYear = [];
   var years = [];
-  var savingPerYear;
+  var savingEveryXYear;
 
   //Only get 4 years , not including the last year which is year the user selected
 
   for (var i = 0; i <= 4; i++) {
-    savingPerYear = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), eachYear));
-    savingsForEachYear.push(savingPerYear);
+    savingEveryXYear = Math.floor(((savingCal / 100) * salaryCal) * Math.pow((1 + x), eachYear));
+    savingsForEachYear.push(savingEveryXYear);
     years.push(eachYear);
     eachYear += yearApart;
   }
-  var eachYearFactorInThisYear = years.map(each => each + thisYear)
 
-  console.log(savingsForEachYear);
-  console.log(years);
-  console.log(eachYearFactorInThisYear);
-  console.log(yearApart);
+  // Year will be in 20xx format, not 5 or 10 or 20 year format
+  var eachYearFactorInThisYear = years.map(each => each + thisYear)
 
   //Calculation for retirement
 
@@ -622,36 +666,46 @@ function projectedSavings(x) {
 }
 
 // ** Ebrahim's code **
-
-
 function appendToBudget() {
-  var container = JSON.parse(localStorage.getItem("chips"));
-  var categories = document.getElementById('cate')
-  var monthleyAll = document.getElementById('monthAll')
+
+  var chipStorage = JSON.parse(localStorage.getItem("chips"));
+  var percentStorage = JSON.parse(localStorage.getItem("percent"));
+
+  //Data On Budget Page
+  var categories = document.getElementById('categoryBudget');
+  var monthlyAllowance = document.getElementById('monthlyAllowanceBudget');
+  var percentagesBudget = document.getElementById('percentageBudget');
 
   categories.innerHTML = "";
-  monthleyAll.innerHTML = "";
+  monthlyAllowance.innerHTML = "";
+  percentagesBudget.innerHTML = "";
 
   var salaryVal = document.getElementById("salary").value;
   var savingVal = document.getElementById("saving").value;
 
   // do your calculation
-  var calculation = ((salaryVal * savingVal) / 100);
-  var budgetLeft = (salaryVal - calculation)
-  var each = (budgetLeft / (container.length - 1))
+  var calculation = ((salaryVal * savingVal) / 100); // Literally the saving 
+  var budgetLeft = (salaryVal - calculation) // What's left after deducted saving (this amount will be used for spending on each category2)
+  var eachCategoryAmount; // Monthly allowance for each category
+  var eachPercentageAmount; 
 
-  for (var i = 0; i < container.length; i++) {
-
+  for (var i = 0; i < chipStorage.length; i++) {
+    // Append to id="categoryBudget"
     var node = document.createElement("p");
-
-    node.setAttribute('id', container[i]);
-    node.innerHTML = container[i];
-
+    node.setAttribute('id', chipStorage[i]);
+    node.innerHTML = chipStorage[i];
     categories.appendChild(node);
 
+    //Append to id="monthlyAllowanceBudget"
     var allowance = document.createElement('p');
-    allowance.innerHTML = each;
-    monthleyAll.appendChild(allowance);
-  }
+    eachCategoryAmount = Math.floor(((budgetLeft * percentStorage[i]) /100) * 100) / 100; // Only 2 decimal places
+    allowance.innerHTML = eachCategoryAmount;
+    monthlyAllowance.appendChild(allowance);
 
+    //Append to id="percentageBudget"
+    var percentage = document.createElement('p');
+    eachPercentageAmount = percentStorage[i] + '%';
+    percentage.innerHTML = eachPercentageAmount;
+    percentagesBudget.appendChild(percentage);
+  }
 }

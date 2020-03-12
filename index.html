@@ -59,13 +59,14 @@
             <br>
             <li>Enter the percentage that you want to spend on each category (i.e: 25% for Food, 7% for Transportation)</li>
             <br>
-            <li>Note: "Percentage left" reflects the remaining portion of income you have left to spend on any additional categories. </li>
+            <li>Note: "Remaining Percentage" reflects the remaining portion of income you have left to spend on any additional categories. </li>
             <br>
             <li>Enter your monthly income</li>
             <br>
             <li>Enter the percentage of your income that you want to save</li>
             <br>
             <li>Press "Calculate Budget"</li>
+            <br>
           </ol>
         </div>
         <div class="circle-border">
@@ -84,7 +85,7 @@
 
           <!-- Add category bttn -->
           <div class="row center-align">
-            <div class="btn green">Percentage Left: <span id="percentLeft">100</span>%</div>
+            <div class="btn green">Remaining Percentage: <span id="remainingPercentage">100</span>%</div>
             <a class="waves-effect waves-yellow btn modal-trigger orange" href="#modal"><i
               class="material-icons">add</i></a>
           </div>
@@ -182,7 +183,7 @@
                 <div class="row title center-align show-on-small hide-on-med-and-up" style="font-size: 14px;">Categories
                 </div>
                 <div class="row">
-                  <div class="col s12" id="cate">
+                  <div class="col s12" id="categoryBudget">
                   </div>
                 </div>
               </div>
@@ -192,9 +193,9 @@
                 <div class="row title center-align show-on-small hide-on-med-and-up" style="font-size: 14px;">Monthly
                   allowance</div>
                 <div class="row">
-                  <div class="col s6 m8 center-align" id="monthAll">
+                  <div class="col s6 m8 center-align" id="monthlyAllowanceBudget">
                   </div>
-                  <div class="col s6 m4 center-align" id="percentage">
+                  <div class="col s6 m4 center-align" id="percentageBudget">
                   </div>
                 </div>
               </div>
@@ -212,29 +213,30 @@
           <div class="col s12 m4"></div>
         </div>
 
-        <!-- Graph -->
-        <div class="center-align" id="Graph">
-          <!-- Toggle between Hide And Show graph-->
-          <div class="switch">
-            <label>
-              Hide
-              <input id="mySwitch" type="checkbox" checked>
-
-              <span class="lever"></span>
-              Show
-            </label>
-          </div>
-
-          <!-- Toggle between Bar and -->
-          <div id="graphStyling">
-            <br>
-            <span><button id="barGraph" class="btn orange">Bar Graph</button></span>
-            <span><button id="pieGraph" class="btn orange">Pie Graph</button></span>
-          </div>
-
-          <!-- Actual Graph-->
-          <div id="myChart">
-            <!-- <canvas id="myChartBar" width="1500" height="1200"></canvas>
+           <!-- Graph -->
+           <div class="center-align" id="Graph">
+            <!-- Toggle between Hide And Show graph-->
+            <div class="switch">
+              <label>
+                Hide
+                <input id="mySwitch" type="checkbox" checked>
+  
+                <span class="lever"></span>
+                Show
+              </label>
+            </div>
+  
+            <!-- Toggle between Bar and -->
+            <div id="graphStyling">
+              <br>
+              <span><button id="barGraph" class="btn orange">Bar Graph</button></span>
+              <span><button id="pieGraph" class="btn orange">Pie Graph</button></span>
+            </div>
+  
+            <!-- Actual Graph-->
+            
+            <div style="margin-top: 20px;" id="myChart">
+              <!-- <canvas id="myChartBar" width="1500" height="1200"></canvas>
             <canvas style="display: none;" id="myChartPie" width="1500" height="1200"></canvas> -->
           </div>
 
