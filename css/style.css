@@ -100,7 +100,6 @@ ul{
 	font-size: inherit;
 }
 .budget-box{
-  
   width: 90%;
   overflow: hidden;
   background: skyblue;
@@ -141,55 +140,3 @@ h4{
   font-family: 'Abril Fatface', cursive;
   background-color: rgba(56, 250, 120, 0.849);
 }
-
-/* @media screen and (max-width:780px){
-.top{
-    font-size: 25px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-  }
-
-  .instruction{
-    width: 80%;
-  }
-
-  .header{
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-} */
-
-/* @media screen and (max-width:550px){
-.top{
-    font-size: 18px;
-    padding-bottom: 10px;
-    padding-top: 10px;
-  }
-
-  .instruction{
-    font-size: 18px;
-  }
-
-  .header{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}  */
-
-/* @media screen and (max-width:400px){
-  .top{
-    font-size: 15px;
-    padding-bottom: 10px;
-    padding-top: 5px;
-  }
-
-  .instruction{
-    font-size: 15px;
-    width: 90%;
-  }
-
-  .header{
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-} */

@@ -23,19 +23,24 @@ function toggleSections(e) {
 function displayTagsFromStorage() {
   var storage = JSON.parse(localStorage.getItem("chips")); // []
   var percentStorage = JSON.parse(localStorage.getItem('percent'));
+  var remainingPercentage = JSON.parse(localStorage.getItem('remainingPercentage'))
 
   if (storage) {
     var budgetOptions = document.getElementById("budget-options");
 
     for (var i = 0; i < storage.length; i++) {
-      createAndDisplayTag(storage, i, budgetOptions, percentStorage);
+      createAndDisplayTag(storage, i, budgetOptions, percentStorage, remainingPercentage);
     }
+
   } else {
     storage = [];
     percentStorage = [];
+    document.getElementById('remainingPercentage').innerHTML = 100;
     localStorage.setItem("chips", JSON.stringify(storage));
     localStorage.setItem("percent" , JSON.stringify(percentStorage));
+    localStorage.setItem("remainingPercentage" , 100);
   }
+
 }
 
 function addEventListenerOnLoad() {
@@ -163,6 +168,7 @@ function appendToExistingOptions(newChips, newPercentage) {
 
 function updateLocalStorage() {
   var budgetOptions = document.getElementById("budget-options");
+  var currentRemainingPercentage = document.getElementById('remainingPercentage').innerHTML;
   var chipsForLocalStorage = [];
   var percentForLocalStorage = [];
   var allCurrentTags = budgetOptions.children;
@@ -178,6 +184,7 @@ function updateLocalStorage() {
 
   localStorage.setItem('chips', JSON.stringify(chipsForLocalStorage));
   localStorage.setItem('percent', JSON.stringify(percentForLocalStorage));
+  localStorage.setItem('remainingPercentage', currentRemainingPercentage);
 }
 
 // When click on Close or Ok in Modal, leave only 1 input field
@@ -485,7 +492,7 @@ function proposeBudget(event) {
   document.getElementById("incomeAmount").innerText = salaryVal;
   document.getElementById("savingAmount").innerText = savingAmount;
 
-  var regex = /\d+\.{0,1}\d+/; // Check to see if it contains 2 or more . or + or -
+  var regex = /\d*\.{0,1}\d*/;
 
   // if the input is not vaild, the input box will turn red
   if (!regex.test(salaryVal)) {
@@ -502,7 +509,7 @@ function proposeBudget(event) {
 
   if (!regex.test(savingVal)) {
     M.toast({
-      html: 'Please enter a valid number for saving.',
+      html: 'Please enter a valid number for saving percentage.',
       classes: 'red',
       displayLength: '2000'
     });
