@@ -1,12 +1,6 @@
 # Budget-your-budget
 
-We want to build an application that helps user plan and track their budget.
-Being able to pull in economic information from your area and track your budget relative to that information.
-https://open.canada.ca/en
-
-For each category, split out links for how much to spend.
-
-## User story
+This is an application that helps users to plan and track their budget. Users can put their income and categories of things and percentages they spend, and the percentage of income they want to save each month. The app will take the inflation rate from your area into account and project your saving after 5 to 30 years.
 
 ## Built with
 * HTML
